@@ -1,0 +1,46 @@
+This project leans heavily on the hard work of many other programmers. Each of the
+
+Each of the several separate projects have their own licenses. These are the projects
+currently being used. 
+
+The code for stuporglue/TreeTrumpet is licensed under the GPL version 3.
+
+Pedigree-Viewer
+* Site: https://github.com/dovy/Pedigree-Viewer
+* License: GNU Affero GPL v3
+
+php-gedcom
+* Site: https://github.com/mrkrstphr/php-gedcom
+* License: GNU GPL v3
+
+Ged2Json
+* Site: https://github.com/stuporglue/ged2json
+* License: GNU GPL v3
+
+Stupid Simple Geocoder
+* Site: https://github.com/stuporglue/ssgeocoder
+* License: GNU Affero GPL v3 + MIT
+
+Leaflet.js
+* Site: http://leafletjs.com/
+* License: BSD (2-point)
+
+Leaflet.markercluster
+* Site: https://github.com/Leaflet/Leaflet.markercluster
+* License: MIT
+
+jQuery
+* Site: https://jquery.org/
+* License: MIT
+
+jQuery jQRangeSlider
+* Site: http://ghusse.github.io/jQRangeSlider/
+* License: GPL v3 + MIT
+
+jQuery DataTables
+* Site: https://datatables.net/
+* License: GPL v2 + BSD (3-point)
+
+Flowplayer HTML5 Video Player
+* Site: http://flowplayer.org/docs/
+* License: GPL v3
