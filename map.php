@@ -59,7 +59,15 @@
                     }
 
                     foreach($popularPlaces as $place => $people){
-                        $popularPlaces[$place] = array_unique($people);
+                        if(array_key_exists('geo',$people)){
+                            $geo = $people['geo'];
+                            unset($people['geo']);
+                            $people = array_unique($people);
+                            $people['geo'] = $geo;
+                        }else{
+                            $people = array_unique($people);
+                        }
+                        $popularPlaces[$place] = $people;
                     }
 
                     uasort($popularPlaces,function($a,$b){
@@ -107,7 +115,7 @@
         <?php require_once('lib/footer.php'); ?>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js"></script>
-<script type='text/javascript' src="http://cdn.leafletjs.com/leaflet-0.5/leaflet-src.js"></script>
+<script type='text/javascript' src="http://cdn.leafletjs.com/leaflet-0.6/leaflet.js"></script>
 <script type='text/javascript' src="js/3rdparty/leaflet.markercluster.js"></script>
 <script type='text/javascript' src="js/3rdparty/jquery.mousewheel.min.js"></script>
 <script type='text/javascript' src="js/3rdparty/jQEditRangeSlider-min.js"></script>

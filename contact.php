@@ -54,12 +54,12 @@ if(count($_POST) > 0){
     <head>
         <meta charset="utf-8"/>
         <title>Contact Me</title>
-        <link href="css/pv.css" rel="stylesheet" media="all"/>
+        <link href="css/tt.css" rel="stylesheet" media="all"/>
         <link href="css/contact.css" rel="stylesheet" media="all"/>
         </head>
     <body>
-    <div id="pv-content">
-        <div id='pv-left-content' class='pv-content'>
+    <div id="tt-content">
+        <div id='tt-left-content' class='tt-content'>
             <h1>Contact Me</h1>
             <?php require_once('lib/header.php'); ?>
             <h2>Contact Information</h2>
@@ -68,18 +68,6 @@ I am interested in collaborating on my genealogy! If we're related, or you think
 we may be, please contact me so we can collaborate.
 </p>
 <?php
-spl_autoload_register(function ($class) {
-    $pathToPhpGedcom = __DIR__ . '/lib/3rdparty/php-gedcom/library/'; 
-
-    if (!substr(ltrim($class, '\\'), 0, 7) == 'PhpGedcom\\') {
-        return;
-    }
-
-    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-    if (file_exists($pathToPhpGedcom . $class)) {
-        require_once($pathToPhpGedcom . $class);
-    }
-});
 
 $printed = FALSE;
 if(file_exists('family.ged')){
@@ -89,7 +77,7 @@ if(file_exists('family.ged')){
     require_once('lib/pretty-print_php-gedcom.php');
     if($submitter = $parsedgedcom->getSubm()){
         foreach($submitter as $subm){
-            printSubm($subm);
+            print printSubm($subm);
         }
     }
 
@@ -105,7 +93,7 @@ if(!$printed && !$_CONFIG['email_address'] == 'example@example.com' && !@include
 
 ?>
         </div>
-        <div id='pv-right-content' class='pv-content'>
+        <div id='tt-right-content' class='tt-content'>
 <?php
 
 if($_CONFIG['email_address'] != 'example@example.com' && $_CONFIG['show_email_form']){

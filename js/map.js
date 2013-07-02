@@ -521,6 +521,6 @@
     }
 
     $.fn.ttMap = function(gedcomparserurl,gedcom,options){
-        return new TreeTrumpetMattiewer(this,gedcomparserurl,gedcom,options);
+        return new TreeTrumpetMapViewer(this,gedcomparserurl,gedcom,options);
     };
 })(jQuery);

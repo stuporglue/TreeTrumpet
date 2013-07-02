@@ -391,19 +391,19 @@ function printAsso($asso){
     return $ret;
 }
 
-function printSubmitter($subm){
+function printSubm($subm){
     $ret = '';
     if($name = $subm->getName()){
         $ret .= "<span>$name</span><br>";
     }
 
     if($addr = $subm->getAddr()){ 
-        printAddr($addr);
+        $ret .= printAddr($addr);
     }
 
     if($phons = $subm->getPhon()){
         foreach($phons as $phon){
-            printPhon($phon);
+            $ret .= printPhon($phon);
         }
     }
     return $ret;

@@ -1,0 +1,16 @@
+# This file isn't required for TreeTrumpet, but will optimize some things for you
+
+AddType image/x-icon .ico
+<IfModule mod_expires.c>
+ExpiresActive on
+ExpiresByType image/x-icon "access plus 1 year"
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css|swf)$">
+ExpiresDefault "access plus 2 months"
+</FilesMatch>
+</IfModule>
+
+FileETag none
+<ifModule mod_headers.c>
+Header unset ETag
+</ifModule>
+

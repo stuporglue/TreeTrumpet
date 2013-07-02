@@ -1,16 +1,16 @@
 <?php 
-    require_once(__DIR__ .'/config.php');
+require_once(__DIR__ .'/config.php');
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
             <title>Welcome to TreeTrumpet!</title>
-            <link href="<?php print $_BASEURL;?>/css/pv.css" rel="stylesheet" media="all"/>
+            <link href="<?php print $_BASEURL;?>/css/tt.css" rel="stylesheet" media="all"/>
         </head>
         <body>
-            <div id='pv-content'>
-                <div id='pv-left-content' class='pv-content'>
+            <div id='tt-content'>
+                <div id='tt-left-content' class='tt-content'>
                     <h1>TreeTrumpet</h1>
                     <?php require_once(__DIR__ . '/header.php'); ?>
                     <p>Thanks for installing TreeTrumpet!</p>
@@ -74,13 +74,12 @@ or
 }
 
 $other = ob_get_clean();
-ob_end_clean();
 
 if(strlen($other) > 0){
     print "<h2>Other Stuff You Might <em>Want</em> To Do</h2>
-    <p>
-    None of these things are required, but may make your website more useful to visitors.
-    </p>";
+        <p>
+        None of these things are required, but may make your website more useful to visitors.
+        </p>";
     print $other;
 }
 ?>

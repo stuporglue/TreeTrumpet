@@ -44,6 +44,9 @@
     width: 3em;
 }
 
+.ttslider {
+    top: -40px;
+}
 
 .tthasgeo {
     color: #25f;

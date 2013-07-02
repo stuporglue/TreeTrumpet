@@ -1,27 +1,24 @@
 <?php
 
-global $_BASEURL,$_CONFIG;
+require_once(__DIR__ . '/config.php');
 
-// Get the base URL
-$_BASEURL = '';
-if(empty($_SERVER['HTTPS'])){
-    $_BASEURL .= 'http://';
-}else{
-    $_BASEURL .= 'https://';
-} 
-$_BASEURL .= $_SERVER['SERVER_NAME']; 
-$scriptdir = dirname($_SERVER['SCRIPT_NAME']);
-
-if(basename($scriptdir) == 'lib'){
-    $scriptdir = dirname($scriptdir);
-}
-
-$_BASEURL .= $scriptdir;
-
-if(!file_exists(__DIR__ . '../family.ged')){
+if(!file_exists(__DIR__ . '/../family.ged')){
     header("Location: $_BASEURL",TRUE,307);
+    exit();
 }
 
 require_once(__DIR__ . '/robots.php');
-require_once(__DIR__ . '/config.php');
+
+spl_autoload_register(function ($class) {
+    $pathToPhpGedcom = __DIR__ . '/3rdparty/php-gedcom/library/'; 
+
+    if (!substr(ltrim($class, '\\'), 0, 7) == 'PhpGedcom\\') {
+        return;
+    }
+
+    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+    if (file_exists($pathToPhpGedcom . $class)) {
+        require_once($pathToPhpGedcom . $class);
+    }
+});
 

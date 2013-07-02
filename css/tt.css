@@ -1,5 +1,5 @@
 /*
- * Common CSS for all PV sites
+ * Common CSS for all tt sites
  */
 
 html,body {
@@ -13,25 +13,25 @@ html {
     padding: 10px;
 }
 
-.pv-content {
+.tt-content {
     float: left;
     width: 48%;
     min-width: 350px;
     padding: 0 10px;
 }
 
-.pv-preview {
+.tt-preview {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.pv-preview img {
+.tt-preview img {
     display: block;
     margin: auto;
     margin-bottom: 5px;
 }
 
-#pv-right-content {
+#tt-right-content {
     padding-top: 80px;
 }
 
@@ -45,87 +45,87 @@ a {
     padding: 1px 3px;
 }
 
-#pv-footer {
+#tt-footer {
     clear: both;
     padding-top: 20px;
 }
 
-#pv-footer a {
+#tt-footer a {
     text-decoration: none;
     padding: 0px;
     border: none;
     background-color: transparent;
 }
 
-#pv-footer a:hover {
+#tt-footer a:hover {
     text-decoration: underline;
 }
 
 
-.pvancestortable {
+.ttancestortable {
     max-width: 100%;
 }
 
-.pvancestortable,
-.pvancestortable table,
-.pvancestortable td,
-.pvancestortable th,
-.pvancestortable tr
+.ttancestortable,
+.ttancestortable table,
+.ttancestortable td,
+.ttancestortable th,
+.ttancestortable tr
 {
     border: 1px solid black;
     border-collapse: collapse;
     width: 100%;
 }
 
-.pvancestortable a {
+.ttancestortable a {
     text-decoration: none;
     padding: 0px;
     border: none;
     background-color: transparent;
 }
-.pvancestortable a:hover {
+.ttancestortable a:hover {
     text-decoration: underline;
 }
 
-.pvln {
+.ttln {
     font-weight: bold;
 }
 
-.pvnamelist {
+.ttnamelist {
     margin-left: 25px;
 }
 
-.pvname,.pvevent {
+.ttname,.ttevent {
     display: block;
     white-space: nowrap;
 }
 
-.pvnowrap {
+.ttnowrap {
     white-space: nowrap;
 }
 
-.pvfakelink {
+.ttfakelink {
     color: #25f;
     text-decoration: underline;
     cursor: pointer;
 }
 
-.pvgender-male {
+.ttgender-male {
     border-color: #171980;
     background-color: #b7daff;
 }
 
-.pvgender-female {
+.ttgender-female {
     border-color: #80177e;
     background-color: #e985e7;
 }
 
-.pvgender-mixed {
+.ttgender-mixed {
     border-color: #df4ddc;
     background-color: #b7daff;
 }
 
-.pvgender-unknown {
+.ttgender-unknown {
     border-color: #ffdd3c;
     background-color: #e6ff41;
 }

@@ -2,26 +2,26 @@
  * Table specific CSS goes here
  */
 
-#pv-table {
+#tt-table {
     clear:both;
 }
 
-.pvtablecontainer {
+.tttablecontainer {
     max-width: 100% !important;
     clear: both;
 }
 
-.pvtablectrl {
+.tttablectrl {
     font-weight: bold;
     padding: 10px 0;
 }
 
-.pvtablectrl .pvclose {
+.tttablectrl .ttclose {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.pvtable {
+.tttable {
     max-width: 100% !important;;
 }
 

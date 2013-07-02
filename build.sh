@@ -53,9 +53,9 @@ cp lib/ged2json/examples/php/lib/ssgeocoder/ssgeocoder.php treetrumpet/lib/3rdpa
 cp -r lib/ged2json/examples/php/lib/php-gedcom/library treetrumpet/lib/3rdparty/php-gedcom/
 
 # Pedigree-Viewer
-cp js/Pedigree-Viewer/js/* pedigree-viewer/js/3rdparty
-cp js/Pedigree-Viewer/css/* pedigree-viewer/css/3rdparty/
-cp js/Pedigree-Viewer/css/ui/* pedigree-viewer/css/3rdparty/ui/
+cp js/Pedigree-Viewer/js/* treetrumpet/js/3rdparty
+cp js/Pedigree-Viewer/css/* treetrumpet/css/3rdparty/
+cp js/Pedigree-Viewer/css/ui/* treetrumpet/css/3rdparty/ui/
 
 #sudo chgrp -R www-data treetrumpet
 #sudo chmod -R 775 treetrumpet

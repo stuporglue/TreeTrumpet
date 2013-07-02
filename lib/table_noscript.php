@@ -5,7 +5,7 @@ $ancestors = $gedcom->toJsonHash(FALSE);
 ksort($ancestors);
 
 $noscript = "";
-$noscript .= "<div class='pvtablectrl'></div><div class='pvtablediv'><table class='pvtable'>
+$noscript .= "<div class='tttablectrl'></div><div class='tttablediv'><table class='tttable'>
     <thead><tr><th>ID</th><th>Name</th><th>Gender</th><th>Parents</th><th>Children</th><th>Events</th></tr></thead><tbody>";
 foreach($ancestors as $id => $ancestor){
     $noscript .= "<tr id={$id}>";
@@ -14,9 +14,9 @@ foreach($ancestors as $id => $ancestor){
     $noscript .= "<td>$id</td>";
 
     // names
-    $noscript .= "<td><a class='pvindipage' href='individual.php?id=$id'>";
+    $noscript .= "<td><a class='ttindipage' href='individual.php?id=$id'>";
     foreach($ancestor['names'] as $name){
-        $noscript .=   preg_replace('|/(.*)/|',"<span class='pvln'>$1</span>",$name) ;
+        $noscript .=   preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$name) ;
     }
     $noscript .= "</a></td>";
 
@@ -28,14 +28,14 @@ foreach($ancestors as $id => $ancestor){
     if(array_key_exists('fathers',$ancestor)){
         $noscript .= "<ul>";
         foreach($ancestor['fathers'] as $father){
-            $noscript .= "<li class='pvnowrap'><a class='pvpersonlink' href='#{$father}'>" .  preg_replace('|/(.*)/|',"<span class='pvln'>$1</span>",$ancestors[$father]['name']) . "</a></li>";
+            $noscript .= "<li class='ttnowrap'><a class='ttpersonlink' href='#{$father}'>" .  preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$ancestors[$father]['name']) . "</a></li>";
         }
         $noscript .= "</ul>";
     }
     if(array_key_exists('mothers',$ancestor)){
         $noscript .= "<ul>";
         foreach($ancestor['mothers'] as $mother){
-            $noscript .= "<li class='pvnowrap'><a class='pvpersonlink' href='#{$mother}'>" .  preg_replace('|/(.*)/|',"<span class='pvln'>$1</span>",$ancestors[$mother]['name']) . "</a></li>";
+            $noscript .= "<li class='ttnowrap'><a class='ttpersonlink' href='#{$mother}'>" .  preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$ancestors[$mother]['name']) . "</a></li>";
         }
         $noscript .= "</ul>";
     }
@@ -46,7 +46,7 @@ foreach($ancestors as $id => $ancestor){
     if(array_key_exists('children',$ancestor)){
         $noscript .= "<ul>";
         foreach($ancestor['children'] as $child => $spouse){
-            $noscript .= "<li class='pvnowrap'><a class='pvpersonlink' href='#{$child}'>" .  preg_replace('|/(.*)/|',"<span class='pvln'>$1</span>",$ancestors[$child]['name']) . "</a></li>";
+            $noscript .= "<li class='ttnowrap'><a class='ttpersonlink' href='#{$child}'>" .  preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$ancestors[$child]['name']) . "</a></li>";
         }
         $noscript .= "</ul>";
     }
@@ -57,7 +57,7 @@ foreach($ancestors as $id => $ancestor){
     if(array_key_exists('events',$ancestor)){
         $noscript .= "<ul>";
         foreach($ancestor['events'] as $event){
-            $noscript .= "<li class='pvevent'>";
+            $noscript .= "<li class='ttevent'>";
             $noscript .= "{$event['type']}: ";
             if(array_key_exists('date',$event)){
                 $noscript .= "{$event['date']['raw']} ";

@@ -11,6 +11,29 @@ Clone Submodules
     git submodule init
     git submodule update
 
+Same for Sub-Submodules
+-----------------------
+    cd lib/ged2json
+    git submodule init
+    git submodule update
+    cd ../../
+
+Install grunt, If Needed
+------------------------
+
+Build JavaScript Projects
+-------------------------
+    cd js/jQRangeSlider
+    sudo npm install
+    sudo npm install -g grunt-cli
+    grunt
+    cd ..
+
+    cd Leaflet.markercluster
+    sudo npm install
+    jake
+
+
 Build TreeTrumpet
 -----------------
     ./build.sh

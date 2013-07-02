@@ -28,8 +28,6 @@ gedcom=1
 ; address to them.
 
 [contact]
-show_mailing_address=1
-show_phone=0
 show_email_address=0
 show_email_form=0
 

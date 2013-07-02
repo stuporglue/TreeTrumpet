@@ -7,18 +7,7 @@
  * This file will be overwritten whenever you upgrade TreeTrumpet!
  */
 
-
-
-/*
- * This is a simple config file for TreeTrumpet
- *
- * You don't NEED to change anything but you can if you wish to change
- * the behavior of TreeTrumpet
- *
- * To use this file, copy config.php.defaults to config.php
- * and change any values you wish
- *
- */
+global $_BASEURL,$_CONFIG;
 
 
 /*
@@ -40,8 +29,6 @@ $_CONFIG = Array(
  * You can use this to allow people to send you emails. 
  */
 
-    'show_address'      => FALSE,
-    'show_phone'        => FALSE,
     'email_address'     => "example@example.com", 
     'show_email'        => FALSE,
     'show_email_form'   => FALSE,
@@ -68,3 +55,20 @@ if(file_exists(__DIR__ . '/../config.php')){
 
     $_CONFIG = array_merge($_CONFIG,$ini_config);
 }
+
+
+// Get the base URL
+$_BASEURL = '';
+if(empty($_SERVER['HTTPS'])){
+    $_BASEURL .= 'http://';
+}else{
+    $_BASEURL .= 'https://';
+} 
+$_BASEURL .= $_SERVER['SERVER_NAME']; 
+$scriptdir = dirname($_SERVER['SCRIPT_NAME']);
+
+if(basename($scriptdir) == 'lib'){
+    $scriptdir = dirname($scriptdir);
+}
+
+$_BASEURL .= $scriptdir;
