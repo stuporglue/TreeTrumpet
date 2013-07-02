@@ -1,0 +1,9 @@
+*.ged
+config.inc
+family.ged
+error_log
+dist/
+pedigree-viewer/
+pedigree-viewer.zip
+pedigree-viewer.zip.md5
+michael_build.sh

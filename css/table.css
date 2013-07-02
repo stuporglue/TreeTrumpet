@@ -1,0 +1,33 @@
+/*
+ * Table specific CSS goes here
+ */
+
+#pv-table {
+    clear:both;
+}
+
+.pvtablecontainer {
+    max-width: 100% !important;
+    clear: both;
+}
+
+.pvtablectrl {
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.pvtablectrl .pvclose {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.pvtable {
+    max-width: 100% !important;;
+}
+
+table, td,th,tr {
+    border: 1px solid black;
+    background-color: white;
+    border-collapse: collapse;
+}
+

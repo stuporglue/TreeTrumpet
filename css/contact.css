@@ -1,0 +1,11 @@
+
+input {
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 500px;
+    height: 250px;
+    clear: both;
+    display: block;
+}

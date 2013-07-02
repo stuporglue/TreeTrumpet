@@ -1,0 +1,198 @@
+.pvChartContainer {
+    width:auto;
+    height:600px;
+    overflow:hidden;
+    position:relative;
+    cursor:move;
+    background-color: #FFFFFF;
+}
+
+.pvChart {
+    visibility:hidden;
+    cursor:move;
+    position:relative;
+}
+
+.pvChartCanvas {
+    z-index:0;
+    position:absolute;
+}
+
+.pvChartPreviewContainer {
+    border: 1px solid #eee;
+    background: #f8f8f8;
+    z-index: 900;
+    opacity: .8;
+    filter: alpha(opacity=80);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    width:13em;
+    height:8.25em;
+    padding:0.5em;
+    overflow:hidden;
+    position:absolute;
+    box-shadow:2px 2px 4px #ccc;
+    -webkit-box-shadow:2px 2px 4px #ccc;
+    -moz-box-shadow: 2px 2px 4px #ccc;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+
+.pvChartPreview {
+    position:absolute;
+}
+
+.pvWait {
+    text-align:center;
+    font-size:200%;
+    line-height:15em;
+    color:#567;
+}
+
+.pvSelected {
+    background-color:#fff9b5;
+}
+
+.pvHover {
+    background-color:#dcecf3;
+}
+
+._jsPlumb_connector{
+    z-index:0;
+}
+
+._jsPlumb_connector, _jsPlumb_endpoint{
+    visibility:hidden;
+}
+
+/* Gender Icons & Profile pics */
+.pvMale, .pvFemale {
+    padding: 5px;
+}
+
+.pvMale {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+}
+
+.pvFemale {
+    border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+}
+
+.pvMale:hover {
+    background-color: #a9daf1;
+}
+
+.pvFemale:hover {
+    background-color: #f6c7f5;
+}
+
+.pvMale span, .pvFemale span {
+    display: block;
+    float: left;
+    height: 12px;
+    width: 16px;
+    margin-top:  3px;
+}
+
+.pvMale span {
+    background: url("../img/gender.png") no-repeat scroll center top transparent;
+}
+.pvFemale span {
+    background: url("../img/gender.png") no-repeat scroll center bottom transparent;
+}
+
+.pvCouple {
+    z-index:1;
+    cursor:pointer;
+    width:15em;
+    border:1px solid #c2bdaf;
+    z-index:1;
+    background-color:#dee6f5;
+    cursor:pointer;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow:2px 2px 4px #aaa;
+    -webkit-box-shadow:2px 2px 4px #aaa;
+    -moz-box-shadow: 2px 2px 4px #aaa;
+    overflow: hidden;
+    text-wrap: none;
+    position: relative !important;
+}
+
+.pvBlank-couple {
+
+    display:none;
+}
+
+
+.pvPreview {
+    background:#fdf0bc;
+    opacity: .6;
+    filter: alpha(opacity=60);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+    border:1px solid #d94b2e;
+    cursor:move;
+    z-index:0;
+}
+
+.pvChkOrientation {
+    display: inline-block;
+    border: outset 2px black;
+    padding: 0px 2px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.pvChartControls {
+    display: inline-block;
+    float: right;
+}
+
+.pvChartControls .compass {
+    background-image: url("../img/slider.png");
+    height: 79px;
+    z-index: 10000;
+    width: 79px;
+    position: relative;
+    margin: 15px 15px auto auto;
+}
+
+.pvChartControls .pan {
+    cursor: pointer;
+    height: 22px;
+    position: absolute;
+    width: 22px;
+}
+.pvChartControls .pan.up {
+    left: 28px;
+    top: 2px;
+}
+.pvChartControls .pan.right {
+    left: 2px;
+    top: 28px;
+}
+.pvChartControls .pan.down {
+    left: 28px;
+    top: 54px;
+}
+.pvChartControls .pan.left {
+    left: 54px;
+    top: 28px;
+}
+.pvChartControls .pan.center {
+    top:  28px;
+    left:  28px;
+}

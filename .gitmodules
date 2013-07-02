@@ -1,0 +1,12 @@
+[submodule "js/Leaflet.markercluster"]
+	path = js/Leaflet.markercluster
+	url = http://github.com/Leaflet/Leaflet.markercluster.git
+[submodule "js/jQRangeSlider"]
+	path = js/jQRangeSlider
+	url = http://github.com/ghusse/jQRangeSlider.git
+[submodule "lib/ged2json"]
+	path = lib/ged2json
+	url = https://github.com/stuporglue/ged2json.git
+[submodule "js/Pedigree-Viewer"]
+	path = js/Pedigree-Viewer
+	url = https://github.com/dovy/Pedigree-Viewer
