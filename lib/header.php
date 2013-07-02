@@ -24,6 +24,6 @@ $moduleMenu = Array();
     }
 
 
-print "<div id='pv-header'>";
+print "<div id='tt-header'>";
 print implode(' | ',$moduleMenu);
 print "</div>";
