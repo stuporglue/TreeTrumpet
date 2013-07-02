@@ -21,7 +21,6 @@ foreach($parsedgedcom->getIndi() as $individual){
 if($names = $individual->getName()){
     $firstName = $names[0]->getName();
     $firstBold = preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$firstName);
-
 }
 
 
@@ -37,23 +36,9 @@ if($names = $individual->getName()){
     <body>
     <div id="tt-content">
         <h1>All About <?php print $firstBold; ?></h1>
-            <?php require_once('lib/header.php'); ?>
-        <div id='navigation'>
-            <ul>
-            <li><a href='#overview'>Overview</a></li>
-            <li><a href='#attributes'>Attributes</a></li>
-            <li><a href='#parents'>Parents</a></li>
-            <li><a href='#spouses'>Spouses</a></li>
-            <li><a href='#events'>Events</a></li>
-            <li><a href='#associates'>Associates</a></li>
-            <li><a href='#notes'>Notes</a></li>
-            <li><a href='#references'>References</a></li>
-            <li><a href='#multimedia'>Multimedia</a></li>
-            <li><a href='#metadata'>Metadata</a></li>
-            <li><a href='#ordinances'>LDS Ordinances</a></li>
-            </ul>
-        </div>
-<?php 
+            <?php require_once('lib/header.php'); 
+ob_start();
+$navigation = "";
 // ID
 
 
@@ -95,6 +80,7 @@ if($names = $individual->getName()){
 
     if($overview != ''){
         print "<h2 id='overview'>Overview</h2>";
+        $navigation .= "<li><a href='#overview'>Overview</a></li>";
         print "<div class='block'>";
         print $overview;
         print "</div>"; // End Overview block
@@ -105,6 +91,7 @@ if($names = $individual->getName()){
 {
     if($attrs = $individual->getAttr()){
         print "<h2 id='attributes'>Attributes</h2>";
+        $navigation .= "<li><a href='#attributes'>Attributes</a></li>";
         print "<div class='block'>";
         foreach($attrs as $attr){
             print printAttr($attr);
@@ -117,6 +104,7 @@ if($names = $individual->getName()){
 {
     if($fams = $individual->getFamc()){
         print "<h2 id='parents'>Parents</h2>";
+        $navigation .= "<li><a href='#parents'>Parents</a></li>";
         print "<div class='block'>";
         foreach($fams as $famc){
             print printFamc($famc,$individual->getId());
@@ -129,6 +117,7 @@ if($names = $individual->getName()){
 {
     if($fams = $individual->getFams()){
         print "<h2 id='spouses'>Spouses and Children</h2>";
+        $navigation .= "<li><a href='#spouses'>Spouses</a></li>";
         print "<div class='block'>";
         foreach($fams as $famc){
             print printFams($famc,$individual->getId());
@@ -141,6 +130,7 @@ if($names = $individual->getName()){
 {
     if($evens = $individual->getEven()){
         print "<h2 id='events'>Events in the life of $firstName</h2>";
+        $navigation .= "<li><a href='#events'>Events</a></li>";
         print "<div class='block'>";
         foreach($evens as $even){
             print printEven($even);   
@@ -153,6 +143,7 @@ if($names = $individual->getName()){
 {
     if($assos = $individual->getAsso()){
         print "<h2 id='associates'>Associates of $firstName</h2>";
+        $navigation .= "<li><a href='#associates'>Associates</a></li>";
         print "<div class='block'>";
         foreach($assos as $asso){
             print printAsso($asso);
@@ -165,6 +156,7 @@ if($names = $individual->getName()){
 {
     if($notes = $individual->getNote()){
         print "<h2 id='notes'>Notes</h2>";
+        $navigation .= "<li><a href='#notes'>Notes</a></li>";
         print "<div class='block'>";
         foreach($notes as $note){
             print printNote($note);
@@ -193,6 +185,7 @@ if($names = $individual->getName()){
 
     if($refs != ''){
         print "<h2 id='references'>References and Sources</h2>";
+        $navigation .= "<li><a href='#references'>References and Sources</a></li>";
         print "<div class='block'>";
         print $refs;
         print "</div>";
@@ -205,6 +198,7 @@ if($names = $individual->getName()){
 {
     if($objes = $individual->getObje()){
         print "<h2 id='multimedia'>Multimedia</h2>";
+        $navigation .= "<li><a href='#multimedia'>Multimedia</a></li>";
         print "<div class='block'>";
         foreach($objes as $obje){
             print printObje($obje);
@@ -218,6 +212,7 @@ if($names = $individual->getName()){
 
 {
     print "<h2 id='metadata'>Metadata</h2>";
+    $navigation .= "<li><a href='#metadata'>Metadata</a></li>";
     print "<div class='block'>";
 
     // GEDCOM ID
@@ -317,14 +312,19 @@ if($names = $individual->getName()){
 //
 //    if($ord != ''){
 //        print "<h2 id='ordinances'>LDS Ordinances</h2>";
+//        $navigation .= "<li><a href='#ordinances'>Ordinances</a></li>";
 //        print "<div class='block'>";
 //        print $ord;
 //        print "</div>";
 //    }
 //}
 
+        $body = ob_get_clean();
 
-
+        print "<div id='navigation'><ul>";
+        print $navigation;
+        print "</ul></div>";
+        print $body;
 ?>
     </div>
     <?php require_once('lib/footer.php'); ?>

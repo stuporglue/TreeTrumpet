@@ -29,28 +29,28 @@ foreach($parsedgedcom->getFam() as $family){
 }
 
 
-    $familyName = Array();
+$familyName = Array();
 
-    if($husb = $family->getHusb()){
-        $husbo = findIndi($husb);
-        $husbname = $husb;
-        if($names = $husbo->getName()){
-            $husbname = $names[0]->getName();
-        }
-        $familyName[] = $husbname;
+if($husb = $family->getHusb()){
+    $husbo = findIndi($husb);
+    $husbname = $husb;
+    if($names = $husbo->getName()){
+        $husbname = $names[0]->getName();
     }
+    $familyName[] = $husbname;
+}
 
-    if($wife = $family->getWife()){
-        $wifeo = findIndi($wife);
-        $wifename = $wife;
-        if($names = $wifeo->getName()){
-            $wifename = $names[0]->getName();
-        }
-        $familyName[] = $wifename;
+if($wife = $family->getWife()){
+    $wifeo = findIndi($wife);
+    $wifename = $wife;
+    if($names = $wifeo->getName()){
+        $wifename = $names[0]->getName();
     }
+    $familyName[] = $wifename;
+}
 
-    $familyName = implode(' and ',$familyName);
-    $familyName = str_replace('/','',$familyName);
+$familyName = implode(' and ',$familyName);
+$familyName = str_replace('/','',$familyName);
 
 ?><!DOCTYPE html>
 <html>
@@ -64,24 +64,15 @@ foreach($parsedgedcom->getFam() as $family){
     <body>
     <div id="tt-content">
     <h1>All About <?php print $familyName; ?></h1>
-            <?php require_once('lib/header.php'); ?>
-        <div id='navigation'>
-            <ul>
-            <li><a href='#parents'>Parents</a></li>
-            <li><a href='#children'>Children</a></li>
-            <li><a href='#events'>Events</a></li>
-            <li><a href='#references'>References</a></li>
-            <li><a href='#notes'>Notes</a></li>
-            <li><a href='#multimedia'>Multimedia</a></li>
-            <li><a href='#metadata'>Metdata</a></li>
-            </ul>
-        </div>
-<?php
+<?php require_once('lib/header.php'); 
 
+ob_start();
+$navigation = "";
 
-
+// Parents
 {
     print "<h2 id='parents'>Parents</h2>";
+    $navigation .= "<li><a href='#parents'>Parents</a></li>";
     print "<div class='block'>";
     print "<dl>";
 
@@ -112,15 +103,17 @@ foreach($parsedgedcom->getFam() as $family){
     print "</div>";
 }
 
+// children
 {
-    print "<h2 id='children'>Children</h2>";
-    print "<div class='block'>";
-
-    if($nchi = $family->getNchi()){
-        print "<p>$nchi total children in this family</p>";
-    }
-
     if($chils = $family->getChil()){
+        print "<h2 id='children'>Children</h2>";
+        $navigation .= "<li><a href='#children'>Children</a></li>";
+        print "<div class='block'>";
+
+        if($nchi = $family->getNchi()){
+            print "<p>$nchi total children in this family</p>";
+        }
+
         print "<ol>";
         foreach($chils as $chil){
             $chilo = findIndi($chil);
@@ -131,14 +124,15 @@ foreach($parsedgedcom->getFam() as $family){
             print "<li><a href='individual.php?id=$chil'>$name</a></li>";
         }
         print "</ol>";
+        print "</div>";
     }
-    print "</div>";
 }
 
 // Events block
 {
     if($evens = $family->getEven()){
         print "<h2 id='events'>Events</h2>";
+        $navigation .= "<li><a href='#events'>Events</a></li>";
         print "<div class='block'>";
         foreach($evens as $even){
             print printEven($even);   
@@ -167,6 +161,7 @@ foreach($parsedgedcom->getFam() as $family){
 
     if($refs != ''){
         print "<h2 id='references'>References and Sources</h2>";
+        $navigation .= "<li><a href='#references'>References</a></li>";
         print "<div class='block'>";
         print $refs;
         print "</div>";
@@ -177,6 +172,7 @@ foreach($parsedgedcom->getFam() as $family){
 {
     if($notes = $family->getNote()){
         print "<h2 id='notes'>Notes</h2>";
+        $navigation .= "<li><a href='#notes'>Notes</a></li>";
         print "<div class='block'>";
         foreach($notes as $note){
             print printNote($note);
@@ -190,6 +186,7 @@ foreach($parsedgedcom->getFam() as $family){
 {
     if($objes = $family->getObje()){
         print "<h2 id='multimedia'>Multimedia</h2>";
+        $navigation .= "<li><a href='#multimedia'>Multimedia</a></li>";
         print "<div class='block'>";
         foreach($objes as $obje){
             print printObje($obje);
@@ -199,8 +196,10 @@ foreach($parsedgedcom->getFam() as $family){
 }
 
 
+// Metadata
 {
     print "<h2 id='metadata'>Family Metadata</h2>";
+    $navigation .= "<li><a href='#Metadata'>Metadata</a></li>";
     print "<div class='block'>";
 
     print "<h3>GEDCOM ID</h3>";
@@ -243,13 +242,19 @@ foreach($parsedgedcom->getFam() as $family){
 //    }
 //    if($ord != ''){
 //        print "<h2 id='ordinances'>LDS Ordinances</h2>";
+//        $navigation .= "<li><a href='#ordinances'>Ordinances</a></li>";
 //        print "<div class='block'>";
 //        print $ord;
 //        print "</div>";
 //    }
 //}
 
+$body = ob_get_clean();
 
+print "<div id='navigation'><ul>";
+print $navigation;
+print "</ul></div>";
+print $body;
 
 ?>
     </div>
