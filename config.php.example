@@ -1,0 +1,49 @@
+;<?php exit(); // Leave this line here to protect against people trying to read your config file!
+;
+; This is a simple config file for TreeTrumpet
+;
+; TreeTrumpet should be usable with the default settings, 
+; but you can change things here without breaking anything
+
+
+; This is a list of modules/pages, you can disable certain pages
+; if you don't want them to be displayed on your site
+;
+; 1 means enabled, 0 (or anything else) means disabled
+
+[modules]
+tree=1
+map=1
+table=1
+contact=1
+gedcom=1
+
+
+; By default only the contact information in your GEDCOM file is
+; displayed on the contact page. You can allow people to see your
+; email address by enabling it here. 
+; 
+; If your server supports it you can enable an email form, which
+; will allow people to email you without revealing your email 
+; address to them.
+
+[contact]
+show_mailing_address=1
+show_phone=0
+show_email_address=0
+show_email_form=0
+
+email_address=example@example.com
+
+
+[mail_form_settings]
+; These are SMTP settings. You will need to check with your email
+; provider to determine the correct values. The values listed are
+; for use with Gmail.
+smtp_server=ssl://smtp.gmail.com
+smtp_port=465
+
+; Your gmail username
+smtp_username=example@example.com  
+; Your gmail password
+smtp_password=your_secret_gmail_password 
