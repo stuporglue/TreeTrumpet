@@ -1,39 +1,39 @@
 /* Map */
-.pvmapcontainer {
+.ttmapcontainer {
     height: 500px !important;
     padding-bottom: 35px;
 }
 
-.pvmap {
+.ttmap {
     height: 500px !important;
     z-index: 0;
 }
 
-.pvmap a {
+.ttmap a {
     padding: 0;
     border: 0;
 }
 
-.pvgender-icon {
+.ttgender-icon {
     border-radius: 25px;
     border-width: 2px;
     border-style: solid;
     text-align: center;
 }
 
-.pvgender-icon.one {
+.ttgender-icon.one {
     width: 15px !important;
     height: 15px !important;
     padding: px;
 }
 
-.pvgender-icon.some {
+.ttgender-icon.some {
     width: 24px !important;
     height: 21px !important;
     padding-top: 3px;
 }
 
-.pvgender-icon.many {
+.ttgender-icon.many {
     width: 30px !important;
     height: 22px !important;
     padding-top: 7px;
@@ -45,7 +45,7 @@
 }
 
 
-.pvhasgeo {
+.tthasgeo {
     color: #25f;
     text-decoration: underline;
     cursor: pointer;

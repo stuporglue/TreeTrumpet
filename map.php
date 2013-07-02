@@ -19,12 +19,12 @@
             <link type='text/css' rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/ui-lightness/jquery-ui.css'/>
             <link type='text/css' rel="stylesheet" href="css/3rdparty/iThing.css"/>
 
-            <link href="css/pv.css" rel="stylesheet" media="all"/>
+            <link href="css/tt.css" rel="stylesheet" media="all"/>
             <link href="css/map.css" rel="stylesheet" media="all"/>
         </head>
         <body>
-        <div id='pv-content'>
-            <div id='pv-left-content' class='pv-content'>
+        <div id='tt-content'>
+            <div id='tt-left-content' class='tt-content'>
                 <h1>A Map Of My Ancestors</h1>
                     <?php 
                     require_once('lib/header.php'); 
@@ -68,7 +68,7 @@
 
                     foreach($popularPlaces as $place => $people){
                         if(array_key_exists('geo',$people)){
-                            print "<h3 data-geo='{$people['geo']['geometry']['coordinates'][0]},{$people['geo']['geometry']['coordinates'][1]}' class='pvhasgeo pvfakelink'>$place</h3>";
+                            print "<h3 data-geo='{$people['geo']['geometry']['coordinates'][0]},{$people['geo']['geometry']['coordinates'][1]}' class='tthasgeo ttfakelink'>$place</h3>";
                             unset($people['geo']);
                         }else{
                             print "<h3>$place</h3>";
@@ -77,27 +77,27 @@
                         sort($people);
                         $boldLastName = Array();
                         foreach($people as $person){
-                            $boldLastName[] = preg_replace('|/(.*)/|',"<span class='pvln'>$1</span>",$person);
+                            $boldLastName[] = preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$person);
                         }
-                        print "<ul class='pvnamelist'><li>";
+                        print "<ul class='ttnamelist'><li>";
                         print implode('</li><li>',$boldLastName);
                         print "</li></ul>";
                     }
 
                 ?>
             </div>
-            <div id='pv-right-content' class='pv-content'>
-                <div id='pv-map'>
+            <div id='tt-right-content' class='tt-content'>
+                <div id='tt-map'>
                     Hang on! The map is loading!
                 </div>
                 <!div>
                     <h2>Map Events of Type...</h2>
                     <ul>
-                        <li class='pvfakelink' onclick='pm.usePlaceFrom("Any","first")'>Any</li>
+                        <li class='ttfakelink' onclick='tm.usePlaceFrom("Any","first")'>Any</li>
                     <?php
                     $eventTypesWithPlaces = array_unique($eventTypesWithPlaces);
                     foreach($eventTypesWithPlaces as $type){
-                        print "<li class='pveventfilter pvfakelink'>$type</li>";
+                        print "<li class='tteventfilter ttfakelink'>$type</li>";
                     }
                     ?>
                     </ul>
@@ -115,15 +115,15 @@
 <script type='text/javascript' src='js/map.js'></script>
 <script type='text/javascript'>
 $(document).ready(function(){
-    pm = $('#pv-map').pvMap('lib/ged2geojson.php','family.ged');
-    $('.pvhasgeo').on('click',function(e){
+    tm = $('#tt-map').ttMap('lib/ged2geojson.php','family.ged');
+    $('.tthasgeo').on('click',function(e){
         var coords = e.target.getAttribute('data-geo').split(',');
-        pm.pvmap.panTo([parseFloat(coords[1]),parseFloat(coords[0])]);
-        pm.pvmap.setZoom(10);
-        document.location.hash="pv-map";
+        tm.ttmap.panTo([parseFloat(coords[1]),parseFloat(coords[0])]);
+        tm.ttmap.setZoom(10);
+        document.location.hash="tt-map";
     });
-    $('.pveventfilter').on('click',function(e){
-        pm.usePlaceFrom(e.target.innerHTML);
+    $('.tteventfilter').on('click',function(e){
+        tm.usePlaceFrom(e.target.innerHTML);
     });
 });
 </script>

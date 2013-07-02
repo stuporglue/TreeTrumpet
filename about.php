@@ -36,15 +36,8 @@ or through FTP.
 </p>
 
 <p>
-Unzip pedigree-viewer.zip and upload everything inside up to your server. That's all there is 
+Unzip treetrumpet.zip and upload everything inside up to your server. That's all there is 
 to the install. 
-</p>
-
-<h2>Configuration (Optional)</h2>
-<p>
-If you want people to be able contact you by email, or if you want to disable certain pages, 
-copy config.php.example to be named config.php and edit the values inside. Upload it to the
-web server. 
 </p>
 
 
@@ -52,6 +45,15 @@ web server.
 <p>
 Export a GEDCOM file from your genealogy program and name it _family.ged_. Upload it to the 
 webserver. To update the site, simply upload a new file named _family.ged_.
+</p>
+
+
+
+<h2>Configuration (Optional)</h2>
+<p>
+If you want people to be able contact you by email, or if you want to disable certain pages, 
+copy config.php.example to be named config.php and edit the values inside. Upload it to the
+web server. 
 </p>
 
 <h2>Help!</h2>

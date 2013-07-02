@@ -32,7 +32,7 @@ This page contains a sortable, filterable table of ancestors, relatives and even
         <script type='text/javascript' src='js/table.js'></script>
         <script type='text/javascript'>
         $(document).ready(function(){
-            pt = $('#pv-table').pvTable('lib/ged2json.php','family.ged');
+            pt = $('#pv-table').ttTable('lib/ged2json.php','family.ged');
         });
         </script>
     </body>

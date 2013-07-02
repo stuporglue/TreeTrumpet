@@ -1,6 +1,6 @@
 (function($){
     /*
-    * The PedigreeMapViewer object
+    * The TreeTrumpetMapViewer object
     *
     * Creates a Leaflet.js map and populates it with the contents of a GEDCOM file
     *
@@ -15,14 +15,14 @@
     * Get Parameters are: 
     * g -- the name of the gedcom file to parse. It is up to gedcomparserurl to determine the absolute path 
     */
-    function PedigreeMapViewer(target,gedcomparserurl,gedcom,options){
+    function TreeTrumpetMapViewer(target,gedcomparserurl,gedcom,options){
 
 
         // Start by initializing the objects we'll need
-        this.pvmap = null;                  // Leaflet map object
-        this.pvslider = null;               // The time slider
-        this.pvancestors = null;            // All our ancestors
-        this._pvancestors = [];             // Cache of all our ancestors
+        this.ttmap = null;                  // Leaflet map object
+        this.ttslider = null;               // The time slider
+        this.ttancestors = null;            // All our ancestors
+        this._ttancestors = [];             // Cache of all our ancestors
         this.parserurl = gedcomparserurl;   // gedcom parser URL
         this.gedcom = gedcom;               // gedcom filename to parse
         var self = this;                    // Ourself (needed for use inside asyncronous callbacks)
@@ -31,10 +31,10 @@
         // Initialize the map
         // Target is a div which will hold the map. We replace its contents with our divs.
         target = $(target)[0];   
-        $(target).addClass('pvmapcontainer');
-        $(target).html("<div class='pvmap' style='height: 500px'></div><div class='pvslider'></div>"); // clear it out
+        $(target).addClass('ttmapcontainer');
+        $(target).html("<div class='ttmap' style='height: 500px'></div><div class='ttslider'></div>"); // clear it out
         this.options = options || {};
-        this.pvmap = new L.Map(target.children[0], {
+        this.ttmap = new L.Map(target.children[0], {
             maxZoom : 18,
             center : [0,0],
             zoom : 2
@@ -42,7 +42,7 @@
         );
 
         // Initialize the slider object
-        this.pvslider = $(target.children[1]).editRangeSlider({
+        this.ttslider = $(target.children[1]).editRangeSlider({
             type: 'number',
             step:1,
             arrows:false,
@@ -62,12 +62,12 @@
         var mapquestUrl = 'http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
         var subDomains = ['otile1','otile2','otile3','otile4'];
         var mapquestAttrib = '<p>Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png"></p>';
-        var basemap = new L.TileLayer(mapquestUrl, {maxZoom: 18, attribution: mapquestAttrib, subdomains: subDomains}).addTo(this.pvmap);
+        var basemap = new L.TileLayer(mapquestUrl, {maxZoom: 18, attribution: mapquestAttrib, subdomains: subDomains}).addTo(this.ttmap);
 
         // This cluster layer lets our map work with tons of ancestors at once. 
         // Too many icons on a web map make it unresponsive 
         // This layer holds our ancestors markers
-        this.pvancestors = new L.MarkerClusterGroup({
+        this.ttancestors = new L.MarkerClusterGroup({
             zoomToBoundsOnClick: false,
             showCoverageOnHover: false,
             spiderfyOnMaxZoom: false,
@@ -86,22 +86,22 @@
                 }
                 return self._makeSingleIcon(gender,'<b>' + children.length + '</b>',children.length);
             }
-        }).addTo(this.pvmap);
+        }).addTo(this.ttmap);
 
         // Now add an onclick handler to the clusters. 
         // If we're zoomed to the max level, show the popup no matter what
         // If we're not zoomed to max, but we only have 3 or less ancestors show the popup
         // If we're not zoomed to max and have > 3 ancestors, then zoom in
-        this.pvancestors.on('clusterclick',function(cluster){
+        this.ttancestors.on('clusterclick',function(cluster){
             var children = cluster.layer.getAllChildMarkers();
-            if(self.pvmap.getZoom() === self.pvmap.getMaxZoom() || children.length <= 3){
-                var html = "<div class='pvscrollpopup'>";
+            if(self.ttmap.getZoom() === self.ttmap.getMaxZoom() || children.length <= 3){
+                var html = "<div class='ttscrollpopup'>";
                 // TODO: Sort by birthdate: children.sort(function(a,b){ });
                 for(var i = 0;i<children.length;i++){
                     html += self._makePopupHTML(children[i].feature.properties);
                 }
                 html += "</div>";
-                L.popup().setLatLng(cluster.layer._latlng).setContent(html).openOn(self.pvmap);
+                L.popup().setLatLng(cluster.layer._latlng).setContent(html).openOn(self.ttmap);
             }else{
                 cluster.layer.zoomToBounds();
             }
@@ -120,16 +120,16 @@
         * @param properties (required) The ancestor's properties 
         */
         this._makePopupHTML = function(properties){
-            var popup = "<div class='pvsinglepopup'>";
+            var popup = "<div class='ttsinglepopup'>";
 
             // Name and gender span
             popup += "<span class='";
             switch(properties.gender){
                 case 'M':
-                    popup += 'pvgender-male';
+                    popup += 'ttgender-male';
                     break;
                 case 'F':
-                    popup += 'pvgender-female';
+                    popup += 'ttgender-female';
                     break;
             }
             popup += "'>";
@@ -187,7 +187,7 @@
                     }); 
 
                     tmp.eachLayer(self._makeSinglePopup);
-                    tmp.eachLayer(self._pvancestorsPush);
+                    tmp.eachLayer(self._ttancestorsPush);
                 }
 
                 self._resortAncestors();
@@ -215,10 +215,10 @@
             var failoverplace;
             var failoverdate;
 
-            for(var i = 0;i<self._pvancestors.length;i++){
-                self._unmapped_ancestors.push(self._pvancestors[i].feature);
+            for(var i = 0;i<self._ttancestors.length;i++){
+                self._unmapped_ancestors.push(self._ttancestors[i].feature);
             }
-            self._pvancestors = [];
+            self._ttancestors = [];
 
             refdate = undefined;
             refplace = undefined;
@@ -253,7 +253,7 @@
                 for(var e = 0;e < self._unmapped_ancestors[i].properties.events.length;e++){
                     if(self._unmapped_ancestors[i].properties.events[e].type == eventType){
                         // Give priority to events that have
-                        // pm._pvancestors[0].feature.properties.events[0].place.geo.geometry
+                        // pm._ttancestors[0].feature.properties.events[0].place.geo.geometry
                             if(
                                 typeof  self._unmapped_ancestors[i].properties.events[e].place != 'undefined' && 
                                 typeof  self._unmapped_ancestors[i].properties.events[e].place.geo != 'undefined' && 
@@ -344,7 +344,7 @@
                     self._unmapped_ancestors.splice(i,1);
 
                     tmp.eachLayer(self._makeSinglePopup);
-                    tmp.eachLayer(self._pvancestorsPush);
+                    tmp.eachLayer(self._ttancestorsPush);
                 }
             }
 
@@ -357,7 +357,7 @@
         */
         this._resortAncestors = function(){
             var dateparts = ['y','m','d'];
-            self._pvancestors.sort(function(a,b){
+            self._ttancestors.sort(function(a,b){
                 if(typeof a.feature.properties.refdate == 'undefined' && typeof b.feature.properties.refdate == 'undefined'){
                     return 0;
                 }
@@ -400,8 +400,8 @@
         /**
         * @brief Push an ancestor into the ancestors array
         */
-        this._pvancestorsPush = function(l){
-            self._pvancestors.push(l);
+        this._ttancestorsPush = function(l){
+            self._ttancestors.push(l);
         };
 
         /*
@@ -424,19 +424,19 @@
                 gender = gender.properties.gender;
             }
 
-            var className = 'pvgender-icon ';
+            var className = 'ttgender-icon ';
             switch(gender){
                 case 'M':
-                    className += 'pvgender-male ';
+                    className += 'ttgender-male ';
                     break;
                 case 'F':
-                    className += 'pvgender-female ';
+                    className += 'ttgender-female ';
                     break;
                 case 'mixed':
-                    className += 'pvgender-mixed ';
+                    className += 'ttgender-mixed ';
                     break;
                 default:
-                    className += 'pvgender-unknown ';
+                    className += 'ttgender-unknown ';
                     break;
             }
 
@@ -459,59 +459,59 @@
         *
         * @param data (optiona) The values to use for filtering
         *
-        * @note This is a callback for pvslider
+        * @note This is a callback for ttslider
         */
         this._filterOnDates = function(e,data){
             e = e || null;
-            data = data || {values:{min: self.pvslider.minDate, max: self.pvslider.maxDate}};
+            data = data || {values:{min: self.ttslider.minDate, max: self.ttslider.maxDate}};
 
             var wereFiltered = [];
-            if(data.values.min == self.pvslider.minDate && data.values.max == self.pvslider.maxDate){
-                wereFiltered = self._pvancestors;
+            if(data.values.min == self.ttslider.minDate && data.values.max == self.ttslider.maxDate){
+                wereFiltered = self._ttancestors;
             }else{
                 // Assuming points are sorted...
-                for(var i  = 0;i<self._pvancestors.length;i++){
-                    if(typeof self._pvancestors[i].feature.properties.refdate == 'undefined' || typeof self._pvancestors[i].feature.properties.refdate.y == 'undefined'){
+                for(var i  = 0;i<self._ttancestors.length;i++){
+                    if(typeof self._ttancestors[i].feature.properties.refdate == 'undefined' || typeof self._ttancestors[i].feature.properties.refdate.y == 'undefined'){
                         continue;
                     }
-                    if(self._pvancestors[i].feature.properties.refdate.y < data.values.min){
+                    if(self._ttancestors[i].feature.properties.refdate.y < data.values.min){
                         continue;
                     }
-                    if(self._pvancestors[i].feature.properties.refdate.y > data.values.max){
+                    if(self._ttancestors[i].feature.properties.refdate.y > data.values.max){
                         break;
                     }
-                    wereFiltered.push(self._pvancestors[i]);
+                    wereFiltered.push(self._ttancestors[i]);
                 }
             }
-            self.pvancestors.clearLayers();
-            self.pvancestors.addLayers(wereFiltered);
+            self.ttancestors.clearLayers();
+            self.ttancestors.addLayers(wereFiltered);
         };
 
         this._setSliderMinMax = function(){
 
             // Set new min/max dates for the slider
-            for(i = 0;i<self._pvancestors.length;i++){
+            for(i = 0;i<self._ttancestors.length;i++){
                 if(
-                    typeof self._pvancestors[i].feature.properties.refdate != 'undefined' &&
-                    typeof self._pvancestors[i].feature.properties.refdate.y != 'undefined'
+                    typeof self._ttancestors[i].feature.properties.refdate != 'undefined' &&
+                    typeof self._ttancestors[i].feature.properties.refdate.y != 'undefined'
                 ){
-                    self.pvslider.minDate = parseInt(self._pvancestors[i].feature.properties.refdate.y,10); 
+                    self.ttslider.minDate = parseInt(self._ttancestors[i].feature.properties.refdate.y,10); 
                     break;
                 }
             }
 
-            for(i = self._pvancestors.length - 1;i > 0;i--){
+            for(i = self._ttancestors.length - 1;i > 0;i--){
                 if(
-                    typeof self._pvancestors[i].feature.properties.refdate != 'undefined' &&
-                    typeof self._pvancestors[i].feature.properties.refdate.y != 'undefined'
+                    typeof self._ttancestors[i].feature.properties.refdate != 'undefined' &&
+                    typeof self._ttancestors[i].feature.properties.refdate.y != 'undefined'
                 ){
-                    self.pvslider.maxDate = parseInt(self._pvancestors[i].feature.properties.refdate.y,10); 
+                    self.ttslider.maxDate = parseInt(self._ttancestors[i].feature.properties.refdate.y,10); 
                     break;
                 }
             }
-            self.pvslider.editRangeSlider('bounds',self.pvslider.minDate,self.pvslider.maxDate);
-            self.pvslider.editRangeSlider('min',self.pvslider.minDate);
-            self.pvslider.editRangeSlider('max',self.pvslider.maxDate);
+            self.ttslider.editRangeSlider('bounds',self.ttslider.minDate,self.ttslider.maxDate);
+            self.ttslider.editRangeSlider('min',self.ttslider.minDate);
+            self.ttslider.editRangeSlider('max',self.ttslider.maxDate);
         };
 
 
@@ -520,7 +520,7 @@
         this.addAncestorsToMap();
     }
 
-    $.fn.pvMap = function(gedcomparserurl,gedcom,options){
-        return new PedigreeMapViewer(this,gedcomparserurl,gedcom,options);
+    $.fn.ttMap = function(gedcomparserurl,gedcom,options){
+        return new TreeTrumpetMattiewer(this,gedcomparserurl,gedcom,options);
     };
 })(jQuery);

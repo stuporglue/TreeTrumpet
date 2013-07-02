@@ -1,12 +1,12 @@
 (function($){
 
     /*
-    * The Pedigree-Viewer Table Object
+    * The TreeTrumpet Table Object
     *
     * Creates a jQuery DataTables table with ancestor information in it
     */
 
-    function PedigreeViewerTable(target,gedcomparserurl,gedcom,options){
+    function TreeTrumpetTable(target,gedcomparserurl,gedcom,options){
 
         // Start by initializing the objects we'll need
         this.gedcom = gedcom;               // gedcom filename to parse
@@ -14,34 +14,34 @@
         var self = this;                    // Ourself (needed for use inside asyncronous callbacks)
         // this._fetchData = false;
 
-        // this._tableStructure = "<table class='pvtable'><thead><tr><th>ID</th><th>Name</th><th>Gender</th><th>Parents</th><th>Children</th><th>Events</th></tr></thead><tbody></tbody></table>";
+        // this._tableStructure = "<table class='tttable'><thead><tr><th>ID</th><th>Name</th><th>Gender</th><th>Parents</th><th>Children</th><th>Events</th></tr></thead><tbody></tbody></table>";
 
         target = $(target)[0];   
-        $(target).addClass('pvtablecontainer');
+        $(target).addClass('tttablecontainer');
 
 
         // Check if the target div has a noscript tag and remove it
         // $(target).find('noscript').remove();
 
         // Now see if we already have the needed divs, otherwise wipe it out
-        //if($(target).find('.pvtablectrl').length === 0){
-        //    $(target).append("<div class='pvtablectrl'></div>");
+        //if($(target).find('.tttablectrl').length === 0){
+        //    $(target).append("<div class='tttablectrl'></div>");
         //}
-        //if($(target).find('.pvtablediv').length === 0){
+        //if($(target).find('.tttablediv').length === 0){
         //    this._fetchData = true;
-        //    $(target).find('.pvtablectrl').append("<div class='pvtablediv'>" + this._tableStructure + "</div>");
+        //    $(target).find('.tttablectrl').append("<div class='tttablediv'>" + this._tableStructure + "</div>");
         //}
-        //if($(target).find('.pvtablediv').find('.pvtable').length === 0){
+        //if($(target).find('.tttablediv').find('.tttable').length === 0){
         //    this._fetchData = true;
-        //    $(target).find('.pvtablediv').append(this._tableStructure);
+        //    $(target).find('.tttablediv').append(this._tableStructure);
         //}
 
 
         this.options = options || {};
 
-        this._pvtablectrl = $(target).find('.pvtablectrl');
-        this._pvtablediv = $(target).find('.pvtablediv');
-        this._pvtable = $(target).find('.pvtable');
+        this._tttablectrl = $(target).find('.tttablectrl');
+        this._tttablediv = $(target).find('.tttablediv');
+        this._tttable = $(target).find('.tttable');
         this._target = target;
 
 
@@ -57,7 +57,7 @@
 
         this.formatGedJson = function(json){
             self.json = json;
-            $(self._pvtable).dataTable().fnAddData(self.json);
+            $(self._tttable).dataTable().fnAddData(self.json);
         };
 
         /* Private Functions */
@@ -69,13 +69,13 @@
             var cell = '';
             if(typeof source.fathers != 'undefined'){
                 for(i = 0;i<source.fathers.length;i++){
-                    cell += "<span class='pvname'><a href='"+source.fathers[i]+"'>" +  self.json[source.fathers[i]].name.replace(/\/(.*)\//,"<span class='pvln'>$1</span>") + "</a></span>";
+                    cell += "<span class='ttname'><a href='"+source.fathers[i]+"'>" +  self.json[source.fathers[i]].name.replace(/\/(.*)\//,"<span class='ttln'>$1</span>") + "</a></span>";
                 }
             }
 
             if(typeof source.mothers != 'undefined'){
                 for(i = 0;i<source.mothers.length;i++){
-                    cell += "<span class='pvname'><a href='"+source.mothers[i]+"'>" +  self.json[source.mothers[i]].name.replace(/\/(.*)\//,"<span class='pvln'>$1</span>") + "</a></span>";
+                    cell += "<span class='ttname'><a href='"+source.mothers[i]+"'>" +  self.json[source.mothers[i]].name.replace(/\/(.*)\//,"<span class='ttln'>$1</span>") + "</a></span>";
                 }
             }
             return cell;
@@ -89,7 +89,7 @@
             var i;
             var cell = '';
             for(i = 0;i<source.children.length;i++){
-                cell += "<span class='pvname'><a href='"+source.children[i]+"'>" +  self.json[source.children[i]].name.replace(/\/(.*)\//,"<span class='pvln'>$1</span>") + "</a></span>";
+                cell += "<span class='ttname'><a href='"+source.children[i]+"'>" +  self.json[source.children[i]].name.replace(/\/(.*)\//,"<span class='ttln'>$1</span>") + "</a></span>";
             }
             return cell;
         };
@@ -104,7 +104,7 @@
             var i;
             var cell = '';
             for(i = 0;i<source.events.length;i++){
-                cell += "<span class='pvevent'>"; 
+                cell += "<span class='ttevent'>"; 
                 if(typeof source.events[i].date != 'undefined' && typeof source.events[i].date.raw){
                     cell += source.events[i].date.raw;
                 }
@@ -118,7 +118,7 @@
 
         this._init = function(){
 
-            $(this._pvtable).dataTable();
+            $(this._tttable).dataTable();
             // {
             //    'aoColumnDefs' : [
             //        { "sType": "html", "aTargets": ['_all'] }
@@ -139,19 +139,19 @@
             //    this.addAncestorsToTable();
             //}
 
-            $(this._target).on('click','.pvclose',function(t){
-                $(self._pvtable).dataTable().fnFilter('',0);
-                $(self._pvtable).dataTable().fnFilter('');
-                $(self._pvtablectrl).html("");
+            $(this._target).on('click','.ttclose',function(t){
+                $(self._tttable).dataTable().fnFilter('',0);
+                $(self._tttable).dataTable().fnFilter('');
+                $(self._tttablectrl).html("");
             });
 
-            $(this._pvtable).on('click','a.pvpersonlink',function(t){
+            $(this._tttable).on('click','a.ttpersonlink',function(t){
                 if(typeof t.target.hash == 'undefined'){
                     t.target = t.target.parentNode;
                 }
                 var target = t.target.hash.replace('#','');
-                $(self._pvtable).dataTable().fnFilter(target,0);
-                $(self._pvtablectrl).html("Filtering on: " + target + " <span class='pvclose'>(X) Clear</span>");
+                $(self._tttable).dataTable().fnFilter(target,0);
+                $(self._tttablectrl).html("Filtering on: " + target + " <span class='ttclose'>(X) Clear</span>");
             });
         };
 
@@ -161,7 +161,7 @@
         this._init();
     }
 
-    $.fn.pvTable = function(gedcomparserurl,gedcom,options){
-        return new PedigreeViewerTable(this,gedcomparserurl,gedcom,options);
+    $.fn.ttTable = function(gedcomparserurl,gedcom,options){
+        return new TreeTrumpetTable(this,gedcomparserurl,gedcom,options);
     };
 })(jQuery);

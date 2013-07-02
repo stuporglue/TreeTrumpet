@@ -22,17 +22,17 @@ Unzip pedigree-viewer.zip and upload everything inside up to your server. That's
 to the install. 
 
 
+Adding Your Family
+------------------
+Export a GEDCOM file from your genealogy program and name it family.ged. Upload it to the 
+webserver. To update the site, simply upload a new file named family.ged.
+
+
 Configuration (Optional)
 ------------------------
 If you want people to be able contact you by email, or if you want to disable certain pages, 
 copy config.php.example to be named config.php and edit the values inside. Upload it to the
 web server. 
-
-
-Adding Your Family
-------------------
-Export a GEDCOM file from your genealogy program and name it family.ged. Upload it to the 
-webserver. To update the site, simply upload a new file named family.ged.
 
 
 Help!
