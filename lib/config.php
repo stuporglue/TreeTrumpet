@@ -72,3 +72,19 @@ if(basename($scriptdir) == 'lib'){
 }
 
 $_BASEURL .= $scriptdir;
+
+
+// Include dirs
+spl_autoload_register(function ($class) {
+    $pathToPhpGedcom = __DIR__ . '/3rdparty/php-gedcom/library/'; 
+
+    if (!substr(ltrim($class, '\\'), 0, 7) == 'PhpGedcom\\') {
+        return;
+    }
+
+    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+    if (file_exists($pathToPhpGedcom . $class)) {
+        require_once($pathToPhpGedcom . $class);
+    }
+});
+
