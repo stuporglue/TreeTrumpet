@@ -6,11 +6,11 @@
     <head>
         <meta charset="utf-8">
             <title>TreeTrumpet</title>
-            <link href="css/pv.css" rel="stylesheet" media="all"/>
+            <link href="css/tt.css" rel="stylesheet" media="all"/>
     </head>
     <body>
-        <div id='pv-content'>
-            <div id='pv-left-content' class='pv-content'>
+        <div id='tt-content'>
+            <div id='tt-left-content' class='tt-content'>
                 <h1>TreeTrumpet</h1>
                 <?php require_once('lib/header.php'); ?>
 
@@ -66,16 +66,16 @@ If you do not have a GitHub account, please email me at <a href='mailto:stuporgl
 or post any login or account information for you web hosting!
 </p>
     
-            <div id='pv-right-content' class='pv-content'>
-                <div class='pv-preview'>
+            <div id='tt-right-content' class='tt-content'>
+                <div class='tt-preview'>
                     <img src='img/tree.png' alt='TreeTrumpet Tree View'/>
                     <a href='tree.php'>TreeTrumpet Tree View</a>
                 </div>
-                <div class='pv-preview'>
+                <div class='tt-preview'>
                     <img src='img/map_preview.png' alt='TreeTrumpet Map View'/>
                     <a href='map.php'>TreeTrumpet Map View</a>
                 </div>
-                <div class='pv-preview'>
+                <div class='tt-preview'>
                     <img src='img/table.png' alt='TreeTrumpet Table View'/>
                     <a href='table.php'>TreeTrumpet Table View</a>
                 </div>
