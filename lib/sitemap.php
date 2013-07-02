@@ -16,26 +16,8 @@ if(file_exists('../family.ged')){
 }
 $lastmod = ($releasemtime > $gedcommtime ? $releasemtime : $gedcommtime);
 
-
-// Get all the people
-spl_autoload_register(function ($class) {
-    $pathToPhpGedcom = __DIR__ . '/lib/3rdparty/php-gedcom/library/'; 
-
-    if (!substr(ltrim($class, '\\'), 0, 7) == 'PhpGedcom\\') {
-        return;
-    }
-
-    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-    if (file_exists($pathToPhpGedcom . $class)) {
-        require_once($pathToPhpGedcom . $class);
-    }
-});
-
 $parser = new PhpGedcom\Parser();
 $parsedgedcom = $parser->parse('../family.ged');
-
-
-
 
 function printSingleUrl($loc,$lastmod,$priority){
     print "<url>";
