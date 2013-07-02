@@ -4,5 +4,5 @@
  */
 ?>
 <div id='tt-footer'>
-Create your personal genealogy website like this one with <a href='about.php'>TreeTrumpet</a>.
+Create your personal genealogy website like this one with <a href='http://treetrumpet.com'>TreeTrumpet</a>.
 </div>
