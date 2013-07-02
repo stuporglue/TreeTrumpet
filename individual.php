@@ -20,7 +20,7 @@ foreach($parsedgedcom->getIndi() as $individual){
 
 if($names = $individual->getName()){
     $firstName = $names[0]->getName();
-    $firstBold = preg_replace('|/(.*)/|',"<span class='pvln'>$1</span>",$firstName);
+    $firstBold = preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$firstName);
 
 }
 
@@ -31,11 +31,11 @@ if($names = $individual->getName()){
     <head>
         <meta charset="utf-8"/>
         <title>All About <?php print $firstName; ?></title>
-        <link href="css/pv.css" rel="stylesheet" media="all"/>
+        <link href="css/tt.css" rel="stylesheet" media="all"/>
         <link href="css/individual.css" rel="stylesheet" media="all"/>
         </head>
     <body>
-    <div id="pv-content">
+    <div id="tt-content">
         <h1>All About <?php print $firstBold; ?></h1>
             <?php require_once('lib/header.php'); ?>
         <div id='navigation'>

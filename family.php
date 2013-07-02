@@ -58,11 +58,11 @@ foreach($parsedgedcom->getFam() as $family){
     <head>
         <meta charset="utf-8"/>
         <title>All About <?php print $familyName; ?></title>
-        <link href="css/pv.css" rel="stylesheet" media="all"/>
+        <link href="css/tt.css" rel="stylesheet" media="all"/>
         <link href="css/family.css" rel="stylesheet" media="all"/>
         </head>
     <body>
-    <div id="pv-content">
+    <div id="tt-content">
     <h1>All About <?php print $familyName; ?></h1>
             <?php require_once('lib/header.php'); ?>
         <div id='navigation'>
