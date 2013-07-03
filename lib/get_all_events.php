@@ -1,25 +1,36 @@
 <?php
 
+require_once(__DIR__ . '/pretty-print_php-gedcom.php');
+
+function parseDateString($string){
+    // might be a year!
+    $ts = date_create_from_format('Y',$string);
+    if($ts === FALSE){
+        $ts = strtotime($string);
+    }else{
+        $ts = $ts->getTimestamp();
+    }
+    if((int)$ts == 0){ return FALSE; }
+        return $ts;
+}
+
+
 function makeGedcomEventsArray(){
 
     $parser = new PhpGedcom\Parser();
     global $parsedgedcom; // this will have to change later. For now, let's get things working
     $parsedgedcom = $parser->parse('family.ged');
 
-    $places = Array();
-    $indis = Array();
-    $fams = Array();
-
     $events_raw = Array();
     $events = Array();
 
     /*
      * One event:
-      Array(
-        'type' => TYPE,
-        'indi' => Array(),
-        'date' => DATE,
-        'place' => Array(),
+     Array(
+            'type' => TYPE,
+            'indi' => Array(),
+            'date' => DATE,
+            'place' => Array(),
       )
      */
 
@@ -52,11 +63,22 @@ function makeGedcomEventsArray(){
         }
     }
 
-    print_r($events_raw);
-
-    foreach($events_raw){
-    
+    foreach($events_raw as $event){
+        if($date = $event->getDate()){
+            if($parsedDate = parseDateString($date)){
+                $events[$parsedDate][] = $event;
+            }
+        }
     }
 
+    ksort($events);
+
     return $events;
+}
+
+function printTimelineEvent($event){
+    $ret = "<div>";
+    $ret .= print_r($event,TRUE);
+    $ret .= "</div>";
+    return $ret;
 }

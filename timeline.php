@@ -16,11 +16,11 @@ require_once('lib/get_all_events.php');
     <body>
     <div id="tt-content">
         <div id='tt-left-content' class='tt-content'>
-            <h1>HTML5 TreeTrumpet Demo</h1>
+            <h1>HTML5 TreeTrumpet Timeline</h1>
             <?php require_once('lib/header.php'); ?>
-            <h2>A TreeTrumpet Demo</h2>
+            <h2>A TreeTrumpet Timeline</h2>
             <p>
-                This is a bowtie view of part of my family tree. Other possible views include ancestors only and descendants only. 
+This timeline is made of all the events with dates. 
             </p>
         </div>
 
@@ -28,9 +28,19 @@ require_once('lib/get_all_events.php');
         <div id='tt-right-content' class='tt-content'>
             <!-- This is the box the actual tree goes in -->
                 <div id="tt-timeline">
+                <dl>
 <?php
-    print_r(makeGedcomEventsArray());
+    $events = makeGedcomEventsArray(); 
+    foreach($events as $date => $eventByDate){
+        print "<dt>" . date('d M Y',$date) . "</dt>";
+        print "<dd><ul>";
+        foreach($eventByDate as $event){
+            print "<li>" . printTimelineEvent($event) . "</li>";
+        }
+        print "</ul></dd>";
+    }
 ?>
+</dl>
                 </div> 
             </div>
         </div>
