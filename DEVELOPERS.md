@@ -18,8 +18,11 @@ Same for Sub-Submodules
     git submodule update
     cd ../../
 
-Install grunt, If Needed
-------------------------
+Install npm If Needed
+---------------------
+
+http://nodejs.org/download/
+
 
 Build JavaScript Projects
 -------------------------
