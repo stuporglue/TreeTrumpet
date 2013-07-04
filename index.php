@@ -1,10 +1,5 @@
 <?php
-require_once(__DIR__ . '/lib/config.php');
-
-if(!file_exists('family.ged')){
-    header('Location: lib/firstrun.php',TRUE,307);  
-    exit();
-}
+require_once(__DIR__ . '/lib/setup.php');
 
 $parser = new PhpGedcom\Parser();
 $parsedgedcom = $parser->parse('family.ged');

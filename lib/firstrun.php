@@ -14,9 +14,18 @@ require_once(__DIR__ .'/config.php');
                     <h1>TreeTrumpet</h1>
                     <?php require_once(__DIR__ . '/header.php'); ?>
                     <p>Thanks for installing TreeTrumpet!</p>
+<?php
+
+if(!file_exists(__DIR__ . '/../family.ged')){
+?>
                     <p>To get started all you need to do is upload a GEDCOM file named '<strong>family.ged</strong>'</p>
                     <p>Bookmark <a href='<?php print $_BASEURL;?>/lib/firstrun.php'>This link</a> so you can always come back to this page if you want help making other changes to your site!</p>
 <?php
+}else{
+?>
+<p>Looks like you've already got a family.ged, so you don't have to do anything else. If you wish you can change other settings as mentioned below.</p>
+<?php
+}
 
 ob_start();
 

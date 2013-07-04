@@ -43,10 +43,18 @@ $_CONFIG = Array(
 );
 
 // If config exists merge it into the real settings
-if(file_exists(__DIR__ . '/../config.php')){
+$inifile = __DIR__ . '/../config.php';
+if(file_exists($inifile)){
 
-    $ini_config = parse_ini_file(__DIR__ . '/..config.php');
-    print_r($ini_config);
+    // Can't use parse_ini_file because it fails if the file doesn't end with .ini
+    $inifile = explode("\n",file_get_contents($inifile));
+    foreach($inifile as $kvpair){
+        preg_match('/([^=]+)=(.*)/',$kvpair,$matches);
+        if(count($matches) > 0){
+            $ini_config[$matches[1]] = $matches[2];
+        }
+    }
+
     foreach($ini_config as $k => $val){
         if($val === 1){
             $ini_config[$k] = TRUE;
