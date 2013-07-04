@@ -16,6 +16,11 @@
                 <p>
 This page contains a sortable, filterable table of ancestors, relatives and events in the gedcom file.
                 </p>
+<p>
+Clicking on Parent or Children names will filter the table to show just that parent 
+or child. Clicking on an individual's own name will bring you to the person's individual 
+information page.
+</p>
             </div>
         </div>
         <div id='tt-table'>
