@@ -61,6 +61,6 @@ cp js/Pedigree-Viewer/css/ui/* treetrumpet/css/3rdparty/ui/
 #sudo chmod -R 775 treetrumpet
 
 rm -f treetrumpet.zip
-zip -r treetrumpet treetrumpet/ -x treetrumpet/lib/3rdparty/ssgeocoder.sqlite3 -x treetrumpet/family.ged -x treetrumpet/robots.txt -x treetrumpet/config.ini 
+zip -r treetrumpet treetrumpet/ -x treetrumpet/lib/3rdparty/ssgeocoder.sqlite3 -x treetrumpet/family.ged -x treetrumpet/robots.txt -x treetrumpet/config.php
 
 md5sum treetrumpet.zip > treetrumpet.zip.md5
