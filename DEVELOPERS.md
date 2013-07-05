@@ -46,3 +46,7 @@ Deploy and Test
 * Copy the contents of treetrumpet or treetrumpet.zip to your web server
 * Add a gedcom named family.ged
 * Ensure that permissions are correct (write permissions for the sqlite file)
+
+Outside Dependencies
+--------------------
+PHP 5.3+ with Pear's Mail and Net_SMTP modules installed

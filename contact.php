@@ -2,45 +2,47 @@
 
 require_once(__DIR__ . '/lib/setup.php');
 
-    function sendMail(){
-        require_once "Mail.php";
+function sendMail(){
+    global $_CONFIG;
 
-        if (!filter_var($_POST['from_email'], FILTER_VALIDATE_EMAIL)) {
-            return FALSE;
-        }
+    require_once("Mail.php");
 
-        $from     = $_POST['from_email'];
-        $to       = $_CONFIG['email_address'];
-        $subject  = preg_replace("/[^a-zA-Z0-9.;:@'\"\/\!\? /",' ',$_POST['subject']);
-        $body     = $_POST['message'];
-
-        $host     = $_CONFIG['smtp_server'];
-        $port     = $_CONFIG['smtp_port'];
-        $username = $_CONFIG['smtp_username'];  //<> give errors
-        $password = $_CONFIG['smtp_password'];
-
-        $headers = array(
-            'From'    => $from,
-            'To'      => $to,
-            'Subject' => $subject
-        );
-        $smtp = Mail::factory('smtp', array(
-            'host'     => $host,
-            'port'     => $port,
-            'auth'     => true,
-            'username' => $username,
-            'password' => $password
-        ));
-
-        $mail = $smtp->send($to, $headers, $body);
-
-        if (PEAR::isError($mail)) {
-            error_log($mail->getMessage());
-            return FALSE;
-        } else {
-            return TRUE;
-        }
+    if (!filter_var($_POST['from_email'], FILTER_VALIDATE_EMAIL)) {
+        return FALSE;
     }
+
+    $from     = $_POST['from_email'];
+    $to       = $_CONFIG['email_address'];
+    $subject  = preg_replace("/[^a-zA-Z0-9.;:@'\"\/\!\? /",' ',$_POST['subject']);
+    $body     = $_POST['message'];
+
+    $host     = $_CONFIG['smtp_server'];
+    $port     = $_CONFIG['smtp_port'];
+    $username = $_CONFIG['smtp_username'];  //<> give errors
+    $password = $_CONFIG['smtp_password'];
+
+    $headers = array(
+        'From'    => $from,
+        'To'      => $to,
+        'Subject' => $subject
+    );
+    $smtp = Mail::factory('smtp', array(
+        'host'     => $host,
+        'port'     => $port,
+        'auth'     => true,
+        'username' => $username,
+        'password' => $password
+    ));
+
+    $mail = $smtp->send($to, $headers, $body);
+
+    if (PEAR::isError($mail)) {
+        error_log($mail->getMessage());
+        return FALSE;
+    } else {
+        return TRUE;
+    }
+}
 
 
 if(count($_POST) > 0){
@@ -98,15 +100,15 @@ if(!$printed && !$_CONFIG['email_address'] == 'example@example.com' && !@include
 
 if($_CONFIG['email_address'] != 'example@example.com' && $_CONFIG['show_email_form']){
 
-    if(!@include('Mail.php')){
+    if(!@include_once('Mail.php')){
         print "Ask your system administrator to install the PHP Pear Mail package";
     }else{
 
         if(isset($email_worked)){
             if($email_worked){
-                print "<p>Your message has been sent</p>";
+                print "<p class='sentstatus'>Your message has been sent</p>";
             }else{
-                print "<p>There was an error sending your email message!</p>";
+                print "<p class='sentstatus'>There was an error sending your email message!</p>";
             }
         }
 
