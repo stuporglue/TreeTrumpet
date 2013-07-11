@@ -3,7 +3,8 @@ This project leans heavily on the hard work of many other programmers. Each of t
 Each of the several separate projects have their own licenses. These are the projects
 currently being used. 
 
-The code for stuporglue/TreeTrumpet is licensed under the GPL version 3.
+The code for TreeTrumpet is copyright 2013 of Michael Moore <stuporglue@gmail.com>
+and is licensed under the GPL version 3.
 
 Pedigree-Viewer
 * Site: https://github.com/dovy/Pedigree-Viewer

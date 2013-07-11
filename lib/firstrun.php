@@ -18,12 +18,19 @@ require_once(__DIR__ .'/config.php');
 
 if(!file_exists(__DIR__ . '/../family.ged')){
 ?>
-                    <p>To get started all you need to do is upload a GEDCOM file named '<strong>family.ged</strong>'</p>
-                    <p>Bookmark <a href='<?php print $_BASEURL;?>/lib/firstrun.php'>This link</a> so you can always come back to this page if you want help making other changes to your site!</p>
+        <h2>Required Setup Steps</h2>
+        <p>
+            <ol>
+            <li>Upload a GEDCOM file named <strong>family.ged</strong>.</li>
+            </ol>
+        </p>
 <?php
 }else{
 ?>
-<p>Looks like you've already got a family.ged, so you don't have to do anything else. If you wish you can change other settings as mentioned below.</p>
+<h2>All Required Steps are Done!</h2>
+<p>Awesome. <a href='../'>Show me my site!</a></p>
+<p>To update your site, upload a new <strong>family.ged</strong></p>
+<p>Optionally change other settings as mentioned below.</p>
 <?php
 }
 
@@ -89,6 +96,8 @@ if(strlen($other) > 0){
         <p>
         None of these things are required, but may make your website more useful to visitors.
         </p>";
+    print "<h3>Bookmark This Page</h3>";
+    print "<p>Bookmark <a href='$_BASEURL/lib/firstrun.php'>This link</a> so you can always come back to this page if you want help making other changes to your site!</p>";
     print $other;
 }
 ?>

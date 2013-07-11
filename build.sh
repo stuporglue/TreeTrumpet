@@ -24,7 +24,7 @@ cp lib/ged2json/examples/moore.ged treetrumpet/family.ged.sample
 cp *.php treetrumpet/
 
 # Non-code files
-cp LICENSE.TXT README.md config.php.example treetrumpet/ 
+cp lib/LICENSE.TXT README.md config.php.example treetrumpet/ 
 
 # Base CSS
 cp css/* treetrumpet/css/
@@ -61,6 +61,9 @@ cp js/Pedigree-Viewer/css/ui/* treetrumpet/css/3rdparty/ui/
 #sudo chmod -R 775 treetrumpet
 
 rm -f treetrumpet.zip
-zip -r treetrumpet treetrumpet/ -x treetrumpet/lib/3rdparty/ssgeocoder.sqlite3 -x treetrumpet/family.ged -x treetrumpet/robots.txt -x treetrumpet/config.php
+chmod -R 755 treetrumpet
+cd treetrumpet
+zip -r ../treetrumpet . -x lib/3rdparty/ssgeocoder.sqlite3 -x family.ged -x robots.txt -x config.php
+cd ..
 
 md5sum treetrumpet.zip > treetrumpet.zip.md5
