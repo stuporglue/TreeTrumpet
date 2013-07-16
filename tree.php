@@ -51,7 +51,12 @@
         <!-- Kick it off once everything is ready -->
         <script type="text/javascript"> 
             $(document).ready(function(){
-                pt = $('#tt-tree').pvTree('lib/ged2json.php','family.ged');
+                pt = $('#tt-tree').pvTree('lib/ged2json.php','family.ged',{
+                    personClick : function(e){
+                        var id = e.target.id.replace('person_','');
+                        pt.refocus(id);
+                    }
+                });
             });
         </script> 	
 </body>
