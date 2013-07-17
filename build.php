@@ -67,17 +67,17 @@ function recurse_copy($src,$dst) {
     $base = glob("*.php");
     foreach($base as $i => $file){
         if($file == 'build.php'){
-            unset($base[$i]);
-        }
-    }
-
-    foreach($base as $file){
-        if(is_file($file)){
+            continue;
+        }else if(is_file($file)){
             copy($file,"$destdir/$file");
         }
     }
 
-    $base_dirs = Array('./','./img/','./lib/','./css/','./js/');
+    // Other rood-dir files
+    copy('.htaccess',"$destdir/.htaccess");
+    copy('lib/ged2json/examples/moore.ged', "$destdir/family.ged.sample");
+
+    $base_dirs = Array('./img/','./lib/','./css/','./js/');
     foreach($base_dirs as $src){
         foreach(glob("$src/*") as $file){
             if(is_file($file)){
@@ -137,7 +137,7 @@ function recurse_copy($src,$dst) {
     $directories = Array('.');
 
     $zip = new ZipArchive();
-    if($zip->open("../$destdir.zip",ZipArchive::CREATE) !== TRUE){
+    if($zip->open("./../$destdir.zip",ZipArchive::CREATE) !== TRUE){
         exit("Cannot open $destdir.zip for writing!");
     }
 
@@ -155,7 +155,7 @@ function recurse_copy($src,$dst) {
 
     $zip->close();
 
-    chdir('..');
+    chdir('./..');
     $md5 = md5("$destdir.zip");
     file_put_contents("$destdir.zip.md5",$md5);
 }

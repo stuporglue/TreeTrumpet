@@ -1,6 +1,10 @@
 Developers
 ==========
 
+This project uses several other projects and needs to be built to run. It will 
+not run directly from checked-out code!!!
+
+
 Clone TreeTrumpet
 -----------------
     git clone https://github.com/stuporglue/TreeTrumpet.git
@@ -39,7 +43,7 @@ Build JavaScript Projects
 
 Build TreeTrumpet
 -----------------
-    ./build.sh
+    ./build.php
 
 Deploy and Test
 ---------------
