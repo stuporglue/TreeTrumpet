@@ -48,7 +48,7 @@
                         if(array_key_exists('events',$ancestor)){
                             foreach($ancestor['events'] as $event){
                                 if(array_key_exists('place',$event) && array_key_exists('raw',$event['place'])){
-                                    $popularPlaces[$event['place']['raw']][] = $ancestor['name'];  
+                                    $popularPlaces[$event['place']['raw']][$ancestor['id']] = $ancestor['name'];  
                                     if(array_key_exists('geo',$event['place'])){
                                         $popularPlaces[$event['place']['raw']]['geo'] = $event['place']['geo'];
                                         $eventTypesWithPlaces[] = $event['type'];
@@ -82,10 +82,10 @@
                             print "<h3>$place</h3>";
                         }
 
-                        sort($people);
+                        asort($people);
                         $boldLastName = Array();
-                        foreach($people as $person){
-                            $boldLastName[] = preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$person);
+                        foreach($people as $id => $person){
+                            $boldLastName[] = "<a href='individual.php?id=$id' title='Go to the individual page for $person'>" . preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$person) . "</a>";
                         }
                         print "<ul class='ttnamelist'><li>";
                         print implode('</li><li>',$boldLastName);
