@@ -15,11 +15,11 @@ $exclude_from_zip = Array(
 );
 
 chdir(__DIR__);
-umask(0); 
+umask(0);
 
 function recurse_copy($src,$dst) { 
     $dir = opendir($src); 
-    @mkdir($dst,'0777',TRUE); 
+    @mkdir($dst,'01777',TRUE); 
     while(false !== ( $file = readdir($dir)) ) { 
         if (( $file != '.' ) && ( $file != '..' )) { 
             if ( is_dir($src . '/' . $file) ) { 
@@ -39,13 +39,13 @@ function recurse_copy($src,$dst) {
     $directories = Array(
         "$destdir/css/3rdparty/ui",
         "$destdir/js/3rdparty/ui",
-        "$destdir/img/3rdparty",
+        "$destdir/img",
         "$destdir/lib/3rdparty",
         "$destdir/lib/licenses"
     );
 
     foreach($directories as $dir){
-        mkdir($dir,'0777',TRUE);
+        @mkdir($dir,'01777',TRUE);
         if(!is_dir($dir)){
             print "ERROR: Couldn't create $dir\n";
             exit();
@@ -60,86 +60,78 @@ function recurse_copy($src,$dst) {
 }
 
 
+
 // copy files
 {
     // Copy base TreeTrumpet files
-        {
-            $base = glob("*.php");
-            foreach($base as $i => $file){
-                if($file == 'build.php'){
-                    unset($base[$i]);
-                }
-            }
+    $base = glob("*.php");
+    foreach($base as $i => $file){
+        if($file == 'build.php'){
+            unset($base[$i]);
+        }
+    }
 
-            foreach($base as $file){
-                if(is_file($file)){
-                    copy($file,"$destdir/$file");
-                }
-            }
+    foreach($base as $file){
+        if(is_file($file)){
+            copy($file,"$destdir/$file");
+        }
+    }
 
-            foreach(Array('./','./lib/','./css/','./js/') as $src){
-                foreach(glob("$src/*") as $file){
-                    if(is_file($file)){
-                        copy($file,"$destdir/$file");
-                    }
-                }
+    $base_dirs = Array('./','./img/','./lib/','./css/','./js/');
+    foreach($base_dirs as $src){
+        foreach(glob("$src/*") as $file){
+            if(is_file($file)){
+                copy($file,"$destdir/$file");
             }
         }
+    }
 
-// jQRangeSlider files
-                    {
-                        copy("js/jQRangeSlider/dest/jQEditRangeSlider-min.js","$destdir/js/3rdparty/jQEditRangeSlider-min.js");
-                        copy("js/jQRangeSlider/lib/jquery.mousewheel.min.js","$destdir/js/3rdparty/jquery.mousewheel.min.js");
-                        copy("js/jQRangeSlider/lib/jquery.mousewheel.license.txt","$destdir/lib/licenses/jquery.mousewheel.txt");
-                        copy("js/jQRangeSlider/css/iThing.css","$destdir/css/3rdparty/iThing.css");
-                    }
+    // } jQRangeSlider files
+    copy("js/jQRangeSlider/dest/jQEditRangeSlider-min.js","$destdir/js/3rdparty/jQEditRangeSlider-min.js");
+    copy("js/jQRangeSlider/lib/jquery.mousewheel.min.js","$destdir/js/3rdparty/jquery.mousewheel.min.js");
+    copy("js/jQRangeSlider/lib/jquery.mousewheel.license.txt","$destdir/lib/licenses/jquery.mousewheel.txt");
+    copy("js/jQRangeSlider/css/iThing.css","$destdir/css/3rdparty/iThing.css");
 
-// Leaflet.markercluster
-                    {
-                        copy("js/Leaflet.markercluster/dist/leaflet.markercluster.js", "$destdir/js/3rdparty/leaflet.markercluster.js");
-                        copy("js/Leaflet.markercluster/dist/MarkerCluster.css", "$destdir/css/3rdparty/MarkerCluster.css");
-                        copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.css","$destdir/css/3rdparty/MarkerCluster.Default.css");
-                        copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.ie.css","$destdir/css/3rdparty/MarkerCluster.Default.ie.css");
-                        copy("js/Leaflet.markercluster/MIT-LICENCE.txt","$destdir/lib/licenses/Leaflet.markercluster.txt");
-                    }
+    // Leaflet.markercluster
+    copy("js/Leaflet.markercluster/dist/leaflet.markercluster.js", "$destdir/js/3rdparty/leaflet.markercluster.js");
+    copy("js/Leaflet.markercluster/dist/MarkerCluster.css", "$destdir/css/3rdparty/MarkerCluster.css");
+    copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.css","$destdir/css/3rdparty/MarkerCluster.Default.css");
+    copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.ie.css","$destdir/css/3rdparty/MarkerCluster.Default.ie.css");
+    copy("js/Leaflet.markercluster/MIT-LICENCE.txt","$destdir/lib/licenses/Leaflet.markercluster.txt");
 
-// ged2json
-                    {
-                        foreach(glob("lib/ged2json/examples/php/lib/*") as $file){
-                            if(is_file($file)){
-                                $destfile = basename($file);
-                                copy($file,"$destdir/lib/3rdparty/$destfile");
-                            }
-                        }
-                        copy("lib/ged2json/examples/php/lib/ssgeocoder/ssgeocoder.php","$destdir/lib/3rdparty/ssgeocoder.php");
-                        recurse_copy("lib/ged2json/examples/php/lib/php-gedcom/library","$destdir/lib/3rdparty/php-gedcom/library");
+    // ged2json
+    foreach(glob("lib/ged2json/examples/php/lib/*") as $file){
+        if(is_file($file)){
+            $destfile = basename($file);
+            copy($file,"$destdir/lib/3rdparty/$destfile");
+        }
+    }
+    copy("lib/ged2json/examples/php/lib/ssgeocoder/ssgeocoder.php","$destdir/lib/3rdparty/ssgeocoder.php");
+    recurse_copy("lib/ged2json/examples/php/lib/php-gedcom/library","$destdir/lib/3rdparty/php-gedcom/library");
 
-                    }
 
-// Pedigree Viewer 
-                            {
-                                foreach(glob("js/Pedigree-Viewer/js/*") as $file){
-                                    if(is_file($file)){
-                                        copy($file,"$destdir/js/3rdparty/" . basename($file));
-                                    }
-                                }
-                                foreach(glob("js/Pedigree-Viewer/css/*") as $file){
-                                    if(is_file($file)){
-                                        copy($file,"$destdir/css/3rdparty/" . basename($file));
-                                    }
-                                }
-                                foreach(glob("js/Pedigree-Viewer/css/ui/*") as $file){
-                                    if(is_file($file)){
-                                        copy($file,"$destdir/css/3rdparty/ui/" . basename($file));
-                                    }
-                                } 
-                            }
+    // Pedigree Viewer 
+    foreach(glob("js/Pedigree-Viewer/js/*") as $file){
+        if(is_file($file)){
+            copy($file,"$destdir/js/3rdparty/" . basename($file));
+        }
+    }
+    foreach(glob("js/Pedigree-Viewer/css/*") as $file){
+        if(is_file($file)){
+            copy($file,"$destdir/css/3rdparty/" . basename($file));
+        }
+    }
+    foreach(glob("js/Pedigree-Viewer/css/ui/*") as $file){
+        if(is_file($file)){
+            copy($file,"$destdir/css/3rdparty/ui/" . basename($file));
+        }
+    } 
 }
 
 // New zip file!
 {
     @unlink("$destdir.zip");
-    chmod($destdir,0777);
+    chmod($destdir,01777);
     chdir($destdir);
 
     $directories = Array('.');
@@ -152,6 +144,7 @@ function recurse_copy($src,$dst) {
     while(count($directories) > 0){
         $cur_dir = array_shift($directories);
         foreach(glob("$cur_dir/*") as $file_or_dir){
+            @chmod($file_or_dir,01755);
             if(is_dir($file_or_dir)){
                 $directories[] = $file_or_dir;
             }else if(is_file($file_or_dir) && !in_array($file_or_dir,$exclude_from_zip)){
