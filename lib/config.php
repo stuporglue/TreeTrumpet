@@ -67,7 +67,7 @@ if(file_exists($inifile)){
 
 // Get the base URL
 $_BASEURL = '';
-if(empty($_SERVER['HTTPS'])){
+if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off'){
     $_BASEURL .= 'http://';
 }else{
     $_BASEURL .= 'https://';

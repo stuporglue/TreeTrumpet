@@ -31,19 +31,23 @@ http://nodejs.org/download/
 Build JavaScript Projects
 -------------------------
     cd js/jQRangeSlider
-    sudo npm install
-    sudo npm install -g grunt-cli
+    npm install -g grunt-cli
+    npm install
     grunt
     cd ..
 
     cd Leaflet.markercluster
-    sudo npm install
+    npm install
+    npm install -g jake
     jake
+    cd ..
 
 
 Build TreeTrumpet
 -----------------
     ./build.php
+    or something like...
+    "C:\Program Files (x86)\PHP\v5.3\php.exe" build.php
 
 Deploy and Test
 ---------------

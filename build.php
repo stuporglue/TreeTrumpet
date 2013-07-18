@@ -148,7 +148,7 @@ function recurse_copy($src,$dst) {
             if(is_dir($file_or_dir)){
                 $directories[] = $file_or_dir;
             }else if(is_file($file_or_dir) && !in_array($file_or_dir,$exclude_from_zip)){
-                $zip->addFile($file_or_dir);
+                $res = $zip->addFile(preg_replace('|^[./]*|','',$file_or_dir));
             }
         }
     }
