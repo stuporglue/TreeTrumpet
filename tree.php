@@ -6,6 +6,7 @@
         <meta charset="utf-8"/>
         <title>HTML5 TreeTrumpet Demo</title>
         <link href="css/tt.css" rel="stylesheet" media="all"/>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <link href="css/3rdparty/ui/ui.slider.css" rel="stylesheet" media="all" /> 
         <link href="css/3rdparty/tree.css" rel="stylesheet" media="all"/>
         <link href="css/tree.css" rel="stylesheet" media="all"/>
@@ -35,7 +36,7 @@
                         break;
                     }
 
-                    print "<ul>";
+                    print "<ul class='shortlist'>";
                     foreach($ancestors as $ancestor){
                         print "<li><a href='individual.php?id={$ancestor['id']}' onclick=\"return refocusTree('{$ancestor['id']}');\">" . preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$ancestor['name']) . "</a></li>";
                     }
@@ -75,7 +76,33 @@
                 pt = $('#tt-tree').pvTree('lib/ged2json.php','family.ged',{
                     personClick : function(e){
                         var id = e.target.id.replace('person_','');
-                        pt.refocus(id);
+
+                        $('#refocuslink')[0].className = id;
+                        $('#gotopage')[0].className = id;
+
+                        $('#details .name').html(pt.people[id].name);
+                        $('#details .gender').html(pt.people[id].gender);
+                        var table = '<table>';
+                        var ev;
+                        for(var i = 0;i < pt.people[id].events.length;i++){
+                            ev = pt.people[id].events[i];
+                            table += '<tr><td>';
+                            if(typeof ev.type != 'undefined'){
+                                table += ev.type;
+                            }
+                            table += '</td><td>';
+                            if(typeof ev.date != 'undefined' && typeof ev.date.raw != 'undefined'){
+                                table += ev.date.raw;
+                            }
+                            table += '</td><td>';
+                            if(typeof ev.place != 'undefined' && typeof ev.place.raw != 'undefined'){
+                                table += ev.place.raw;
+                            }
+                            table += '</td></tr>';
+                        }
+                        $('#details .events').html(table);
+
+                        $('#details').dialog({modal:true});
                     }
                 });
             });
@@ -85,10 +112,20 @@
             // javascriptless users and brings them to the individual page
             function refocusTree(id){
                 pt.refocus(id);
-                window.location.hash='tree';
-                window.location=window.location;
+                //window.location.hash='tree';
+                //window.location=window.location;
                 return false;
             }
         </script> 	
+<div id='details' style='display:none'>
+    <h3>All about <span class='name'></span></h3>
+    <span id='refocuslink' onclick='pt.refocus(this.className);' class=''>Focus Tree on Me</span><br>
+    <span id='gotopage' onclick='document.location="individual.php?id=" + this.className;' class=''>See all details</span>
+    <h4>Gender</h3>
+    <div class='gender'></div>
+    <h4>Events</h4>
+    <div class='events'></div>
+</div>
+
 </body>
 </html>

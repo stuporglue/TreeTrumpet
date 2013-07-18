@@ -196,3 +196,11 @@
     top:  28px;
     left:  28px;
 }
+
+#details {
+    clear: both;
+}
+.shortlist {
+    max-height: 400px;
+    overflow: auto;
+}
