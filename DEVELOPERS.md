@@ -40,7 +40,7 @@ Build JavaScript Projects
     npm install
     npm install -g jake
     jake
-    cd ..
+    cd ../../
 
 
 Build TreeTrumpet
