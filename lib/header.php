@@ -5,22 +5,43 @@
 
 require_once(__DIR__ . '/config.php');
 
+$current = basename($_SERVER['SCRIPT_NAME']);
 
 $moduleMenu = Array();
     if($_CONFIG['tree']){
-        $moduleMenu[] = "<a href='$_BASEURL/tree.php'>Tree View</a>";
+        if($current == 'tree.php'){
+            $current_page = " class='current_page'";
+        }else{
+            $current_page = "";
+        }
+        $moduleMenu[] = "<a href='$_BASEURL/tree.php'$current_page>Tree View</a>";
     }
     if($_CONFIG['map']){
-        $moduleMenu[] = "<a href='$_BASEURL/map.php'>Map View</a>";
+        if($current == 'map.php'){
+            $current_page = " class='current_page'";
+        }else{
+            $current_page = "";
+        }
+        $moduleMenu[] = "<a href='$_BASEURL/map.php'$current_page>Map View</a>";
     }
     if($_CONFIG['table']){
-        $moduleMenu[] = "<a href='$_BASEURL/table.php'>Table View</a>";
+        if($current == 'table.php'){
+            $current_page = " class='current_page'";
+        }else{
+            $current_page = "";
+        }
+        $moduleMenu[] = "<a href='$_BASEURL/table.php'$current_page>Table View</a>";
     }
     if($_CONFIG['contact']){
-        $moduleMenu[] = "<a href='$_BASEURL/contact.php'>Contact Me</a>";
+        if($current == 'contact.php'){
+            $current_page = " class='current_page'";
+        }else{
+            $current_page = "";
+        }
+        $moduleMenu[] = "<a href='$_BASEURL/contact.php'$current_page>Contact Me</a>";
     }
     if($_CONFIG['gedcom']){
-        $moduleMenu[] = "<a href='$_BASEURL/gedcom.php'>GEDCOM</a>";
+        $moduleMenu[] = "<a href='$_BASEURL/gedcom.php'$current_page>GEDCOM</a>";
     }
 
 
