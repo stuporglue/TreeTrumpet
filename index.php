@@ -3,34 +3,33 @@
 // This is the router for TreeTrumpet. 
 // Since TreeTrumpet is supposed to be 0-config we need to work where .htaccess doesn't
 // PHP files such as tree.php or individual.php should require index.php which will take over
-//
-print __FILE__ . ':' . __LINE__ . "    (" . time() . ")<br/>\n";
-print_r($_SERVER);
 
-function controller($controller,$args){
+function controller($controller,$args = Array()){
     $controller = strtolower($controller);
     $controller = basename($controller,'.php');
     $controller = basename($controller,'.ged');
-    print "$controller\n";
-    print_r($args);
-    print_r($_GET);
-    exit();
-
 
     // If our controller doesn't exist, 404 'em
     if(!file_exists(__DIR__ . "/controller/$controller.php")){
-        $endpoint = '404';
+        $args = Array($controller);
+        $controller = '_404';
     }
 
     require(__DIR__ . "/controller/$controller.php");
-    $controller($args);
+    if(function_exists($controller)){
+        call_user_func_array($controller,$args);
+    }
 }
 
-function view($view){
-    require(__DIR__ . "/view/$view");
+function view($view,$vars = Array()){
+    extract($vars);
+    require(__DIR__ . "/view/$view.php");
 }
 
-function model($model){
+function model($model,$args = Array()){
+    require_once(__DIR__ . "/model/$model.php");
+    $rc = new ReflectionClass($model);
+    return $rc->newInstanceArgs($args);
 }
 
 

@@ -1,4 +1,8 @@
-# This file isn't required for TreeTrumpet, but will optimize some things for you
+# This file isn't required for TreeTrumpet, but if your server supports it, this file will: 
+# * Enable caching
+# * Give you prettier URLs (/individual/id/name instead of individual.php/id/name)
+# * Bump up PHP's max memory (TODO)
+# * Increase security by denying access to sub-directories (TODO)
 
 # Add some caching
 AddType image/x-icon .ico
@@ -25,10 +29,16 @@ Header unset ETag
 # All PHP and gedcom requests should go through index.php
     RewriteCond %{REQUEST_FILENAME} .*(php|ged)
     RewriteCond %{REQUEST_FILENAME} !.*index.php.*
-    RewriteRule (.*(php|ged))(.*) index.php$3?c=$1 [L]
+    RewriteRule (.*(php|ged))(.*) index.php$3?controller=$1 [L]
 
+# Any files which don't exist should go through index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !.*index.php
-    RewriteRule . index.php [L]
+    RewriteRule . index.php?ruri=%{REQUEST_URI} [L]
+
+# Robots.txt because it never really exists
+    RewriteCond %{REQUEST_FILENAME} robots.txt
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule . index.php$3?controller=robots [L]
 </IfModule>
