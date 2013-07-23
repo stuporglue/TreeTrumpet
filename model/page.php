@@ -33,7 +33,7 @@ class page{
 
     function js($url,$inline = FALSE){
         if($inline){
-            $this->inline[] = $url; 
+            $this->inlinejs[] = $url; 
         }else{
             $this->js[] = $url; 
         }

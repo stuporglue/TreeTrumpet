@@ -524,17 +524,3 @@
         return new TreeTrumpetMapViewer(this,gedcomparserurl,gedcom,options);
     };
 })(jQuery);
-
-$(document).ready(function(){
-    tm = $('#tt-map').ttMap('lib/ged2geojson.php','family.ged');
-    $('.tthasgeo').on('click',function(e){
-        var coords = e.target.getAttribute('data-geo').split(',');
-        tm.ttmap.panTo([parseFloat(coords[1]),parseFloat(coords[0])]);
-        tm.ttmap.setZoom(10);
-        document.location.hash="tt-map";
-    });
-    $('.tteventfilter').on('click',function(e){
-        tm.usePlaceFrom(e.target.innerHTML);
-    });
-});
-

@@ -17,13 +17,25 @@ function controller($controller,$args = Array()){
 
     require(__DIR__ . "/controller/$controller.php");
     if(function_exists($controller)){
-        call_user_func_array($controller,$args);
+        return call_user_func_array($controller,$args);
     }
 }
 
-function view($view,$vars = Array()){
+function view($view,$vars = Array(),$asString = FALSE){
+
+    if($asString){
+        ob_start();
+    }
+
     extract($vars);
     require(__DIR__ . "/view/$view.php");
+
+    if($asString){
+        $ret = ob_get_contents();
+        ob_get_clean();
+        ob_end_flush();
+        return $ret;
+    }
 }
 
 function model($model,$args = Array()){
