@@ -1,0 +1,34 @@
+# This file isn't required for TreeTrumpet, but will optimize some things for you
+
+# Add some caching
+AddType image/x-icon .ico
+<IfModule mod_expires.c>
+ExpiresActive on
+ExpiresByType image/x-icon "access plus 1 year"
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css|swf)$">
+ExpiresDefault "access plus 2 months"
+</FilesMatch>
+</IfModule>
+
+FileETag none
+<ifModule mod_headers.c>
+Header unset ETag
+</ifModule>
+
+
+# Do some pretty URLs!
+<IfModule mod_rewrite.c>
+# Disable multiviews so that /tree doesn't try to map to /tree.html or something silly like that
+    Options -MultiViews
+    RewriteEngine On
+
+# All PHP and gedcom requests should go through index.php
+    RewriteCond %{REQUEST_FILENAME} .*(php|ged)
+    RewriteCond %{REQUEST_FILENAME} !.*index.php.*
+    RewriteRule (.*(php|ged))(.*) index.php$3?c=$1 [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !.*index.php
+    RewriteRule . index.php [L]
+</IfModule>

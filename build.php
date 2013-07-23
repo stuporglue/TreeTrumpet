@@ -37,6 +37,9 @@ function recurse_copy($src,$dst) {
 // Create directories and set version info
 {
     $directories = Array(
+        "$destdir/model",
+        "$destdir/view",
+        "$destdir/controller",
         "$destdir/css/3rdparty/ui",
         "$destdir/js/3rdparty/ui",
         "$destdir/img",
@@ -73,8 +76,12 @@ function recurse_copy($src,$dst) {
         }
     }
 
+    recurse_copy("model","$destdir/model");
+    recurse_copy("view","$destdir/view");
+    recurse_copy("controller","$destdir/controller");
+
     // Other rood-dir files
-    copy('.htaccess',"$destdir/.htaccess");
+    copy('htaccess',"$destdir/.htaccess");
     copy('lib/ged2json/examples/moore.ged', "$destdir/family.ged.sample");
 
     $base_dirs = Array('./img/','./lib/','./css/','./js/');
