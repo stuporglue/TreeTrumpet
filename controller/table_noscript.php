@@ -6,6 +6,6 @@ function table_noscript(){
     ksort($ancestors);
 
 
-    return view('table_noscript',Array(),TRUE);
+    return view('table_noscript',Array('ancestors' => $ancestors),TRUE);
 }
 

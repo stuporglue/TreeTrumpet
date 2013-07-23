@@ -60,24 +60,24 @@ class page{
     }
 
     function printCss(){
-        $css = "";
+        $cssstr = "";
         foreach($this->css as $css => $media){
-            $css .= "<link type='text/css' href='$css' rel='stylesheet' media='$media'/>";
+            $cssstr .= "<link type='text/css' href='$css' rel='stylesheet' media='$media'/>";
         }
         foreach($this->conditionalCss as $css => $if){
-            $css .= "<!--[$if]><link type='text/css' href='$css' rel='stylesheet'/><![endif]-->";
+            $cssstr .= "<!--[$if]><link type='text/css' href='$css' rel='stylesheet'/><![endif]-->";
         }
-        return $css;
+        return $cssstr;
     }
 
     function printJs(){
-        $js = "";
+        $jsstr = "";
         foreach($this->js as $js){
-            $js .= "<script type='text/javascript' src='$js'></script>";
+            $jsstr .= "<script type='text/javascript' src='$js'></script>";
         }
         foreach($this->inlinejs as $js){
-            $js .= "<script type='text/javascript'><!--\n$js\n--></script>";
+            $jsstr .= "<script type='text/javascript'><!--\n$js\n--></script>";
         }
-        return $js;
+        return $jsstr;
     }
 }

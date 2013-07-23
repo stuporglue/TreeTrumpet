@@ -5,7 +5,6 @@ $page->title("TreeTrumpet Ancestors Table");
 
 $csses = Array(
     "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css",
-    "css/tt.css",
     "css/table.css",
 );
 foreach($csses as $css){
@@ -35,7 +34,5 @@ information page.
 $page->body .= "<div id='tt-table'>";
 $page->body .= controller('table_noscript');
 $page->body .= "</div>";
-
-
 
 view('page',Array('page' => $page,'menu' => 'table'));

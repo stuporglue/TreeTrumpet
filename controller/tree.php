@@ -41,7 +41,6 @@ $hidden = "
 $page = model('page');
 
 $csses = Array(
-    'css/tt.css',
     'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css',
     'css/3rdparty/ui/ui.slider.css',
     'css/3rdparty/tree.css',

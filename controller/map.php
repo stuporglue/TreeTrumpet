@@ -74,7 +74,6 @@ $csses = Array(
     "css/3rdparty/MarkerCluster.Default.css",
     'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/ui-lightness/jquery-ui.css',
     "css/3rdparty/iThing.css",
-    "css/tt.css",
     "css/map.css"
 );
 
