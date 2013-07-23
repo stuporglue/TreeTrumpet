@@ -6,9 +6,7 @@
 
 print "<title>$page->title</title>";
 
-foreach($page->css as $css => $media){
-    print "<link href='$css' rel='stylesheet' media='$media'/>";
-}
+print $page->printCss();
 
 print $page->head;
 
@@ -34,12 +32,7 @@ print $page->head;
     </div>
 </footer>
 <?php
-foreach($page->js as $js){
-    print "<script type='text/javascript' src='$js'></script>";
-}
-foreach($page->inlinejs as $js){
-    print "<script type='text/javascript'><!--\n$js\n--></script>";
-}
+    print $page->printJs();
 ?>
 <div style='display:none'>
 <?php 

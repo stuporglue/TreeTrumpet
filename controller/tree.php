@@ -1,7 +1,5 @@
 <?php
 
-controller('setup');
-
 $ged2json = model('ged2json',Array(__DIR__ . '/../family.ged'));
 
 $ancestors = $ged2json->toJsonArray(TRUE);
@@ -72,6 +70,7 @@ foreach($scripts as $script){
     $page->js($script);
 }
 
+$page->title("Treetrumpet Tree Demo");
 $page->h1("Treetrumpet Tree Demo");
 $page->body .= "<h2>Interactive Tree Temo</h2>";
 $page->body .= $treeNav;

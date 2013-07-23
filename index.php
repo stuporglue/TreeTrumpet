@@ -27,7 +27,7 @@ function view($view,$vars = Array()){
 }
 
 function model($model,$args = Array()){
-    require_once(__DIR__ . "/model/$model.php");
+    // Any require_once business for models should be handled by spl_autoload_register in controller/setup.php
     $rc = new ReflectionClass($model);
     return $rc->newInstanceArgs($args);
 }
@@ -59,4 +59,5 @@ if(array_key_exists('PATH_INFO',$_SERVER)){
 }
 
 // Call the requested controller
+controller('setup');
 controller($endpoint,$args);

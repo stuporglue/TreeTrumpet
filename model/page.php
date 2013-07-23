@@ -10,6 +10,7 @@
 class page{
     var $title = "My Family Tree";
     var $css = Array();
+    var $conditionalCss = Array();
     var $footer = "Create your personal genealogy website like this one with <a href='http://treetrumpet.com'>TreeTrumpet</a>.";
     var $js = Array();
     var $inlinejs = Array();
@@ -22,8 +23,12 @@ class page{
         $this->title = $title;
     }
 
-    function css($url,$media = 'all'){
-       $this->css[$url] = $media; 
+    function css($url,$media = 'all',$if = NULL){
+        if(is_null($if)){
+            $this->css[$url] = $media; 
+        }else{
+            $conditionalCss[$url] = $if;
+        }
     }
 
     function js($url,$inline = FALSE){
@@ -52,5 +57,27 @@ class page{
 
     function head($head){
         $this->head = $head;
+    }
+
+    function printCss(){
+        $css = "";
+        foreach($this->css as $css => $media){
+            $css .= "<link type='text/css' href='$css' rel='stylesheet' media='$media'/>";
+        }
+        foreach($this->conditionalCss as $css => $if){
+            $css .= "<!--[$if]><link type='text/css' href='$css' rel='stylesheet'/><![endif]-->";
+        }
+        return $css;
+    }
+
+    function printJs(){
+        $js = "";
+        foreach($this->js as $js){
+            $js .= "<script type='text/javascript' src='$js'></script>";
+        }
+        foreach($this->inlinejs as $js){
+            $js .= "<script type='text/javascript'><!--\n$js\n--></script>";
+        }
+        return $js;
     }
 }
