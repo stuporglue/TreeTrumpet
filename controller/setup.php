@@ -39,8 +39,7 @@ spl_autoload_register(function ($class) {
 controller('config');
 
 if(!file_exists(__DIR__ . '/../family.ged')){
-    header("Location: $_BASEURL/lib/firstrun.php",TRUE,307);
-    view('firstrun');
+    controller('firstrun');
     exit();
 }
 
