@@ -8,7 +8,7 @@ function menu($current){
     $menu = '';
 
     $pages = Array(
-        'tree'      => 'Tre View',
+        'tree'      => 'Tree View',
         'map'       => 'Map View',
         'table'     => 'Table View',
         'contact'   => 'Contact Me',
@@ -20,9 +20,6 @@ function menu($current){
     foreach($pages as $ctrl => $label){
         $current_page = "";
         if($_CONFIG[$ctrl]){
-            if($current === "$ctrl.php"){
-                $current_page = " class='current_page'";
-            }
             $moduleMenu[$ctrl] = $label;
         }
     }

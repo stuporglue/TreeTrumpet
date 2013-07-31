@@ -4,6 +4,10 @@ global $_BASEURL;
 
 print "<div id='tt-header'><ul>";
 foreach($menus as $ctrl => $label){
-    print "<li><a href='$_BASEURL/$ctrl.php' title='$label' alt='$label'>$label</a></li>";
+    $curClass = '';
+    if($ctrl == $current){
+        $curClass = 'current_page';
+    }
+    print "<li class='$curClass'><a href='" . linky("$_BASEURL/$ctrl.php") . "' title='" . htmlentities($label) . "' alt='" . htmlentities($label) . "'>" . htmlentities($label) . "</a></li>";
 }
 print "</ul></div>";

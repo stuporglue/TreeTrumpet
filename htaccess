@@ -26,19 +26,26 @@ Header unset ETag
     Options -MultiViews
     RewriteEngine On
 
-# All PHP and gedcom requests should go through index.php
-    RewriteCond %{REQUEST_FILENAME} .*(php|ged)
-    RewriteCond %{REQUEST_FILENAME} !.*index.php.*
-    RewriteRule (.*(php|ged))(.*) index.php$3?controller=$1 [L]
+## All PHP requests should go through index.php (except index.php)
+    RewriteCond %{REQUEST_FILENAME} !index.php
+    RewriteCond %{REQUEST_URI} (.*)\.php(.*)
+    RewriteRule .* %1%2 [R,L]
 
-# Any files which don't exist should go through index.php
+## We need to redirect requests for / so they have an ruri component so we 
+## can tell if we need the .php suffix on our links or not
+    RewriteCond %{REQUEST_FILENAME} index.php
+    RewriteCond %{QUERY_STRING} ^$
+    RewriteRule . index.php?ruri='index' 
+
+## Robots.txt might never really exist if the web dir is not writable
+    RewriteCond %{REQUEST_FILENAME} robots.txt
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule . index.php$ruri=robots
+
+## Lastly, any files which don't exist should go through index.php
+## All our controllers should exist since we need to work where mod_rewrite might not be set up
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !.*index.php
-    RewriteRule . index.php?ruri=%{REQUEST_URI} [L]
-
-# Robots.txt because it never really exists
-    RewriteCond %{REQUEST_FILENAME} robots.txt
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule . index.php$3?controller=robots [L]
+    RewriteRule . index.php?ruri=%{REQUEST_URI} [PT]
 </IfModule>

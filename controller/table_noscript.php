@@ -5,7 +5,6 @@ function table_noscript(){
     $ancestors = $gedcom->toJsonHash(FALSE);
     ksort($ancestors);
 
-
     return view('table_noscript',Array('ancestors' => $ancestors),TRUE);
 }
 

@@ -17,13 +17,18 @@ function controller($controller,$args = Array()){
 
     require(__DIR__ . "/controller/$controller.php");
     if(function_exists($controller)){
-        call_user_func_array($controller,$args);
+        return call_user_func_array($controller,$args);
     }
 }
 
-function view($view,$vars = Array(),$asString){
+function view($view,$vars = Array(),$asString = FALSE){
     if($asString){
         ob_start();
+    }
+    foreach($vars as $k => $v){
+        if(is_string($v)){
+            $vars[$k] = htmlentities($v);
+        }
     }
     extract($vars);
     require(__DIR__ . "/view/$view.php");
@@ -38,21 +43,23 @@ function model($model,$args = Array()){
     return $rc->newInstanceArgs($args);
 }
 
+function linky($url){
+    if(!array_key_exists('ruri',$_GET)){
+        return $url;
+    }else{
+        return str_replace('.php','',$url);
+    }
+}
 
 // Some pretty simple processing to handle getting here either via
 // tree.php or tree
 
 $endpoint = basename($_SERVER['SCRIPT_FILENAME']); // index.php if htaccess is working, or tree.php
 
-// If htaccess is working and the requested page was tree.php for some reason we should have $_GET['controller']
-if(array_key_exists('controller',$_GET)){
-    $endpoint = $_GET['controller'];
-}
-
 // If htaccess is working and the page was tree then ruri (REQUEST_URI) should be filled in. 
 if(array_key_exists('ruri',$_GET)){
     $path_info = str_replace(dirname($_SERVER['SCRIPT_NAME']),'',$_GET['ruri']);
-    $path_info = trim($path_info,'/');
+    $path_info = trim($path_info,"/'");
     $path_info = explode('/',$path_info);
     $endpoint = array_shift($path_info);
     $_SERVER['PATH_INFO'] = implode('/',$path_info);

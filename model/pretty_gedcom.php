@@ -1,9 +1,15 @@
 <?php
 
 class pretty_gedcom {
-    static function findObje($id){
-        global $parsedgedcom;
-        foreach($parsedgedcom->getObje() as $obje){
+    var $parsedgedcom;
+
+    function __construct($parsedgedcom){
+        $this->parsedgedcom = $parsedgedcom;
+    }
+
+
+    function findObje($id){
+        foreach($this->parsedgedcom->getObje() as $obje){
             if($obje->hasAttribute('id') && $obje->getId() == $id){
                 return $obje;
             }
@@ -11,9 +17,8 @@ class pretty_gedcom {
         return FALSE;
     }
 
-    static function findFam($id){
-        global $parsedgedcom;
-        foreach($parsedgedcom->getFam() as $fam){
+    function findFam($id){
+        foreach($this->parsedgedcom->getFam() as $fam){
             if($fam->hasAttribute('id') && $fam->getId() == $id){
                 return $fam;
             }
@@ -21,9 +26,8 @@ class pretty_gedcom {
         return FALSE;
     }
 
-    static function findIndi($id){
-        global $parsedgedcom;
-        foreach($parsedgedcom->getIndi() as $indi){
+    function findIndi($id){
+        foreach($this->parsedgedcom->getIndi() as $indi){
             if($indi->hasAttribute('id') && $indi->getId() == $id){
                 return $indi;
             }
@@ -31,7 +35,7 @@ class pretty_gedcom {
         return FALSE;
     }
 
-    static function printOrdinance($ord){
+    function printOrdinance($ord){
         $ret = '';
         $ret .= "<dl>";
 
@@ -50,7 +54,7 @@ class pretty_gedcom {
         if($sours = $ord->getSour()){
             $ret .= "<dt>Sources</dt><dd>";
             foreach($sours as $sour){
-                 $ret .= pretty_gedcom::printSour($sour);
+                $ret .= $this->printSour($sour);
             }
             $ret .= "</dd>";
         }
@@ -58,7 +62,7 @@ class pretty_gedcom {
         if($notes = $ord->getNote()){
             $ret .= "<dt>Note</dt><dd>";
             foreach($notes as $note){
-                 $ret .= pretty_gedcom::printNote($note);
+                $ret .= $this->printNote($note);
             }
             $ret .= "</dd>";
         }
@@ -67,7 +71,7 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printChan($chan){
+    function printChan($chan){
         $ret = '';
         $ret .= "<dl>";
         if($date = $chan->getDate()){
@@ -79,7 +83,7 @@ class pretty_gedcom {
         if($notes = $chan->getNote()){
             $ret .= "<dt>Notes</dt><dd>";
             foreach($notes as $note){
-                 $ret .= pretty_gedcom::printNote($note);
+                $ret .= $this->printNote($note);
             }
             $ret .= "</dd>";
         }
@@ -87,17 +91,17 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printFamc($fam,$selfId){
+    function printFamc($fam,$selfId){
         $ret = '';
 
         $ret .= "<ul>";
 
         if($fam->hasAttribute('famc') && $famc = $fam->getFamc()){
             $ret .= "<li><a href='family.php?id=$famc'>Family $famc</a></li>";
-            $cfam = findFam($famc);
+            $cfam = $this->findFam($famc);
 
             if($cfam && $wife = $cfam->getWife()){ 
-                $wife = findIndi($wife);
+                $wife = $this->findIndi($wife);
                 $name = "Wife {$wife->getId()}";
                 if($names = $wife->getName()){
                     $name = $names[0]->getName();
@@ -106,7 +110,7 @@ class pretty_gedcom {
             }
 
             if($cfam && $husb = $cfam->getHusb()){ 
-                $husb = findIndi($husb);
+                $husb = $this->findIndi($husb);
                 $name = "Husb {$husb->getId()}";
                 if($names = $husb->getName()){
                     $name = $names[0]->getName();
@@ -117,7 +121,7 @@ class pretty_gedcom {
             if($cfam && $chils = $cfam->getChil()){
                 $ret .= "<dt>Children</dt><dd><ol>";
                 foreach($chils as $chil){
-                    $chil = findIndi($chil);
+                    $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
                     if($names = $chil->getName()){
                         $name = $names[0]->getName();
@@ -139,7 +143,7 @@ class pretty_gedcom {
         if($notes = $fam->getNote()){
             $ret .= "<li><h3>Notes</h3><li>";
             foreach($notes as $note){
-                 $ret .= pretty_gedcom::printNote($note);
+                $ret .= $this->printNote($note);
             }
             $ret .= "</li>";
         }
@@ -148,7 +152,7 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printFams($fam,$selfId){
+    function printFams($fam,$selfId){
         $ret = '';
 
         $ret .= "<ul>";
@@ -156,10 +160,10 @@ class pretty_gedcom {
         // Turn a family reference into a de-referenced family
         if($fam->hasAttribute('fams') && $fams = $fam->getFams()){
             $ret .= "<li><a href='family.php?id=$fams'>Family $fams</a><dl>";
-            $sfam = findFam($fams);
+            $sfam = $this->findFam($fams);
 
             if($sfam && $wife = $sfam->getWife()){ 
-                $wife = findIndi($wife);
+                $wife = $this->findIndi($wife);
                 $name = "Wife {$wife->getId()}";
                 if($names = $wife->getName()){
                     $name = $names[0]->getName();
@@ -173,7 +177,7 @@ class pretty_gedcom {
             }
 
             if($sfam && $husb = $sfam->getHusb()){ 
-                $husb = findIndi($husb);
+                $husb = $this->findIndi($husb);
                 $name = "Husb {$husb->getId()}";
                 if($names = $husb->getName()){
                     $name = $names[0]->getName();
@@ -189,7 +193,7 @@ class pretty_gedcom {
             if($sfam && $chils = $sfam->getChil()){
                 $ret .= "<dt>Children</dt><dd><ol>";
                 foreach($chils as $chil){
-                    $chil = findIndi($chil);
+                    $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
                     if($names = $chil->getName()){
                         $name = $names[0]->getName();
@@ -213,7 +217,7 @@ class pretty_gedcom {
         if($notes = $fam->getNote()){
             $ret .= "<li><h3>Notes</h3><li>";
             foreach($notes as $note){
-                 $ret .= pretty_gedcom::printNote($note);
+                $ret .= $this->printNote($note);
             }
             $ret .= "</li>";
         }
@@ -222,7 +226,7 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printObje($obje){
+    function printObje($obje){
 
         if($obje->getIsReference()){
             $obje = findObje($obje->getObje());
@@ -324,20 +328,20 @@ class pretty_gedcom {
         if($notes = $obje->getNote()){
             $ret .= "<li><h3>Notes</h3>";
             foreach($notes as $note){
-                $ret .=  $ret .= pretty_gedcom::printNote($note);
+                $ret .=  $ret .= $this->printNote($note);
             }
             $ret .= "</li>";
         }
 
         if($obje->hasAttribute('chan') &&  $chan = $obje->getChan()){
             $ret .= "<li><h3>Changes</h3>";
-            $ret .=  $ret .= pretty_gedcom::printChan($chan);
+            $ret .=  $ret .= $this->printChan($chan);
         }
 
         if($obje->hasAttribute('refn') && $refns = $obje->getRefn()){
             $ret .= "<li><h3>References</h3>";
             foreach($refns as $refn){
-                $ret .=  $ret .= pretty_gedcom::printRefn($refn);
+                $ret .=  $ret .= $this->printRefn($refn);
             }
             $ret .= "</li>";
         }
@@ -350,7 +354,7 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printRefn($refn){
+    function printRefn($refn){
         $ret = '';
         $ret .= "<dl>";
         if($refnum = $refn->getRefn()){
@@ -363,8 +367,8 @@ class pretty_gedcom {
         return $ret;
     }
 
-    // Every static function should $ret .= a set of closed and valid nodes
-    static function printAsso($asso){
+    // Every function should $ret .= a set of closed and valid nodes
+    function printAsso($asso){
         $ret = '';
         $ret .= "<dl>";
         if($id = $asso->getIndi()){
@@ -376,14 +380,14 @@ class pretty_gedcom {
         if($notes = $asso->getNote()){
             $ret .= "<dt>Notes</dt><dd>";
             foreach($notes as $note){
-                 $ret .= pretty_gedcom::printNote($note);
+                $ret .= $this->printNote($note);
             }
             $ret .= "</dd>";
         }
         if($sours = $asso->getSour()){
             $ret .= "<dt>Sources</dt><dd>";
             foreach($sours as $sour){
-                $ret .=  $ret .= pretty_gedcom::printSour($sour); 
+                $ret .=  $ret .= $this->printSour($sour); 
             }
             $ret .= "</dd>";
         }
@@ -392,25 +396,25 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printSubm($subm){
+    function printSubm($subm){
         $ret = '';
         if($name = $subm->getName()){
             $ret .= "<span>$name</span><br>";
         }
 
         if($addr = $subm->getAddr()){ 
-            $ret .=  $ret .= pretty_gedcom::printAddr($addr);
+            $ret .=  $ret .= $this->printAddr($addr);
         }
 
         if($phons = $subm->getPhon()){
             foreach($phons as $phon){
-                $ret .=  $ret .= pretty_gedcom::printPhon($phon);
+                $ret .=  $ret .= $this->printPhon($phon);
             }
         }
         return $ret;
     }
 
-    static function printEven($even){
+    function printEven($even){
         $ret = '';
         $type = preg_replace("|.*\\\|",'',get_class($even));
         $ret .= "<h3>Type: $type</h3>";
@@ -426,7 +430,7 @@ class pretty_gedcom {
             $ret .= "<dt>Date</dt><dd>$date</dd>";
         }
         if($plac = $even->getPlac()){
-             $ret .= pretty_gedcom::printPlac($plac);
+            $ret .= $this->printPlac($plac);
         }
         if($caus = $even->getCaus()){
             $ret .= "<dt>Cause</dt><dd>$caus</dd>";
@@ -435,14 +439,14 @@ class pretty_gedcom {
             $ret .= "<dt>Age</dt><dd>$age</dd>";
         }
         if($addr = $even->getAddr()){
-             $ret .= pretty_gedcom::printAddr($addr);
+            $ret .= $this->printAddr($addr);
         }
         $ret .= "</dl>";
         $ret .= "</span>";
         return $ret;
     }
 
-    static function printAddr($addr){
+    function printAddr($addr){
         $ret = '';
 
         $address = Array();
@@ -488,7 +492,7 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printPhon($phon){
+    function printPhon($phon){
         $ret = '';
         if($ph = $phon->getPhon()){
             $ret .= "<span><a href='tel:$ph'>$ph</a></span>";
@@ -496,7 +500,7 @@ class pretty_gedcom {
         return $ret;
     }
 
-    static function printPlac($plac){
+    function printPlac($plac){
         $ret = '';
         $ret .= "<dt>Place</dt><dd><p>";
         if($name = $plac->getPlac()){
@@ -507,19 +511,19 @@ class pretty_gedcom {
         }
         if($notes = $plac->getNote()){
             foreach($notes as $note){
-                 $ret .= pretty_gedcom::printNote($note);
+                $ret .= $this->printNote($note);
             }
         }
         if($sours = $plac->getSour()){
             foreach($sours as $sour){
-                 $ret .= pretty_gedcom::printSour($sour);
+                $ret .= $this->printSour($sour);
             }
         }
         $ret .= "</dd>";
         return $ret;
     }
 
-    static function printAttr($attr){
+    function printAttr($attr){
         $ret = '';
         $ret .= "<h3>Type: " . $attr->getType() . "</h3>";
 
@@ -545,13 +549,13 @@ class pretty_gedcom {
         }
 
         if($addr = $attr->getAddr()){
-            $ret .= "<dt>Address</dt><dd>" .  $ret .= pretty_gedcom::printAddr($addr) . "</dd>";
+            $ret .= "<dt>Address</dt><dd>" .  $ret .= $this->printAddr($addr) . "</dd>";
         }
 
         if($phones = $attr->getPhon()){
             $ret .= "<dt>Phone Number</dt><dd>";
             foreach($phones as $phone){
-                $ret .=  $ret .= pretty_gedcom::printPhon($phone);
+                $ret .=  $ret .= $this->printPhon($phone);
             }
             $ret .= "</dd>";
         }
@@ -562,24 +566,24 @@ class pretty_gedcom {
 
         if($notes = $attr->getNote()){
             foreach($notes as $note){
-                $ret .=  $ret .= pretty_gedcom::printNote($note);
+                $ret .=  $ret .= $this->printNote($note);
             }
         }
         if($sours = $attr->getSour()){
             foreach($sours as $sour){
-                $ret .=  $ret .= pretty_gedcom::printSour($sour);
+                $ret .=  $ret .= $this->printSour($sour);
             }
         }
         if($objes = $attr->getObje()){
             foreach($objes as $obje){
-                $ret .=  $ret .= pretty_gedcom::printObje($obje);
+                $ret .=  $ret .= $this->printObje($obje);
             }
         }
         $ret .= "</dl>";
         return $ret;
     }
 
-    static function printNote($note){
+    function printNote($note){
         $ret = '';
         $ret .= "<span class='note'>";
         //if($ref = $note->getIsRef()){
@@ -591,14 +595,14 @@ class pretty_gedcom {
         if($sours = $note->getSour()){
             $ret .= "<h4>Sources</h4>";
             foreach($sours as $sour){
-                 $ret .= pretty_gedcom::printSour($sour);
+                $ret .= $this->printSour($sour);
             }
         }
         $ret .= "</span>";
         return $ret;
     }
 
-    static function printSour($sour){
+    function printSour($sour){
         $ret = '';
         $ret .= "<dl>";
         if($sourid = $sour->getSour()){
@@ -634,12 +638,12 @@ class pretty_gedcom {
             $ret .= "<dt>Text</dt><dd>$text</dd>";
         }
         if($obje = $sour->getObje()){
-             $ret .= pretty_gedcom::printObje($obje);
+            $ret .= $this->printObje($obje);
         }
         if($notes = $sour->getNote()){
             $ret .= "<dt>Notes</dt><dd>";
             foreach($notes as $note){
-                 $ret .= pretty_gedcom::printNote($note);
+                $ret .= $this->printNote($note);
             }
             $ret .= "</dd>";
         }
