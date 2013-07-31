@@ -11,7 +11,7 @@ foreach($ancestors as $id => $ancestor){
     $noscript .= "<td>$id</td>";
 
     // names
-    $noscript .= "<td><a class='ttindipage' href='individual.php?id=$id'>";
+    $noscript .= "<td><a class='ttindipage' href='" . linky("individual.php/$id/" . htmlentities(trim(preg_replace("/-+/",'-',preg_replace("/[^a-zA-Z0-9\.]/",'-',$ancestor['name'])),'-'))) . "'>";
     foreach($ancestor['names'] as $name){
         $noscript .=   preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",htmlentities($name)) ;
     }

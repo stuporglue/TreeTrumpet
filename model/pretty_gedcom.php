@@ -7,7 +7,6 @@ class pretty_gedcom {
         $this->parsedgedcom = $parsedgedcom;
     }
 
-
     function findObje($id){
         foreach($this->parsedgedcom->getObje() as $obje){
             if($obje->hasAttribute('id') && $obje->getId() == $id){
@@ -20,7 +19,7 @@ class pretty_gedcom {
     function findFam($id){
         foreach($this->parsedgedcom->getFam() as $fam){
             if($fam->hasAttribute('id') && $fam->getId() == $id){
-                return $fam;
+                return model('family',Array($fam,$this->parsedgedcom));
             }
         }
         return FALSE;
@@ -29,7 +28,7 @@ class pretty_gedcom {
     function findIndi($id){
         foreach($this->parsedgedcom->getIndi() as $indi){
             if($indi->hasAttribute('id') && $indi->getId() == $id){
-                return $indi;
+                return model('individual',Array($indi,$this->parsedgedcom));
             }
         }
         return FALSE;
@@ -97,25 +96,26 @@ class pretty_gedcom {
         $ret .= "<ul>";
 
         if($fam->hasAttribute('famc') && $famc = $fam->getFamc()){
-            $ret .= "<li><a href='family.php?id=$famc'>Family $famc</a></li>";
+            $family = $this->findFam($famc);
+            $ret .= "<li><a href='" . $family->link() . "'>" . $family->familyName() . " (Family $famc)</a></li>";
             $cfam = $this->findFam($famc);
 
             if($cfam && $wife = $cfam->getWife()){ 
                 $wife = $this->findIndi($wife);
                 $name = "Wife {$wife->getId()}";
-                if($names = $wife->getName()){
-                    $name = $names[0]->getName();
+                if($realName = $wife->firstBold()){
+                    $name = $realName;
                 }
-                $ret .= "<dt>Mother</dt><dd><a href='individual.php?id={$wife->getId()}'>$name</a></dd>";
+                $ret .= "<dt>Mother</dt><dd><a href='" . $wife->link() . "'>$name</a></dd>";
             }
 
             if($cfam && $husb = $cfam->getHusb()){ 
                 $husb = $this->findIndi($husb);
                 $name = "Husb {$husb->getId()}";
-                if($names = $husb->getName()){
-                    $name = $names[0]->getName();
+                if($realName = $husb->getName()){
+                    $name = $realName;
                 }
-                $ret .= "<dt>Father</dt><dd><a href='individual.php?id={$husb->getId()}'>$name</a></dd>";
+                $ret .= "<dt>Father</dt><dd><a href='" . $husb->link() . "'>$name</a></dd>";
             }
 
             if($cfam && $chils = $cfam->getChil()){
@@ -123,13 +123,13 @@ class pretty_gedcom {
                 foreach($chils as $chil){
                     $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
-                    if($names = $chil->getName()){
-                        $name = $names[0]->getName();
+                    if($realName = $chil->getName()){
+                        $name = $realName;
                     }
                     if($chil->getId() == $selfId){
                         $name .= " (self) ";
                     }
-                    $ret .= "<li><a href='individual.php?id={$chil->getId()}'>$name</a></li>";
+                    $ret .= "<li><a href='" . $chil->link() . "'>$name</a></li>";
 
                 }
                 $ret .= "</ol></dd>";
@@ -159,52 +159,49 @@ class pretty_gedcom {
 
         // Turn a family reference into a de-referenced family
         if($fam->hasAttribute('fams') && $fams = $fam->getFams()){
-            $ret .= "<li><a href='family.php?id=$fams'>Family $fams</a><dl>";
+            $family = $this->findFam($fams);
+            $ret .= "<li><a href='" . $family->link() . "'>" . $family->familyName() . " (Family $fams)</a><dl>";
             $sfam = $this->findFam($fams);
 
             if($sfam && $wife = $sfam->getWife()){ 
                 $wife = $this->findIndi($wife);
                 $name = "Wife {$wife->getId()}";
-                if($names = $wife->getName()){
-                    $name = $names[0]->getName();
+                if($realName = $wife->getName()){
+                    $name = $realName;
                 }
                 if($wife->getId() == $selfId){
-                    $self = " (self) ";
-                }else{
-                    $self = '';
+                    $name .= " (self) ";
                 }
-                $ret .= "<dt>Wife$self</dt><dd><a href='individual.php?id={$wife->getId()}'>$name</a></dd>";
+                $ret .= "<li><a href='" . $wife->link() . "'>$name</a></li>";
             }
 
             if($sfam && $husb = $sfam->getHusb()){ 
                 $husb = $this->findIndi($husb);
                 $name = "Husb {$husb->getId()}";
-                if($names = $husb->getName()){
-                    $name = $names[0]->getName();
+                if($realName = $husb->getName()){
+                    $name = $realName;
                 }
                 if($husb->getId() == $selfId){
-                    $self = " (self) ";
-                }else{
-                    $self = '';
+                    $name .= " (self) ";
                 }
-                $ret .= "<dt>Husband$self</dt><dd><a href='individual.php?id={$husb->getId()}'>$name</a></dd>";
+                $ret .= "<li><a href='" . $husb->link() . "'>$name</a></li>";
             }
 
             if($sfam && $chils = $sfam->getChil()){
-                $ret .= "<dt>Children</dt><dd><ol>";
+                $ret .= "<li>Children<ol>";
                 foreach($chils as $chil){
                     $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
-                    if($names = $chil->getName()){
-                        $name = $names[0]->getName();
+                    if($realName = $chil->getName()){
+                        $name = $realName;
                     }
                     if($chil->getId() == $selfId){
                         $name .= " (self) ";
                     }
-                    $ret .= "<li><a href='individual.php?id={$chil->getId()}'>$name</a></li>";
+                    $ret .= "<li><a href='" . $chil->link() . "'>$name</a></li>";
 
                 }
-                $ret .= "</ol></dd>";
+                $ret .= "</ol></li>";
             }
 
             $ret .= "</ul></li>";

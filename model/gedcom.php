@@ -16,6 +16,15 @@ class gedcom {
         }
     }
 
+    function getFamily($id){
+        foreach($this->gedcom->getFam() as $family){
+            if($family->getId() == $id){
+                return model('family',Array($family,$this->gedcom));
+            }
+        }
+        return FALSE;
+    }
+
     function lastUpdated(){
         $updatedAt;
         $head = $this->gedcom->getHead();

@@ -60,8 +60,14 @@ class page{
     }
 
     function printCss(){
+        global $_BASEURL;
         $cssstr = "";
         foreach($this->css as $css => $media){
+
+            if(preg_match('/^[a-zA-Z0-9]/',$css)){
+                $css = "$_BASEURL/$css";
+            }
+
             $cssstr .= "<link type='text/css' href='$css' rel='stylesheet' media='$media'/>";
         }
         foreach($this->conditionalCss as $css => $if){
