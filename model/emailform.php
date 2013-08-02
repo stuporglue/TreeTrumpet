@@ -49,15 +49,15 @@ class emailform {
 
         global $_CONFIG;
 
-        require_once("Mail.php");
-
         if (!filter_var($_POST['from_email'], FILTER_VALIDATE_EMAIL)) {
             return FALSE;
         }
 
+        $post = $_POST;
+
         $from     = $_POST['from_email'];
         $to       = $_CONFIG['email_address'];
-        $subject  = preg_replace("/[^a-zA-Z0-9.;:@'\"\/\!\? /",' ',$_POST['subject']);
+        $subject  = preg_replace("|[^a-zA-Z0-9.;:@'\"/\!\? ]|",' ',$_POST['subject']);
         $body     = $_POST['message'];
 
         $host     = $_CONFIG['smtp_server'];
