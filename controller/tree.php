@@ -1,36 +1,26 @@
 <?php
 
-$ged2json = model('ged2json',Array(__DIR__ . '/../family.ged'));
+$gedcom = model('gedcom',Array(__DIR__ . '/../family.ged'));
 
-$ancestors = $ged2json->toJsonArray(TRUE);
-usort($ancestors,function($a,$b){
-    return str_replace('/','',$a['name']) > str_replace('/','',$b['name']);
-});
-$ids = Array();
-foreach($ancestors as $ancestor){
-    $ids[$ancestor['id']] = $ancestor['name'];
-}
-ksort($ids);
+$ancestors = $gedcom->alphabeticByName();
+$focusId = $gedcom->getFocusId();
 
-$treeNav = "";
-foreach($ids as $id => $name){
-    $treeNav .= "<p>Back to the home person: <a href='individual.php?id={$id}' onclick=\"return refocusTree('{$id}');\">" . preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$name) . "</a></p>";
-    break;
-}
+$focus = $ancestors[$focusId];
+
+$treeNav .= "<p>Back to the home person: <a href='".$focus->link()."' onclick=\"return refocusTree('{$focusId}');\">" . $focus->firstBold() . "</a></p>";
 
 $treeNav .= "<ul class='shortlist'>";
-foreach($ancestors as $ancestor){
-    $treeNav .= "<li><a href='individual.php?id={$ancestor['id']}' onclick=\"return refocusTree('{$ancestor['id']}');\">" . preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$ancestor['name']) . "</a></li>";
+foreach($ancestors as $id => $ancestor){
+    $treeNav .= "<li><a href='".$ancestor->link()."' onclick=\"return refocusTree('$id');\">" . $ancestor->firstBold() . "</a></li>";
 }
 $treeNav .= "</ul>";
-
 
 
 $hidden = "
 <div id='details' style='display:none'>
     <h3>All about <span class='name'></span></h3>
     <span id='refocuslink' onclick='pt.refocus(this.className);' class=''>Focus Tree on Me</span><br>
-    <span id='gotopage' onclick='document.location=\"individual.php?id=\" + this.className;' class=''>See all details</span>
+    <span id='gotopage' onclick='document.location=\"individual.php\" + this.className;' class=''>See all details</span>
     <h4>Gender</h3>
     <div class='gender'></div>
     <h4>Events</h4>

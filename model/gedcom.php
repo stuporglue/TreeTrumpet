@@ -8,6 +8,14 @@ class gedcom {
         $this->gedcom = $parser->parse(__DIR__. '/../family.ged');
     }
 
+    function getFocusId(){
+        $ids = Array();
+        foreach($this->gedcom->getIndi() as $individual){
+            $ids[] = $individual->getId();
+        }
+        return array_shift($ids);
+    }
+
     function getIndividual($id){
         foreach($this->gedcom->getIndi() as $individual){
             if($individual->getId() == $id){
@@ -52,5 +60,27 @@ class gedcom {
             }
         }
         return $createdBy;
+    }
+
+    function alphabeticByName(){
+        $ancestors = Array();
+        foreach($this->gedcom->getIndi() as $individual){
+            $ancestors[$individual->getId()] = model('individual',Array($individual,$this->gedcom)); 
+        }
+
+        uasort($ancestors,function($a,$b){
+            return $a->alphaName() > $b->alphaName();
+        });
+
+        return $ancestors;
+    }
+
+    function getSubmitter(){
+        if($submitter = $this->gedcom->getSubm()){
+            foreach($submitter as $subm){
+                return model('submitter',Array($subm,$this->gedcom));
+            }
+        }
+        return FALSE;
     }
 }

@@ -10,6 +10,15 @@ class individual {
         $this->pretty_gedcom = model('pretty_gedcom',Array($gedcom));
     }
 
+    function alphaName(){
+     $firstName;
+        if($names = $this->individual->getName()){
+            $firstName = $names[0]->getName();
+            $firstName = trim(preg_replace('/[^a-zA-Z ]/','',$firstName));
+        }
+        return $firstName;
+    }
+
     function firstName(){
         $firstName;
         if($names = $this->individual->getName()){
