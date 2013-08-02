@@ -12,7 +12,7 @@ we may be, please contact me so we can collaborate.
 
 $contacts = Array(); 
 $gedcom = model('gedcom',Array(__DIR__ . '/../family.ged'));
-$submitter = $gedcom->submitter();
+$submitter = $gedcom->getSubmitter();
 
 if($form = $submitter->emailForm()){
     if($formhtml = $form->form()){

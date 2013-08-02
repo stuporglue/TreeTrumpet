@@ -7,7 +7,7 @@ class individual {
 
     function __construct($individual,$gedcom){
         $this->individual = $individual;
-        $this->pretty_gedcom = model('pretty_gedcom',Array($gedcom));
+        $this->pretty_gedcom = model('pretty_gedcom',$gedcom);
     }
 
     function alphaName(){

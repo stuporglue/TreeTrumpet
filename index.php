@@ -9,6 +9,10 @@ function controller($controller,$args = Array()){
     $controller = basename($controller,'.php');
     $controller = basename($controller,'.ged');
 
+    if(!is_array($args)){
+        $args = Array($args);
+    }
+
     // If our controller doesn't exist, 404 'em
     if(!file_exists(__DIR__ . "/controller/$controller.php")){
         $args = Array($controller);
@@ -39,6 +43,9 @@ function view($view,$vars = Array(),$asString = FALSE){
 
 function model($model,$args = Array()){
     // Any require_once business for models should be handled by spl_autoload_register in controller/setup.php
+    if(!is_array($args)){
+        $args = Array($args);
+    }
     $rc = new ReflectionClass($model);
     return $rc->newInstanceArgs($args);
 }

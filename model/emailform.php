@@ -9,8 +9,24 @@ class emailform {
     }
 
     function enabled(){
+
+        if(isset($this->enabled)){
+            return $this->enabled;
+        }
+
         global $_CONFIG;
-        return $_CONFIG['email_address'] != 'example@example.com' && $_CONFIG['show_email_form'] && @include('Mail.php');
+        if(!@include_once('Mail.php')){
+            $this->enabled = FALSE;
+        }
+        if($_CONFIG['email_address'] == 'example@example.com'){
+            $this->enabled = FALSE;
+        } 
+        if(!$_CONFIG['show_email_form']){
+            $this->enabled = FALSE;
+        }
+        $this->enabled = TRUE;
+
+        return $this->enabled;
     }
 
     function form(){

@@ -46,17 +46,19 @@ $_CONFIG = Array(
 $inifile = __DIR__ . '/../config.php';
 if(file_exists($inifile)){
 
+    $ini_config = Array();
     // Can't use parse_ini_file because it fails if the file doesn't end with .ini
     $inifile = explode("\n",file_get_contents($inifile));
     foreach($inifile as $kvpair){
+        $kvpair = preg_replace('/;.*/','',$kvpair);
         preg_match('/([^=]+)=(.*)/',$kvpair,$matches);
         if(count($matches) > 0){
-            $ini_config[$matches[1]] = $matches[2];
+            $ini_config[trim($matches[1])] = trim($matches[2]);
         }
     }
 
     foreach($ini_config as $k => $val){
-        if($val === 1){
+        if($val === '1'){
             $ini_config[$k] = TRUE;
         }
     }

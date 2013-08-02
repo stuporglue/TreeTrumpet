@@ -400,12 +400,12 @@ class pretty_gedcom {
         }
 
         if($addr = $subm->getAddr()){ 
-            $ret .=  $ret .= $this->printAddr($addr);
+            $ret .= $this->printAddr($addr);
         }
 
         if($phons = $subm->getPhon()){
             foreach($phons as $phon){
-                $ret .=  $ret .= $this->printPhon($phon);
+                $ret .= $this->printPhon($phon);
             }
         }
         return $ret;
