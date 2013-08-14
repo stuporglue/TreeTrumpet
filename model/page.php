@@ -64,7 +64,7 @@ class page{
         $cssstr = "";
         foreach($this->css as $css => $media){
 
-            if(preg_match('/^[a-zA-Z0-9]/',$css)){
+            if(!preg_match('|^http://|',$css)){
                 $css = "$_BASEURL/$css";
             }
 

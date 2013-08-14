@@ -1,6 +1,8 @@
 <?php
 
-$ged2json = model('ged2json',Array(__DIR__ . '/../' . $_GET['g']));
+$gedfile = __DIR__ . '/../' . $_GET['g'];
+$ged2json = model('ged2json',Array($gedfile));
 
-$json = (string)$ged2json;
+$json = $ged2json->toJsonArray();
+
 view('json',Array('json' => $json));

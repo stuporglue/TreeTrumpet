@@ -20,7 +20,7 @@ $hidden = "
 <div id='details' style='display:none'>
     <h3>All about <span class='name'></span></h3>
     <span id='refocuslink' onclick='pt.refocus(this.className);' class=''>Focus Tree on Me</span><br>
-    <span id='gotopage' onclick='document.location=\"individual.php\" + this.className;' class=''>See all details</span>
+    <span id='gotopage' onclick='document.location=\"individual.php/\" + this.className;' class=''>See all details</span>
     <h4>Gender</h3>
     <div class='gender'></div>
     <h4>Events</h4>

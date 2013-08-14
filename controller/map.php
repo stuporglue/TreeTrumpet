@@ -58,7 +58,7 @@ foreach($popularPlaces as $place => $people){
     asort($people);
     $boldLastName = Array();
     foreach($people as $id => $person){
-        $boldLastName[] = "<a href='individual.php?id=$id' title='Go to the individual page for $person'>" . preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$person) . "</a>";
+        $boldLastName[] = "<a href='" . linky("individual.php?$id") . "' title='Go to the individual page for $person'>" . preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$person) . "</a>";
     }
     $placesList .= "<ul class='ttnamelist'><li>";
     $placesList .= implode('</li><li>',$boldLastName);
@@ -90,8 +90,8 @@ foreach($iecss as $css){
 }
 
 $scripts = Array(
-    "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js",
     "http://code.jquery.com/jquery-1.9.1.js",
+    "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js",
     "http://cdn.leafletjs.com/leaflet-0.6/leaflet.js",
     "js/3rdparty/leaflet.markercluster.js",
     "js/3rdparty/jquery.mousewheel.min.js",

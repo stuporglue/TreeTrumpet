@@ -29,7 +29,7 @@ Header unset ETag
 ## All PHP requests should go through index.php (except index.php)
     RewriteCond %{REQUEST_FILENAME} !index.php
     RewriteCond %{REQUEST_URI} (.*)\.php(.*)
-    RewriteRule .* %1%2 [R,L]
+    RewriteRule .* %1%2 [R,L,QSA]
 
 ## We need to redirect requests for / so they have an ruri component so we 
 ## can tell if we need the .php suffix on our links or not
@@ -47,5 +47,5 @@ Header unset ETag
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !.*index.php
-    RewriteRule . index.php?ruri=%{REQUEST_URI} [PT]
+    RewriteRule . index.php?ruri=%{REQUEST_URI} [PT,QSA]
 </IfModule>
