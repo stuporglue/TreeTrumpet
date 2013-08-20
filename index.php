@@ -81,4 +81,3 @@ if(array_key_exists('PATH_INFO',$_SERVER)){
 // Call the requested controller
 controller('setup');
 controller($endpoint,$args);
-

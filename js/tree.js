@@ -4,7 +4,7 @@ $(document).ready(function(){
             var id = e.target.id.replace('person_','');
 
             $('#refocuslink')[0].className = id;
-            $('#gotopage')[0].className = id;
+            $('#gotopage')[0].href = linky(ttbaseurl + '/individual.php/' + id + '/' + pt.people[id].name);
 
             $('#details .name').html(pt.people[id].name);
             $('#details .gender').html(pt.people[id].gender);

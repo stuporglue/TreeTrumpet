@@ -32,6 +32,8 @@ print $page->head;
 </footer>
 <?php
     print $page->printJs();
+
+    view('htjs');
 ?>
 <div style='display:none'>
 <?php 
@@ -39,3 +41,4 @@ print $page->head;
 ?>
 </div>
 </body></html>
+<?php
