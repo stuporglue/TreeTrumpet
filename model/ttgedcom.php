@@ -1,6 +1,6 @@
 <?php
 
-class gedcom {
+class ttgedcom {
     var $gedcom;
 
     function __construct($gedcomFile){
@@ -24,10 +24,13 @@ class gedcom {
         }
     }
 
-    function getFamily($id){
-        foreach($this->gedcom->getFam() as $family){
+    function getFamily($id,$gedcom = NULL){
+        if(is_null($gedcom)){
+            $gedcom = $this->gedcom;
+        }
+        foreach($gedcom->getFam() as $family){
             if($family->getId() == $id){
-                return model('family',Array($family,$this->gedcom));
+                return model('family',Array($family,$gedcom));
             }
         }
         return FALSE;

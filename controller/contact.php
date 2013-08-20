@@ -11,7 +11,7 @@ we may be, please contact me so we can collaborate.
 </p>";
 
 $contacts = Array(); 
-$gedcom = model('gedcom',Array(__DIR__ . '/../family.ged'));
+$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 $submitter = $gedcom->getSubmitter();
 
 if($form = $submitter->emailForm()){

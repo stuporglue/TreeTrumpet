@@ -1,6 +1,6 @@
 <?php
 
-$gedcom = model('gedcom',Array(__DIR__ . '/../family.ged'));
+$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 
 $ancestors = $gedcom->alphabeticByName();
 $focusId = $gedcom->getFocusId();

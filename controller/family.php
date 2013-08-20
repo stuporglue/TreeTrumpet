@@ -1,7 +1,7 @@
 <?php
 
 function family($familyId){
-    $gedcom = model('gedcom',Array(__FILE__ . '/../family.ged'));
+    $gedcom = model('ttgedcom',Array(__FILE__ . '/../family.ged'));
 
     $family = $gedcom->getFamily($familyId);
 

@@ -2,7 +2,7 @@
 
 function individual($indiId){
 
-    $gedcom = model('gedcom',Array(__FILE__ . '/../family.ged'));
+    $gedcom = model('ttgedcom',Array(__FILE__ . '/../family.ged'));
 
     $individual = $gedcom->getIndividual($indiId);
 

@@ -213,4 +213,15 @@ class family {
     function __call($func,$args){
         call_user_func_array(Array($this->family,$func),$args);
     }
+
+    function eventsList(){
+        $events = Array();
+
+        if($evens = $this->family->getEven()){
+            foreach($evens as $even){
+                $events[] = $even;
+            }
+        }
+        return $events;
+    }
 }

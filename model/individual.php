@@ -5,11 +5,17 @@ class individual {
     var $individual;
     var $pretty_gedcom;
 
-    function __construct($individual,$gedcom){
+    function __construct($individual,$gedcom,$pretty_gedcom = NULL){
         $this->individual = $individual;
-        $this->pretty_gedcom = model('pretty_gedcom',$gedcom);
+        $this->gedcom = $gedcom;
+        if(!is_null($pretty_gedcom)){
+            $this->pretty_gedcom = $pretty_gedcom;
+        }else{
+            $this->pretty_gedcom = model('pretty_gedcom',$gedcom);
+        }
     }
 
+    // Alpha-only version of first name
     function alphaName(){
      $firstName;
         if($names = $this->individual->getName()){
@@ -19,6 +25,12 @@ class individual {
         return $firstName;
     }
 
+    // Unique name (alpha + ID)
+    function sortName(){
+        return $this->alphaName() . $this->individual->getId();
+    }
+
+    // The first name they have
     function firstName(){
         $firstName;
         if($names = $this->individual->getName()){
@@ -27,6 +39,7 @@ class individual {
         return $firstName;
     }
 
+    // First name they have, try to bold the last name
     function firstBold(){
         $firstBold;
         if($names = $this->individual->getName()){
@@ -178,6 +191,36 @@ class individual {
         if($events != ''){
             $events = "<h2 id='events'>Events in the life of ".$this->firstBold()."</h2>$events";
         }
+        return $events;
+    }
+
+    function eventsList(){
+        $events = Array();
+
+        if($evens = $this->individual->getEven()){
+            foreach($evens as $even){
+                $events[] = $even;
+            }
+        }
+
+        if($fams = $this->individual->getFams()){
+            foreach($fams as $famc){
+                $fam = ttgedcom::getFamily($famc->getFams(),$this->gedcom);
+                foreach($fam->eventsList() as $even){
+                    $events[] = $even;
+                }
+            }
+        }
+
+        if($famc = $this->individual->getFamc()){
+            foreach($famc as $famc){
+                $fam = ttgedcom::getFamily($famc->getFamc(),$this->gedcom);
+                foreach($fam->eventsList() as $even){
+                    $events[] = $even;
+                }
+            }
+        }
+
         return $events;
     }
 
@@ -367,6 +410,10 @@ class individual {
             $ord = "<h2 id='ordinances'>LDS Ordinances</h2><div class='block'>$ord</div>";
         }
         return $ord;
+    }
+
+    function __toSTring(){
+        return $this->firstName();
     }
 
 }
