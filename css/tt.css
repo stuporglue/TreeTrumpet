@@ -34,4 +34,22 @@ menu {
     margin: 1px 0;
 }
 
+.tt-content {
+    border: 1px solid black;
+    max-height: 500px;
+    overflow: auto;
+}
 
+.tt-content-left {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 10px;
+}
+
+.tt-content-right {
+    padding-left: 10px;
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+}

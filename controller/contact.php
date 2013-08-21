@@ -15,15 +15,16 @@ $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 $submitter = $gedcom->getSubmitter();
 
 if($form = $submitter->emailForm()){
-    if($formhtml = $form->form()){
-        $contacts['Email Form'] = $formhtml;
-    }
     if(count($_POST) > 0){
         if($sentMail = $form->sendMail()){
-            $page->body .= "<p class='sentstatus success'>Your message has been sent.</p>";
+            $page->bodyright .= "<p class='sentstatus success'>Your message has been sent.</p>";
         }else{
-            $page->body .= "<p class='sentstatus failure'>There was an error sending your email message!</p>";
+            $page->bodyright .= "<p class='sentstatus failure'>There was an error sending your email message!</p>";
         }
+    }
+    if($formhtml = $form->form()){
+         $page->bodyright .= "<h3>Email Form</h3>";
+         $page->bodyright .= $formhtml;
     }
 }
 
@@ -35,7 +36,6 @@ if($addr = $submitter->contactInfo()){
     $contacts['Traditional Contact Methods'] = $addr;
 }
 
-
 foreach($contacts as $title => $method){
     $page->body .= "<h3>$title</h3>";
     $page->body .= $method;
@@ -43,4 +43,4 @@ foreach($contacts as $title => $method){
 
 
 
-view('page',Array('page' => $page,'menu' => 'contact'));
+view('page_v_split',Array('page' => $page,'menu' => 'contact'));

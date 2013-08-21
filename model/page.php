@@ -16,6 +16,7 @@ class page{
     var $inlinejs = Array();
     var $h1 = '';
     var $body = '';
+    var $bodyright = '';
     var $hidden = '';
     var $head = '';
 
