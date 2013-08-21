@@ -74,7 +74,7 @@ class family {
 
             $children .= "<ol>";
             foreach($chils as $chilId){
-                $chil = $this->pretty_gedcom->getIndividual($chilId);
+                $chil = $this->pretty_gedcom->findIndi($chilId);
                 $name = "Child $chilId";
                 if($realName = $chil->firstName()){
                     $name = $realName;

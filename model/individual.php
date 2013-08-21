@@ -53,7 +53,7 @@ class individual {
         global $_BASEURL;
         $url = $_BASEURL . "/individual.php/".$this->individual->getId()."/";
         $firstName = $this->firstName();
-        $firstName = trim(preg_replace("/-+/",'-',preg_replace("/[^a-zA-Z0-9\.]/",'-',$firstName)),'-');
+        $firstName = trim(preg_replace("/-+/",'-',preg_replace("/[^a-zA-Z0-9\.]+/",'-',$firstName)),'-');
         $firstName = htmlentities($firstName);
         $url .= $firstName;
         return linky(htmlentities($url));
