@@ -44,7 +44,8 @@ function recurse_copy($src,$dst) {
         "$destdir/js/3rdparty/ui",
         "$destdir/img",
         "$destdir/lib/3rdparty",
-        "$destdir/lib/licenses"
+        "$destdir/lib/licenses",
+        "$destdir/cache"
     );
 
     foreach($directories as $dir){
@@ -159,6 +160,7 @@ function recurse_copy($src,$dst) {
                 $res = $zip->addFile(preg_replace('|^[./]*|','',$file_or_dir));
             }
         }
+        $res = $zip->addFile('.htaccess');
     }
 
     $zip->close();
