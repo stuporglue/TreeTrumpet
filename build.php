@@ -8,7 +8,7 @@
 $destdir = 'treetrumpet';
 
 $exclude_from_zip = Array(
-    './lib/3rdparty/ssgeocoder.sqlite3',
+    './cache/geocding.sqlite3',
     './family.ged',
     './robots.txt',
     './config.php'

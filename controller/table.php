@@ -2,6 +2,7 @@
 
 $page = model('page');
 $page->title("TreeTrumpet Ancestors Table");
+$page->h1("TreeTrumpet Ancestors Table");
 
 $csses = Array(
     "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css",

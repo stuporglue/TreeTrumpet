@@ -2,7 +2,6 @@
 
 $page = model('page');
 
-$page->css("$_BASEURL/css/tt.css");
 $page->title("Welcome to TreeTrumpet");
 
 $page->h1("TreeTrumpet");
