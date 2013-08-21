@@ -59,7 +59,7 @@ class family {
         }
 
         if($parents != ''){
-            $parents = "<h2 id='parents'>Parents</h2><div class='block'><dl>" .  $parents . "</dl></div>";
+            $parents = "<h2 class='blocktitle'>Parents</h2><div id='parents' class='block'><dl>" .  $parents . "</dl></div>";
         }
 
         return $parents;
@@ -85,7 +85,7 @@ class family {
         }
 
         if($children != ''){
-            $children = "<h2 id='children'>Children</h2><div class='block'>" . $children . "</div>";
+            $children = "<h2 class='blocktitle'>Children</h2><div id='children' class='block'>" . $children . "</div>";
         }
 
         return $children;
@@ -101,7 +101,7 @@ class family {
         }
 
         if($events != ''){
-            $events = "<h2 id='events'>Events</h2><div class='block'>$events</div>";
+            $events = "<h2 class='blocktitle'>Events</h2><div id='events' class='block'>$events</div>";
         }
 
         return $events;
@@ -125,7 +125,7 @@ class family {
         }
 
         if($refs != ''){
-            $refs = "<h2 id='references'>References and Sources</h2><div class='block'>$refs</div>";
+            $refs = "<h2 class='blocktitle'>References and Sources</h2><div id='references' class='block'>$refs</div>";
         }
 
         return $refs;
@@ -140,7 +140,7 @@ class family {
         }
 
         if($noteTxt != ''){
-            $noteTxt = "<h2 id='notes'>Notes</h2><div class='block'>$noteTxt</div>";
+            $noteTxt = "<h2 class='blocktitle'>Notes</h2><div id='notes' class='block'>$noteTxt</div>";
         }
 
         return $noteTxt;
@@ -155,7 +155,7 @@ class family {
         }
 
         if($mm != ''){
-            $mm = "<h2 id='multimedia'>Multimedia</h2><div class='block'>$mm</div>";
+            $mm = "<h2 class='blocktitle'>Multimedia</h2><div id='multimedia' class='block'>$mm</div>";
         }
 
         return $mm;
@@ -163,8 +163,8 @@ class family {
 
     function metadata(){
         $md = '';
-        $md .= "<h2 id='metadata'>Family Metadata</h2>";
-        $md .= "<div class='block'>";
+        $md .= "<h2 class='blocktitle'>Family Metadata</h2>";
+        $md .= "<div id='metadata' class='block'>";
 
         $md .= "<h3>GEDCOM ID</h3>";
         $md .= "<ul><li>{$this->family->getId()}</li></ul>";
@@ -204,7 +204,7 @@ class family {
         }
 
         if($ord != ''){
-            $ord = "<h2 id='ordinances'>LDS Ordinances</h2><div class='block'>$ord</div>";
+            $ord = "<h2 class='blocktitle'>LDS Ordinances</h2><div id='ordinances' class='block'>$ord</div>";
         }
 
         return $ord;

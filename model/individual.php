@@ -112,7 +112,7 @@ class individual {
         }
 
         if($overview != ''){
-            $overview = "<h2 id='overview'>Overview</h2><div class='block'>$overview</div>";
+            $overview = "<h2 class='blocktitle'>Overview</h2><div id='overview' class='block'>$overview</div>";
         }
 
         return $overview;
@@ -124,15 +124,15 @@ class individual {
         $attributes = "";
 
         if($attrs = $this->individual->getAttr()){
+            $attributes .= "<div id='attributes' class='block'>";
             foreach($attrs as $attr){
-                $attributes .= "<div class='block'>";
                 $attributes .= $this->pretty_gedcom->printAttr($attr);
-                $attributes .= "</div>";
             }
+            $attributes .= "</div>";
         }
 
         if($attributes != ''){
-            $attributes = "<h2 id='attributes'>Attributes</h2>$attributes";
+            $attributes = "<h2 class='blocktitle'>Attributes</h2>$attributes";
         }
 
         return $attributes;
@@ -144,7 +144,7 @@ class individual {
         $parents = "";
 
         if($fams = $this->individual->getFamc()){
-            $parents .= "<div class='block'>";
+            $parents .= "<div id='parents' class='block'>";
             foreach($fams as $famc){
                 $parents .= $this->pretty_gedcom->printFamc($famc,$this->individual->getId());
             }
@@ -152,7 +152,7 @@ class individual {
         }
 
         if($parents .= ''){
-            $parents = "<h2 id='parents'>Parents</h2>$parents";
+            $parents = "<h2 class='blocktitle'>Parents</h2>$parents";
         }
         return $parents;
     }
@@ -163,14 +163,14 @@ class individual {
         $spak = '';
 
         if($fams = $this->individual->getFams()){
-            $spak .= "<div class='block'>";
+            $spak .= "<div id='spouses' class='block'>";
             foreach($fams as $famc){
                 $spak .= $this->pretty_gedcom->printFams($famc,$this->individual->getId());
             }
             $spak .= "</div>";
         }
         if($spak != ''){
-            $spak = "<h2 id='spouses'>Spouses and Children</h2>$spak";
+            $spak = "<h2 class='blocktitle'>Spouses and Children</h2>$spak";
         }
 
         return $spak;
@@ -181,7 +181,7 @@ class individual {
     {
         $events = '';
         if($evens = $this->individual->getEven()){
-            $events .= "<div class='block'>";
+            $events .= "<div id='events' class='block'>";
             foreach($evens as $even){
                 $events .= $this->pretty_gedcom->printEven($even);   
             }
@@ -189,7 +189,7 @@ class individual {
         }
 
         if($events != ''){
-            $events = "<h2 id='events'>Events in the life of ".$this->firstBold()."</h2>$events";
+            $events = "<h2 class='blocktitle'>Events in the life of ".$this->firstBold()."</h2>$events";
         }
         return $events;
     }
@@ -229,7 +229,7 @@ class individual {
     {
         $associates = '';
         if($assos = $this->individual->getAsso()){
-            $associates .= "<div class='block'>";
+            $associates .= "<div id='associates' class='block'>";
             foreach($assos as $asso){
                 $associates .= $this->pretty_gedcom->printAsso($asso);
             }
@@ -237,7 +237,7 @@ class individual {
         }
 
         if($associates != ''){
-            $associates = "<h2 id='associates'>Associates of ".$this->firstBold()."</h2>$associates";
+            $associates = "<h2 class='blocktitle'>Associates of ".$this->firstBold()."</h2>$associates";
         }
 
         return $associates;
@@ -248,14 +248,14 @@ class individual {
     {
         $snotes = '';
         if($notes = $this->individual->getNote()){
-            $snotes .= "<div class='block'>";
+            $snotes .= "<div id='notes' class='block'>";
             foreach($notes as $note){
                 $snotes .= $this->pretty_gedcom->printNote($note);
             }
             $snotes .= "</div>";
         }
         if($snotes != ''){
-            $snotes = "<h2 id='notes'>Notes</h2>$snotes";
+            $snotes = "<h2 class='blocktitle'>Notes</h2>$snotes";
         }
         return $snotes;
     }
@@ -280,7 +280,7 @@ class individual {
         }
 
         if($refs != ''){
-            $refs = "<h2 id='references'>References and Sources</h2><div class='block'>$refs</div>";
+            $refs = "<h2 class='blocktitle'>References and Sources</h2><div id='references' class='block'>$refs</div>";
         }
         return $refs;
     }
@@ -290,14 +290,14 @@ class individual {
     {
         $mm = '';
         if($objes = $this->individual->getObje()){
-            $mm .= "<div class='block'>";
+            $mm .= "<div id='multimedia'class='block'>";
             foreach($objes as $obje){
                 $mm .= $this->pretty_gedcom->printObje($obje);
             }
             $mm .= "</div>";
         }
         if($mm != ''){
-            $mm = "<h2 id='multimedia'>Multimedia</h2>$mm";
+            $mm = "<h2 class='blocktitle'>Multimedia</h2>$mm";
         }
 
         return $mm;
@@ -307,8 +307,8 @@ class individual {
     function metadata()
     {
         $meta = '';
-        $meta .=  "<h2 id='metadata'>Metadata</h2>";
-        $meta .=  "<div class='block'>";
+        $meta .=  "<h2 class='blocktitle'>Metadata</h2>";
+        $meta .=  "<div id='metadata' class='block'>";
 
         // GEDCOM ID
         $meta .=  "<h3>GEDCOM ID</h3>";
@@ -407,7 +407,7 @@ class individual {
         }
 
         if($ord != ''){
-            $ord = "<h2 id='ordinances'>LDS Ordinances</h2><div class='block'>$ord</div>";
+            $ord = "<h2 class='blocktitle'>LDS Ordinances</h2><div id='ordinances' class='block'>$ord</div>";
         }
         return $ord;
     }
@@ -415,5 +415,4 @@ class individual {
     function __toSTring(){
         return $this->firstName();
     }
-
 }
