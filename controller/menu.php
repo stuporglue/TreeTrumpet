@@ -8,9 +8,9 @@ function menu($current){
     $menu = '';
 
     $pages = Array(
-        'tree'      => 'Tree View',
-        'map'       => 'Map View',
-        'table'     => 'Table View',
+        'tree'      => 'Tree',
+        'map'       => 'Map',
+        'table'     => 'People',
         'contact'   => 'Contact Me',
         'gedcom'    => 'GEDCOM'
     );

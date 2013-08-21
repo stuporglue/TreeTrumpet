@@ -1,4 +1,4 @@
-<?php view('page_header',Array('page' => $page)); ?>
+<?php view('page_header',Array('page' => $page,'menu' => $menu)); ?>
 <article>
     <div class='tt-content'>
     <?php 
@@ -7,5 +7,4 @@
     ?>
     </div>
 </article>
-<?php view('page_footer',Array('page' => $page)); ?>
-
+<?php view('page_footer',Array('page' => $page,'menu' => $menu)); 
