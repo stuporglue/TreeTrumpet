@@ -63,7 +63,7 @@ $page->title("Treetrumpet Tree Demo");
 $page->h1("Treetrumpet Tree Demo");
 $page->body .= "<h2>Interactive Tree Temo</h2>";
 $page->body .= $treeNav;
-$page->body .= "<div id='tt-tree'>Please wait...loading</div>";
+$page->bodyright .= "<div id='tt-tree'>Please wait...loading</div>";
 $page->hidden($hidden);
 
-view('page',Array('page' => $page,'menu' => 'tree'));
+view('page_v_split',Array('page' => $page,'menu' => 'tree'));

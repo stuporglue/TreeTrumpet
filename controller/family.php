@@ -13,7 +13,7 @@ function family($familyId){
     $familyName = $family->familyName();
 
     $page = model('page');
-    $page->css('css/family.css');
+    $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     $page->title("All about $familyName");
     $page->h1("All about $familyName");
 
@@ -22,7 +22,7 @@ function family($familyId){
 
     $parents = $family->parents();
     if($parents != ''){
-        $navigation .= "<li><a href='#parents'>Parents</a></li>";
+        $navigation .= "<li><a href='#couples'>Couples</a></li>";
         $details .= $parents;
     }
 
@@ -72,5 +72,16 @@ function family($familyId){
     $navigation .= "</ul>";
 
     $page->body = $navigation .= $details;
+
+    $scripts = Array(
+        "http://code.jquery.com/jquery-1.9.1.js",
+        "http://code.jquery.com/ui/1.10.3/jquery-ui.js",
+    );
+
+    foreach($scripts as $script){
+        $page->js($script);
+    }
+    $page->js("$('h2.blocktitle').hide(); $('.tt-content').tabs();",TRUE);
+
     view('page',Array('page' => $page,'menu' => 'family'));
 }

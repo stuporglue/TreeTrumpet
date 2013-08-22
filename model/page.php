@@ -11,7 +11,7 @@ class page{
     var $title = "My Family Tree";
     var $css = Array();
     var $conditionalCss = Array();
-    var $footer = "Create your personal genealogy website like this one with <a href='http://treetrumpet.com'>TreeTrumpet</a>.";
+    var $footer = "Create your own personal genealogy website like this one with <a href='http://treetrumpet.com'>TreeTrumpet</a>.";
     var $js = Array();
     var $inlinejs = Array();
     var $h1 = '';

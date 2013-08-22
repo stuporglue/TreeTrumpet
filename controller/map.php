@@ -56,9 +56,9 @@ foreach($allPlaces as $place => $people){
     $placesList .= "</li></ul>";
 }
 
-$page->body .= $placesList;
 
 $page->body .= $eventTypeMenu;
+$page->body .= $placesList;
 
 $csses = Array(
     "http://cdn.leafletjs.com/leaflet-0.5/leaflet.css",
@@ -119,10 +119,8 @@ $page->h1("A Map of My Ancestors");
 $page->body .= "<h2>Important Places and My People Who Lived there</h2>
     <p>This map and list show the places my ancestors lived and died. On the map you can filter by the year events occurred, and in the list you can see a list of places. 
     <p>Clicking on the blue place names will zoom there on the map. </p>";
-//$page->body .= $placesList;
 
-$page->body .= "<div id='tt-map'>Hang on! The map is loading!</div>";
-//$page->body .= $eventTypeMenu;
+$page->bodyright .= "<div id='tt-map'>Hang on! The map is loading!</div>";
 
 
-view('page',Array('page' => $page,'menu' => 'map'));
+view('page_v_split',Array('page' => $page,'menu' => 'map'));

@@ -43,14 +43,16 @@ header menu {
 
 .tt-content {
     border: 1px solid black;
-    height: 500px;
+    height: 525px;
     overflow: auto;
 }
 
 .tt-content-block {
     text-align: left;
-    height: 500px;
+    height: 525px;
     width: 48%;
+    max-height: 525px;
     display: inline-block;
     vertical-align: top;
+    overflow: auto;
 }

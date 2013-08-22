@@ -200,7 +200,3 @@
 #details {
     clear: both;
 }
-.shortlist {
-    max-height: 400px;
-    overflow: auto;
-}

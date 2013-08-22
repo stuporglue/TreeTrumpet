@@ -59,7 +59,7 @@ class family {
         }
 
         if($parents != ''){
-            $parents = "<h2 class='blocktitle'>Parents</h2><div id='parents' class='block'><dl>" .  $parents . "</dl></div>";
+            $parents = "<h2 class='blocktitle'>Couples</h2><div id='couples' class='block'><dl>" .  $parents . "</dl></div>";
         }
 
         return $parents;
