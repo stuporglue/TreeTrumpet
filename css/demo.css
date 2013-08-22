@@ -1,0 +1,38 @@
+#page_wrapper #page-content #page-content-wrapper {
+    padding:10px 10px 10px 10px;
+    margin:0 20px;
+    border:#e5e1d8 solid 5px;
+
+    background:#fff right top repeat-y;
+
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+
+
+    box-shadow:0 0 0 #fff;
+    -o-box-shadow:0 0 0 #fff;
+    -moz-box-shadow:0 0 0 #fff;
+    -webkit-box-shadow:0 0 0 #fff;
+}
+
+body {
+    background:#EFEBE3;
+}
+
+label {
+    cursor:pointer;
+}
+
+
+#info {
+    display:none;
+    position:absolute;
+    z-index:10;
+    width:17em;
+    right:2em;
+    top:2em;
+    font-size:95%;
+    background-color:white;
+    padding:0.7em;
+}

@@ -118,7 +118,9 @@
 
         this._init = function(){
 
-            $(this._tttable).dataTable();
+            $(this._tttable).dataTable({
+                    "sDom": '<"top"if<"clear">lp<"clear">>rt<"bottom"if<"clear">lp<"clear">>'
+                        });
             // {
             //    'aoColumnDefs' : [
             //        { "sType": "html", "aTargets": ['_all'] }

@@ -1,0 +1,135 @@
+/*
+ * Common CSS for all tt sites
+ */
+
+html,body {
+    margin: 0;
+    padding: 0;
+    background-color: #EFEBE3;
+    min-height: 100%;
+}
+
+html {
+    padding: 10px;
+}
+
+.tt-content {
+    float: left;
+    width: 48%;
+    min-width: 350px;
+    padding: 0 10px;
+}
+
+.tt-preview {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tt-preview img {
+    display: block;
+    margin: auto;
+    margin-bottom: 5px;
+}
+
+#tt-right-content {
+    padding-top: 80px;
+}
+
+
+
+
+a {
+    color: #00b;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 1px 3px;
+}
+
+#tt-footer {
+    clear: both;
+    padding-top: 20px;
+}
+
+#tt-footer a {
+    text-decoration: none;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+}
+
+#tt-footer a:hover {
+    text-decoration: underline;
+}
+
+
+.ttancestortable {
+    max-width: 100%;
+}
+
+.ttancestortable,
+.ttancestortable table,
+.ttancestortable td,
+.ttancestortable th,
+.ttancestortable tr
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.ttancestortable a {
+    text-decoration: none;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+}
+.ttancestortable a:hover {
+    text-decoration: underline;
+}
+
+.ttln {
+    font-weight: bold;
+}
+
+.ttnamelist {
+    margin-left: 25px;
+}
+
+.ttname,.ttevent {
+    display: block;
+    white-space: nowrap;
+}
+
+.ttnowrap {
+    white-space: nowrap;
+}
+
+.ttfakelink {
+    color: #25f;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ttgender-male {
+    border-color: #171980;
+    background-color: #b7daff;
+}
+
+.ttgender-female {
+    border-color: #80177e;
+    background-color: #e985e7;
+}
+
+.ttgender-mixed {
+    border-color: #df4ddc;
+    background-color: #b7daff;
+}
+
+.ttgender-unknown {
+    border-color: #ffdd3c;
+    background-color: #e6ff41;
+}
+
+.current_page {
+    text-decoration: underline;
+}

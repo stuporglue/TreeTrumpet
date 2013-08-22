@@ -31,3 +31,6 @@ table, td,th,tr {
     border-collapse: collapse;
 }
 
+.clear {
+    clear:both;
+}
