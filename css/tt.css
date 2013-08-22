@@ -5,6 +5,7 @@
 /* Page Layout */
 #tt-content {
     margin: auto;
+    min-height: 525px;
     padding: 20px;
 }
 
@@ -43,7 +44,7 @@ header menu {
 
 .tt-content {
     border: 1px solid black;
-    height: 525px;
+    max-height: 525px;
     overflow: auto;
 }
 
@@ -51,8 +52,34 @@ header menu {
     text-align: left;
     height: 525px;
     width: 48%;
+    min-width: 200px;
     max-height: 525px;
-    display: inline-block;
     vertical-align: top;
     overflow: auto;
+    float: left;
+}
+
+/* Site-wide colors */
+.ttgender-male {
+    border-color: #171980;
+    background-color: #b7daff;
+}
+
+.ttgender-female {
+    border-color: #80177e;
+    background-color: #e985e7;
+}
+
+.ttgender-mixed {
+    border-color: #df4ddc;
+    background-color: #b7daff;
+}
+
+.ttgender-unknown {
+    border-color: #ffdd3c;
+    background-color: #e6ff41;
+}
+
+.ttfakelink {
+    text-decoration: underline;
 }
