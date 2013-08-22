@@ -53,3 +53,12 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.ttslider {
+    margin-left: 30px;
+    margin-right: 28px;
+}
+
+.ui-editRangeSlider-inputValue {
+    width: 3.5em;
+}
