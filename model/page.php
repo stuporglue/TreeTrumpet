@@ -60,18 +60,39 @@ class page{
         $this->head = $head;
     }
 
-    function printCss(){
-        global $_BASEURL;
-        $cssstr = "";
-        foreach($this->css as $css => $media){
+    function cacheLocally($url,$type){
+        global $_BASEURL,$_CONFIG;
 
-            if(!preg_match('|^http://|',$css)){
-                $css = "$_BASEURL/$css";
+        if(strlen(filter_var($url,FILTER_VALIDATE_URL)) === 0){
+            $url = "$_BASEURL/$url";
+        } else if($_CONFIG['cache_resources']){
+            $cacheDir = __DIR__ . "/../cache/$type/3rdparty/";
+            @mkdir($cacheDir,0777,TRUE);
+            $downloadedFile = $cacheDir . basename($url);
+
+            if(!file_exists($downloadedFile)){
+                if($urlcont = file_get_contents($url)){
+                    $res = file_put_contents($downloadedFile,$urlcont);
+                }
             }
 
+            if(file_exists($downloadedFile)){
+                $basename = basename($url);
+                $url = "$_BASEURL/cache/$type/3rdparty/" . basename($url);
+            }
+        }
+
+        return $url;
+    }
+
+    function printCss(){
+        $cssstr = "";
+        foreach($this->css as $css => $media){
+            $css = $this->cacheLocally($css,'css');
             $cssstr .= "<link type='text/css' href='$css' rel='stylesheet' media='$media'/>";
         }
         foreach($this->conditionalCss as $css => $if){
+            $css = $this->cacheLocally($css,'css');
             $cssstr .= "<!--[$if]><link type='text/css' href='$css' rel='stylesheet'/><![endif]-->";
         }
         return $cssstr;
@@ -80,6 +101,7 @@ class page{
     function printJs(){
         $jsstr = "";
         foreach($this->js as $js){
+            $js = $this->cacheLocally($js,'js');
             $jsstr .= "<script type='text/javascript' src='$js'></script>";
         }
         foreach($this->inlinejs as $js){

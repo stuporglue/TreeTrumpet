@@ -40,6 +40,9 @@ $_CONFIG = Array(
     'smtp_port'         => '465',
     'smtp_username'     => 'example@example.com', // Your gmail username
     'smtp_password'     => 'your_secret_password', // Your gmail password
+
+    // For debugging. Caches js and css locally then uses it instead
+    'cache_resources'   => FALSE,
 );
 
 // If config exists merge it into the real settings

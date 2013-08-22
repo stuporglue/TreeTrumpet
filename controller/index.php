@@ -11,18 +11,22 @@ foreach($gedcom->gedcom->getIndi() as $individual){
     $totalPeople++;
 }
 
-
 $page = model('page');
+
 $page->title("The Genealogy of " . $focus->firstName());
 
 $page->h1("The Genealogy of " . $focus->firstBold() . " and " . ($totalPeople - 1) . " of " . $focus->posessive() . " relatives");
 
 $page->body .= "<h2>Explore the family of " . $focus->firstBold() . "</h2>";
-$page->body .= "<div>
-    This site has 
-    </div>"
+
+$page->bodyright = "<ul>
+    <li><a href='#pedigreetree'>Pedigree Tree</a></li>
+    <li><a href='#eventsmap'>Ancestor Events Map</a></li>
+    <li><a href='#people'>Ancestor Table</a></li>
+    </ul>";
 
 $page->bodyright .= view('feature_preview',Array(
+    'id' => 'pedigreetree',
     'title' => 'Pedigree Tree',
     'text' => 'Pan, zoom and click around this interactive tree view of the family tree.',
     'link' => linky('tree.php'),
@@ -30,6 +34,7 @@ $page->bodyright .= view('feature_preview',Array(
 ),true);
 
 $page->bodyright .= view('feature_preview',Array(
+    'id' => 'eventsmap',
     'title' => 'Ancestor Events Map',
     'text' => 'See where ancestors important events occurred on this map.',
     'link' => linky('map.php'),
@@ -37,6 +42,7 @@ $page->bodyright .= view('feature_preview',Array(
 ),true);
 
 $page->bodyright .= view('feature_preview',Array(
+    'id' => 'people',
     'title' => 'People',
     'text' => 'Drill down to the ancestor you\'re looking for with the filter and sorting tools on this interactive table.',
     'link' => linky('table.php'),
@@ -45,7 +51,7 @@ $page->bodyright .= view('feature_preview',Array(
 
 
 $csses = Array(
-    "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css",
+    "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css",
     "css/index.css",
 );
 foreach($csses as $css){
@@ -55,17 +61,13 @@ foreach($csses as $css){
 
 $scripts = Array(
     "http://code.jquery.com/jquery-1.9.1.js",
-    "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js",
-    "js/people.js"
+    "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js",
 );
+
 foreach($scripts as $script){
     $page->js($script);
 }
-$page->js("$(document).ready(function(){
-    tt = $('#tt-people').ttTable('lib/ged2json.php','family.ged');
-});",TRUE);
 
-
-
+$page->js("$('h3.blocktitle').hide(); $('.tt-content-right').tabs();",TRUE);
 
 view('page_v_split',Array('page' => $page,'menu' => 'index'));
