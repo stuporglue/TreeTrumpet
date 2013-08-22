@@ -1,0 +1,13 @@
+/* block size changes */
+.tt-content-left {
+    width: 30%;
+    min-width: 250px;
+    max-width: 400px;
+}
+
+.tt-content-right {
+    min-width: 250px;
+    float: none;
+    overflow: hidden;
+    width: auto;
+}

@@ -1,5 +1,5 @@
 <?php 
-$page->css('tt_v_split.php');
+$page->css('css/page_v_split.css');
 view('page_header',Array('page' => $page,'menu' => $menu)); ?>
 <article>
     <div class='tt-content'>
