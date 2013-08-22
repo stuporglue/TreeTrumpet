@@ -14,7 +14,7 @@
 [modules]
 tree=1
 map=1
-table=1
+people=1
 contact=1
 gedcom=1
 

@@ -19,7 +19,7 @@ global $_BASEURL,$_CONFIG;
 $_CONFIG = Array(
     'tree'      =>  TRUE, 
     'map'       =>  TRUE, 
-    'table'     =>  TRUE, 
+    'people'    =>  TRUE, 
     'contact'   =>  TRUE, 
     'gedcom'    =>  TRUE, 
 

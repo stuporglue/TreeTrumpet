@@ -5,7 +5,6 @@
 /* Page Layout */
 #tt-content {
     margin: auto;
-    min-height: 525px;
     padding: 20px;
 }
 
@@ -44,7 +43,7 @@ header menu {
 
 .tt-content {
     border: 1px solid black;
-    max-height: 525px;
+    height: 525px;
     overflow: auto;
 }
 

@@ -10,7 +10,7 @@ function menu($current){
     $pages = Array(
         'tree'      => 'Tree',
         'map'       => 'Map',
-        'table'     => 'People',
+        'people'     => 'People',
         'contact'   => 'Contact Me',
         'gedcom'    => 'GEDCOM'
     );
