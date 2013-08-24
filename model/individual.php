@@ -412,7 +412,15 @@ class individual {
         return $ord;
     }
 
-    function __toSTring(){
+    function __toString(){
         return $this->firstName();
+    }
+
+    function __call($func,$args){
+        call_user_func_array(Array($this->individual,$func),$args);
+    }
+
+    function __get($param){
+        return $this->individual->$param;
     }
 }

@@ -1,3 +1,21 @@
 #details {
     clear: both;
 }
+
+#details {
+    clear: both;
+}
+
+.ancestorlist {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ancestorlist li:hover {
+    background-color: #cccccc;
+}
+
+.ancestorlist li a {
+    width: 100%;
+    display: block;
+}

@@ -27,10 +27,34 @@ $(document).ready(function(){
                 table += '</td></tr>';
             }
             $('#details .events').html(table);
-
-            $('#details').dialog({modal:true});
+            $('#details').dialog({modal:true,width: 500});
         }
     });
+
+
+    autocompleteNames = $('.ancestorlist li a').map(function(i,e){return $(e).text();})
+    var filter = function(e){
+             var matcher = new RegExp(e.target.value, "i" ); 
+             var foundone = false;
+             var matches = [];
+             for(var i = 0;i<autocompleteNames.length;i++){
+                if(matcher.test(autocompleteNames[i])){
+                    matches.push(autocompleteNames[i]);
+                    $($('.ancestorlist li a')[i].parentNode).show();
+                }else{
+                    $($('.ancestorlist li a')[i].parentNode).hide();
+                }
+             }
+             response(matches);
+        };
+    $('#autocomplete').on('mousedown',filter);
+    $('#autocomplete').on('keyup',filter);
+    $('#autocomplete').parent().show();
+    $('#autocomplete').val('');
+    $('#searchhelp').on('click',function(e){
+        $('#help').dialog({width: 500});
+    });
+
 });
 
 // refocus the tree on someone and move the page so that the tree is in view
@@ -42,3 +66,5 @@ function refocusTree(id){
     //window.location=window.location;
     return false;
 }
+
+
