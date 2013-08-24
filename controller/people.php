@@ -1,8 +1,12 @@
 <?php
 
 $page = model('page');
-$page->title("TreeTrumpet Ancestors");
-$page->h1("TreeTrumpet Ancestors");
+$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+$focusId = $gedcom->getFocusId();
+$focus = $gedcom->getIndividual($focusId);
+
+$page->title("List of Relatives of " . $focus->firstName());
+$page->h1("List of Relatives of " . $focus->firstBold());
 
 $csses = Array(
     "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css",
@@ -25,12 +29,7 @@ $page->js("$(document).ready(function(){
 });",TRUE);
 
 
-$page->body .= "<p>This page contains a sortable, filterable table of ancestors, relatives and events in the gedcom file.</p>
-<p>
-Clicking on Parent or Children names will filter the table to show just that parent 
-or child. Clicking on an individual's own name will bring you to the person's individual 
-information page.
-</p>";
+$page->body .= "<p>Clicking on Parent or Children names to show that person.  Click an individual's own name will bring you to the person's information page.  </p>";
 
 $page->body .= "<div id='tt-people'>";
 $page->body .= controller('table_noscript');

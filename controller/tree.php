@@ -86,9 +86,8 @@ foreach($scripts as $script){
     $page->js($script);
 }
 
-$page->title("Treetrumpet Tree Demo");
-$page->h1("Treetrumpet Tree Demo");
-$page->body .= "<h2>The " . $focus->firstBold() . " Family Tree</h2>";
+$page->title($focus->firstName() . " Family Tree");
+$page->h1("<h1>The " . $focus->firstBold() . " Family Tree</h1>");
 $page->body .= $treeNav;
 $page->bodyright .= "<div id='tt-tree'>Please wait...loading</div>";
 $page->hidden($hidden);

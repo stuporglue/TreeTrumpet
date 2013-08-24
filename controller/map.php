@@ -114,7 +114,7 @@ $page->js("
 });
 ",TRUE);
 
-$page->title("TreeTrumpet Ancestors Map");
+$page->title("Ancestors Map");
 
 $page->h1("A Map of My Ancestors");
 
