@@ -1,6 +1,10 @@
 <?php
 
+global $_CONFIG;
+
 $page = model('page');
+
+$page->css('css/firstrun.css');
 
 $page->title("Welcome to TreeTrumpet");
 
@@ -14,9 +18,11 @@ if(!file_exists(__DIR__ . '/../family.ged')){
     $page->body .= view('firstrun_required_done',Array(),TRUE);
 }
 
+
+
 $otherSteps = Array();
 
-if(!@touch(__DIR__ . '/3rdparty/ssgeocoder.sqlite3')){
+if(!@file_put_contents(__DIR__ . '/../cache/write_test','Caching enabled!')){
     $otherSteps[] = 'firstrun_sqlite';
 }
 
@@ -34,11 +40,17 @@ if(!file_exists(__DIR__ . '/config.php')){
     }
 }
 
+
+if(!array_key_exists('ruri',$_GET)){
+    $otherSteps[] = 'firstrun_htaccess';
+}
+
+
 if(count($otherSteps) > 0){
-    $page->body .= view('firstrun_other',Array(),TRUE);
+    $page->bodyright .= view('firstrun_other',Array(),TRUE);
     foreach($otherSteps as $step){
-        $page->body .= view($step,Array(),TRUE);
+        $page->bodyright .= view($step,Array(),TRUE);
     }
 }
 
-view('page',Array('page' => $page,'menu' => 'tree'));
+view('page_v_split',Array('page' => $page,'menu' => 'tree'));

@@ -22,7 +22,7 @@ $hidden = "
 <div id='details' style='display:none'>
     <h3>All about <span class='name'></span></h3>
     <p>
-        <a id='refocuslink' onclick='pt.refocus(this.className);return false;' class=''>Focus Tree on Me</a><br>
+        <a id='refocuslink' onclick='pt.refocus(this.className);return false;' class='' href='#'>Focus Tree on Me</a><br>
         <a id='gotopage' href='#' class=''>See all details</a>
     </p>
     <h4>Gender</h3>
