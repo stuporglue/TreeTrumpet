@@ -2,17 +2,13 @@
 
 class emailform {
 
-    function __construct(){
-        if(count($_POST) && $this->enabled()){
-            $this->sendMail();
-        }
-    }
-
     function enabled(){
 
         if(isset($this->enabled)){
             return $this->enabled;
         }
+
+        $this->enabled = TRUE;
 
         global $_CONFIG;
         if(!@include_once('Mail.php')){
@@ -24,7 +20,15 @@ class emailform {
         if(!$_CONFIG['show_email_form']){
             $this->enabled = FALSE;
         }
-        $this->enabled = TRUE;
+        if($_CONFIG['smtp_username'] == 'example@example.com'){
+            $this->enabled = FALSE;
+        }
+        if($_CONFIG['smtp_password'] == 'your_secret_gmail_password'){
+            $this->enabled = FALSE;
+        }
+        if (!filter_var($_CONFIG['email_address'], FILTER_VALIDATE_EMAIL)) {
+            $this->enabled = FALSE;
+        }
 
         return $this->enabled;
     }
@@ -35,19 +39,20 @@ class emailform {
         }
 
         return "<form method='post'>
-            Your Email Address: <input name='from_email' type='email'/><br>
-            Subject: <input name='subject' type='text'/><br>
-            <textarea name='message'>Enter your message here...</textarea>
+            <label for='from_email'>Your Email Address:</label><input name='from_email' id='from_email' type='email'/><br>
+            <label for='subject'>Subject:</label><input id='subject' name='subject' type='text'/><br>
+            <label for='message'>Message:</label>
+            <textarea class='clearme' id='message' name='message'></textarea>
             <input type='submit' value='Send me an email!'/>
             </form>";
     }
 
     function sendMail(){
-        if(!$this->enabled()){
+        global $_CONFIG;
+        
+        if(count($_POST) > 0  && !$this->enabled()){
             return FALSE;
         }
-
-        global $_CONFIG;
 
         if (!filter_var($_POST['from_email'], FILTER_VALIDATE_EMAIL)) {
             return FALSE;
