@@ -83,6 +83,7 @@ function recurse_copy($src,$dst) {
 
     // Other rood-dir files
     copy('htaccess',"$destdir/.htaccess");
+    copy('favicon.ico',"$destdir/favicon.ico");
     copy('config.php.example',"$destdir/config.php.example");
     copy('lib/ged2json/examples/moore.ged', "$destdir/family.ged.sample");
 
