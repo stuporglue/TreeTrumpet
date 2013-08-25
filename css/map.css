@@ -1,11 +1,15 @@
 /* Map */
 .ttmapcontainer {
-    height: 500px !important;
+    height: 500px;
+    height: calc(100% - 16px);
+    height: -webkit-calc(100% - 16px);
     padding-bottom: 35px;
 }
 
 .ttmap {
-    height: 500px !important;
+    height: 500px;
+    height: calc(100% - 16px);
+    height: -webkit-calc(100% - 16px);
     z-index: 0;
 }
 

@@ -5,7 +5,7 @@
 <?php 
 global $_BASEURL;
 print "<link type='text/css' href='$_BASEURL/css/tt.css' rel='stylesheet' media='all'/>";
-print $page->printCtss();
+print $page->printCss();
 print "<link rel='stylesheet' type='text/css' media='handheld, only screen and (max-device-width: 768px)' href='$_BASEURL/css/small_screens.css' />";
 
 print "<link type='image/x-icon' rel='shortcut icon' href='$_BASEURL/img/favicon.png'/>";

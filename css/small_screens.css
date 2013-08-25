@@ -20,7 +20,9 @@ h1 {
     bottom:0;
     left:0;
     max-height: 100%;
-    height: calc(100% - 50px);
+    height: 100%;
+    height: calc(100% - 40px);
+    height: -webkit-calc(100% - 40px);
     border: 0;
     background-color: white;
 }
@@ -30,6 +32,7 @@ h1 {
     top: 0;
     left:0;
     right:0;
+    height: 40px;
     background-color: #668866;
 }
 

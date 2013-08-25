@@ -32,7 +32,7 @@
         // Target is a div which will hold the map. We replace its contents with our divs.
         target = $(target)[0];   
         $(target).addClass('ttmapcontainer');
-        $(target).html("<div class='ttmap' style='height: 500px'></div><div class='ttslider'></div>"); // clear it out
+        $(target).html("<div class='ttmap'></div><div class='ttslider'></div>"); // clear it out
         this.options = options || {};
         this.ttmap = new L.Map(target.children[0], {
             maxZoom : 18,
