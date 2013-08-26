@@ -482,9 +482,7 @@ class pretty_gedcom {
         }
 
         if(count($address) > 0){
-            $ret .= "<p>";
             $ret .= "<address>" . implode("<br>",$address) . "</address>";
-            $ret .= "</p>";
         }
         return $ret;
     }
@@ -492,7 +490,11 @@ class pretty_gedcom {
     function printPhon($phon){
         $ret = '';
         if($ph = $phon->getPhon()){
-            $ret .= "<span><a href='tel:$ph'>$ph</a></span>";
+            if(preg_match('/^[0-9+()[]#-\s-]+$/',$ph)){
+                $ret .= "<span><a href='tel:$ph'>$ph</a></span>";
+            }else{
+                $ret .= "<span>$ph</span>";
+            }
         }
         return $ret;
     }

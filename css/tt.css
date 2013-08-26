@@ -22,21 +22,25 @@ header menu {
 
 #tt-header li {
     display:inline-block;
+    background-image: url('../img/menu_neutral.png');
 }
 
 #tt-header li:hover {
-    background-color: #aaeeaa;
+    background-image: url('../img/menu_hover.png');
 }
 
 #tt-header li a {
     display: block;
+    text-decoration: none;
     padding: 8px 12px;
-    border: 1px solid #33aa33;
     margin: 1px 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: black;
 }
 
-.current_page {
-    background-color: #229922;
+#tt-header li.current_page {
+    background-image: url('../img/menu_active.png');
 }
 
 /* Body content */
