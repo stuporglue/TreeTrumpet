@@ -1,5 +1,6 @@
 $(document).ready(function(){
     pt = $('#tt-tree').pvTree('lib/ged2json.php','family.ged',{
+        focusPerson : focus_person_id,
         personClick : function(e){
             var id = e.target.id.replace('person_','');
 
@@ -32,7 +33,7 @@ $(document).ready(function(){
     });
 
 
-    autocompleteNames = $('.ancestorlist li a').map(function(i,e){return $(e).text();})
+    var autocompleteNames = $('.ancestorlist li a').map(function(i,e){return $(e).text();});
     var filter = function(e){
              var matcher = new RegExp(e.target.value, "i" ); 
              var foundone = false;

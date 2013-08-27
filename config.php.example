@@ -5,6 +5,9 @@
 ; TreeTrumpet should be usable with the default settings, 
 ; but you can change things here without breaking anything
 
+; Change the focus person
+focus_person_id=0
+
 
 ; This is a list of modules/pages, you can disable certain pages
 ; if you don't want them to be displayed on your site
@@ -28,7 +31,7 @@ gedcom=1
 ; address to them.
 
 [contact]
-show_email_address=0
+show_email_address=1
 show_email_form=0
 
 email_address=example@example.com

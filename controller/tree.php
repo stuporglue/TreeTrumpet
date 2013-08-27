@@ -82,6 +82,7 @@ $scripts = Array(
     "js/tree.js"
 );
 
+$page->js("focus_person_id = '" . $focus->getId() . "';",TRUE);
 foreach($scripts as $script){
     $page->js($script);
 }

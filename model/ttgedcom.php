@@ -13,11 +13,15 @@ class ttgedcom {
     }
 
     function getFocusId(){
-        $ids = Array();
-        foreach($this->gedcom->getIndi() as $individual){
-            $ids[] = $individual->getId();
+        global $_CONFIG;
+
+        if($_CONFIG['focus_person_id'] && $this->getIndividual($_CONFIG['focus_person_id'])){
+            return $_CONFIG['focus_person_id'];
         }
-        return array_shift($ids);
+
+        foreach($this->gedcom->getIndi() as $individual){
+            return $individual->getId();
+        }
     }
 
     function getIndividual($id){

@@ -9,14 +9,20 @@
 
 global $_BASEURL,$_CONFIG;
 
-
-/*
- * $enabled_modules is a list of modules which are enabled (of course)
- *
- * You can disable them by setting the value to FALSE
- */
-
 $_CONFIG = Array(
+    /*
+     * User can set the focus person. It defaults to the first person in the file
+     */
+    'focus_person_id' => FALSE,
+
+
+    /*
+    * A list of modules which are enabled (of course)
+    *
+    * You can disable them by setting the value to FALSE
+    */
+
+
     'tree'      =>  TRUE, 
     'map'       =>  TRUE, 
     'people'    =>  TRUE, 
