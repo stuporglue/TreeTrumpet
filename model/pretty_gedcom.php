@@ -649,4 +649,23 @@ class pretty_gedcom {
         $ret .= "</dl>";
         return $ret;
     }
+
+    static function parseDateString($string){
+        // might be a year!
+        $ts = date_create_from_format('Y',$string);
+        if($ts === FALSE){
+            $ts = strtotime($string);
+        }else{
+            $ts = $ts->getTimestamp();
+        }
+        if((int)$ts == 0){ 
+            return FALSE; 
+        }
+        return $ts;
+    }
+    
+    static function parseTimeString($string){
+
+        return FALSE;
+    }
 }

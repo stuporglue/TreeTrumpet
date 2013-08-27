@@ -8,6 +8,10 @@ class ttgedcom {
         $this->gedcom = $parser->parse(__DIR__. '/../family.ged');
     }
 
+    function updated(){
+        return filemtime(__DIR__ . '/../family.ged');
+    }
+
     function getFocusId(){
         $ids = Array();
         foreach($this->gedcom->getIndi() as $individual){
@@ -22,6 +26,38 @@ class ttgedcom {
                 return model('individual',Array($individual,$this->gedcom));
             }
         }
+    }
+
+    /**
+        @Keep returning individual objects until we've visited them all
+     */
+    function nextIndividual(){
+        if(!isset($this->_indiIDs)){
+            $this->_indiIDs = $this->gedcom->getIndi(); 
+        }
+        $cur = current($this->_indiIDs);
+        if($cur === FALSE){
+            unset($this->_indiIDs);
+            return FALSE;
+        }
+        next($this->_indiIDs);
+        return $this->getIndividual($cur->getId());
+    }
+
+    /**
+        @Keep returning family objects until we've visited them all
+     */
+    function nextFamily(){
+        if(!isset($this->_familyIDs)){
+            $this->_familyIDs = $this->gedcom->getFam(); 
+        }
+        $cur = current($this->_familyIDs);
+        if($cur === FALSE){
+            unset($this->_familyIDs);
+            return FALSE;
+        }
+        next($this->_familyIDs);
+        return $this->getFamily($cur->getId());
     }
 
     function getFamily($id,$gedcom = NULL){

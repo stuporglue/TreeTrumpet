@@ -412,6 +412,21 @@ class individual {
         return $ord;
     }
 
+    function updated(){
+        if($chan = $this->individual->getChan()){
+            if(
+                $date = $chan->getDate() && 
+                $time = $chan->getTime()
+            ){
+
+                $date = pretty_gedcom::parseDateString($date);
+            }
+        }
+
+        // Default to filemtime
+        return filemtime(__DIR__ . '/../family.ged');
+    }
+
     function __toString(){
         return $this->firstName();
     }

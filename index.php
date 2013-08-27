@@ -69,6 +69,7 @@ if(array_key_exists('ruri',$_GET)){
     $path_info = trim($path_info,"/'");
     $path_info = explode('/',$path_info);
     $endpoint = array_shift($path_info);
+    $endpoint = preg_replace('/(.*)\..*/',"$1",$endpoint);
     $_SERVER['PATH_INFO'] = implode('/',$path_info);
 }
 
