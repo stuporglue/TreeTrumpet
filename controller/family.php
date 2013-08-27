@@ -6,8 +6,7 @@ function family($familyId){
     $family = $gedcom->getFamily($familyId);
 
     if(!$family){
-        controller('_404',Array("Family $familyId"));
-        exit();
+        return controller('_404',Array("Family $familyId"));
     }
 
     $familyName = $family->familyName();

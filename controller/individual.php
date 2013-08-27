@@ -6,6 +6,10 @@ function individual($indiId){
 
     $individual = $gedcom->getIndividual($indiId);
 
+    if(!$individual){
+        return controller('_404',Array("Individual $indiId"));
+    }
+
     $page = model('page');
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     $page->title("All about " . $individual->firstName());
