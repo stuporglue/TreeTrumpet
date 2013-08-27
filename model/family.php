@@ -224,4 +224,40 @@ class family {
         }
         return $events;
     }
+
+    function updated($fallback = TRUE){
+        $updated = 0;
+        if($husbId = $this->family->getHusb()){
+            if($husb = $this->pretty_gedcom->findIndi($husbId)){
+                $updated = $husb->updated(FALSE);
+            }
+        }
+        if($wifeId = $this->family->getwife()){
+            if($wife = $this->pretty_gedcom->findIndi($wifeId)){
+                if($wup = $wife->updated(FALSE)){
+                    if($wup > $updated){
+                        $updated = $wup;
+                    }
+                }
+            }
+        }
+
+        if($chils = $this->family->getChil()){
+            foreach($chils as $childId){
+                $child = $this->pretty_gedcom->findIndi($childId);
+                if($cup = $child->updated(FALSE)){
+                    if($cup > $updated){
+                        $updated = $cup;
+                    }
+                }
+            }
+        }
+
+        // Default to filemtime
+        if($fallback){
+            return filemtime(__DIR__ . '/../family.ged');
+        }else{
+            return FALSE;
+        }
+    }
 }

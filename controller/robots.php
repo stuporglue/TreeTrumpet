@@ -10,6 +10,6 @@ if(file_exists(__DIR__ . '/../robots.txt')){
 
 global $_BASEURL;
 $robots = view('robots',Array('sitemap' => $_BASEURL . '/xmlsitemap.xml'),TRUE);
-// @file_put_contents(__DIR__ . '/../robots.txt',$robots);
+@file_put_contents(__DIR__ . '/../robots.txt',$robots);
 print $robots;
 exit();

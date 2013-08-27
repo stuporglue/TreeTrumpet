@@ -1,5 +1,5 @@
 <?php
-
+http://localhost/stuporglue/TreeTrumpet/treetrumpet/xmlsitemap.xml
 // Include dirs
 
 // Our models
@@ -42,5 +42,3 @@ if(!file_exists(__DIR__ . '/../family.ged')){
     controller('firstrun');
     exit();
 }
-
-

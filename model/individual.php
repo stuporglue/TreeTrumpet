@@ -412,19 +412,21 @@ class individual {
         return $ord;
     }
 
-    function updated(){
+    function updated($fallback = TRUE){
         if($chan = $this->individual->getChan()){
-            if(
-                $date = $chan->getDate() && 
-                $time = $chan->getTime()
-            ){
-
-                $date = pretty_gedcom::parseDateString($date);
+            $date = $chan->getDate();
+            $time = $chan->getTime();
+            if($date && $time){
+                return pretty_gedcom::parseDateTimeString($date,$time);
             }
         }
 
         // Default to filemtime
-        return filemtime(__DIR__ . '/../family.ged');
+        if($fallback){
+            return filemtime(__DIR__ . '/../family.ged');
+        }else{
+            return FALSE;
+        }
     }
 
     function __toString(){

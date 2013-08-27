@@ -665,7 +665,26 @@ class pretty_gedcom {
     }
     
     static function parseTimeString($string){
+        return strtotime($string);
+    }
 
-        return FALSE;
+    static function parseDateTimeString($date,$time){
+        $date = pretty_gedcom::parseDateString($date);
+        if($date === FALSE){
+            return FALSE;
+        }
+        $time = pretty_gedcom::parseTimeString($time);
+        if($time === FALSE){
+            return FALSE;
+        }
+
+        return mktime(
+            date('H',$time),
+            date('i',$time),
+            date('s',$time),
+            date('n',$date),
+            date('j',$date),
+            date('Y',$date)
+        );
     }
 }
