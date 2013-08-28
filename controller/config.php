@@ -11,16 +11,55 @@ global $_BASEURL,$_CONFIG;
 
 $_CONFIG = Array(
     /*
+     * focus_person_id
+     *
      * User can set the focus person. It defaults to the first person in the file
      */
     'focus_person_id' => FALSE,
 
+    /*
+     *   media_dir
+     *
+     *   media_dir lets GEDCOMs with absolute media paths work
+     *
+     *   If your gedcom file uses relative URLs, you can just upload everything to media
+     *   with nothing listed in this config file
+     *
+     *   If your media paths have standard prefix you can list it here. The 
+     *   prefix will be stripped off of the front of any attachment file
+     *   paths in the Gedcom. 
+     *      
+     *   If you keep all your media in a single directory, then you can just
+     *   upload that directory to the media directory, set this prefix and
+     *   everything should just-work(TM).
+     *
+     *   Examples:
+     *
+     *  * Windows
+     *  media_dir=C:\Users\Michael\Genealogy\Files
+     *  Path to file shown in GEDCOOM: C:\Users\Michael\Genealogy\Files\mcginnis\patrick_marriage_cert.jpg
+     *  Path to file on server: media/mcginnis/patrick_marriage_cert.jpg
+     *
+     *  * OSX
+     *  media_dir=/Volumes/External Hard Drive/Genealogy/Files
+     *  Path to file shown in GEDCOM: /Volumes/External Hard Drive/Genealogy/Files/mcginnis/patrick_marriage_cert.jpg
+     *  Path to file on server: media/mcginnis/patrick_marriage_cert.jpg
+     *
+     *  * Linux
+     *  media_dir=/home/michael/genealogy/files
+     *  Path to file shown in GEDCOM: /home/michael/genealogy/files/mcginnis/patrick_marriage_cert.jpg
+     *  Path to file on server: media/mcginnis/patrick_marriage_cert.jpg
+     * 
+     */
+
+    'media_dir' => '/media/',
+
 
     /*
-    * A list of modules which are enabled (of course)
-    *
-    * You can disable them by setting the value to FALSE
-    */
+     * A list of modules which are enabled (of course)
+     *
+     * You can disable them by setting the value to FALSE
+     */
 
 
     'tree'      =>  TRUE, 

@@ -33,7 +33,7 @@ class ttgedcom {
     }
 
     /**
-        @Keep returning individual objects until we've visited them all
+        @brief Keep returning individual objects until we've visited them all
      */
     function nextIndividual(){
         if(!isset($this->_indiIDs)){
@@ -49,7 +49,7 @@ class ttgedcom {
     }
 
     /**
-        @Keep returning family objects until we've visited them all
+        @brief Keep returning family objects until we've visited them all
      */
     function nextFamily(){
         if(!isset($this->_familyIDs)){
@@ -64,6 +64,21 @@ class ttgedcom {
         return $this->getFamily($cur->getId());
     }
 
+    /**
+        @brief Keep returning objects until we've visited them all
+     */
+    function nextObje(){
+        if(!isset($This->_objectIDs)){
+            $this->_objectIDs = $this->gedcom->getObje();
+        }
+        $cur = current($this->_objectIDs);
+        if($cur === FALSE){
+            unset($this->_objectIDs);
+        }
+        next($this->_familyIDs);
+        return $this->getObject($cur->getId());
+    }
+
     function getFamily($id,$gedcom = NULL){
         if(is_null($gedcom)){
             $gedcom = $this->gedcom;
@@ -71,6 +86,18 @@ class ttgedcom {
         foreach($gedcom->getFam() as $family){
             if($family->getId() == $id){
                 return model('family',Array($family,$gedcom));
+            }
+        }
+        return FALSE;
+    }
+
+    function getObject($id,$gedcom = NULL){
+     if(is_null($gedcom)){
+            $gedcom = $this->gedcom;
+        }
+        foreach($gedcom->getObject() as $obje){
+            if($obje->getId() == $id){
+                return model('obje',Array($obje,$gedcom));
             }
         }
         return FALSE;

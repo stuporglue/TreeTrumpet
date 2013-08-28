@@ -226,106 +226,29 @@ class pretty_gedcom {
     function printObje($obje){
 
         if($obje->getIsReference()){
-            $obje = findObje($obje->getObje());
+            $obje = $this->pretty_gedcom->findObje($obje->getObje());
+        }
+
+        if(get_class($obje) != 'obje'){ 
+            $obje = model('obje',Array($obje,$this->parsedgedcom));
         }
 
         $ret = '';
         $ret .= "<ul>";
 
-        $form = $obje->getForm();
-        $titl = $obje->getTitl();
 
-        if($obje->hasAttribute('file') && $file = $obje->getFile()){
-
-            // File type
-            // $mime = `file -bi $file  | sed 's/;.*//'`;
-            if(file_exists($file)){
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mimeType = finfo_file($finfo, $file);
-
-                $browserImages = Array(
-                    'image/jpeg',
-                    'image/gif',
-                    'image/png',
-                );
-
-                $browserVideos = Array(
-                    'video/mp4',
-                    'video/webm',
-                    'video/ogg',
-
-                );
-
-                $browserAudio = Array(
-                    'audio/mpeg',
-                    'audio/ogg',
-                    'audio/wav',
-                    'audio/x-wav',
-                );
-
-                if(in_array($mimeType,$browserImages)){
-                    $ret .= "<li><a href='$file'><img alt='".$obje->getTitl()."'src='lib/thumbnail.php?img=" . urlencode($file) . "'/></a></li>";
-                }else if(in_array($mimeType,$browserAudio)){
-                    if($titl){
-                        $target = $titl;
-                    }else{
-                        $target = $file;
-                    }
-
-                    $ret .= "<li><a title='$titl' alt='$titl'  href='$file'>$titl</a><br>";
-                    $ret .= "<audio controls><source src='$file' type='$mimeType'>Your browser does not support the HTML5 audio element.</audio>";
-                    $ret .= "</li>";
-                }else if(in_array($mimeType,$browserVideos)){
-                    if($titl){
-                        $target = $titl;
-                    }else{
-                        $target = $file;
-                    }
-
-                    $ret .= "<li><a title='$titl' alt='$titl'  href='$file'>$titl</a><br>";
-                    $ret .= "<video height='400' controls><source src='$file' type='$mimeType'>Your browser does not support the HTML5 video tag.</video>";
-                    $ret .= "</li>";
-                } else {
-
-                    if($titl){
-                        $target = $titl;
-                    }else{
-                        $target = $file;
-                    }
-
-                    $ret .= "<li><a title='$titl' alt='$titl'  href='$file'>$titl</a></li>";
-                }
-
-
-                // URL type
-            }else if(filter_var($file,FILTER_VALIDATE_URL)){
-
-                if($titl){
-                    $target = $titl;
-                }else{
-                    $target = $file;
-                }
-
-                $ret .= "<li><a title='$titl' alt='$titl'  href='$file'>$target</a></li>";
-
-                // Unknown
-            }else{
-                if(!$form){
-                    $form = 'file';
-                }
-                if($titl){
-                    $titl = ", titled <em>$titl</em>";
-                }
-                $ret .= "<li>Oh no! This $form$titl can't be found. Please <a href='contact.php'>ask the owner of this website</a> to upload it or fix the link!</li>";
-            }
+        if($obje->hasAttribute('file')){
+            $ret .= "<li>";
+            $ret .= $obje->embedHtml();
+            $ret .= "</li>";
         }else if($obje->hasAttribute('blob') && $blob = $obje->getBlob()){
-            $ret .= "<li>Please ask for support for embedded images, re-export your GEDCOM with linked images instead</li>";
+            $ret .= "<li>Please ask for support for embedded images and in the mean time re-export your GEDCOM with linked images instead.</li>";
         }
 
         if($notes = $obje->getNote()){
             $ret .= "<li><h3>Notes</h3>";
             foreach($notes as $note){
-                $ret .=  $ret .= $this->printNote($note);
+                $ret .=  $this->printNote($note);
             }
             $ret .= "</li>";
         }

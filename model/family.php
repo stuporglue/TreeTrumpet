@@ -32,10 +32,7 @@ class family {
     function link(){
         global $_BASEURL;
         $url = $_BASEURL . "/family.php/".$this->family->getId()."/";
-        $familyName = $this->familyName();
-        $familyName = trim(preg_replace("/-+/",'-',preg_replace("/[^a-zA-Z0-9\.]/",'-',$familyName)),'-');
-        $familyName = htmlentities($familyName);
-        $url .= $familyName;
+        $url .= linkPath($this->familyName());
         return linky(htmlentities($url));
     }
 

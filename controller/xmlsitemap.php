@@ -51,6 +51,10 @@ while($fam = $gedcom->nextFamily()){
     $urls[] = printSingleUrl($fam->link(),$fam->updated(),'0.4'); 
 }
 
+while($obje = $gedcom->nextObje()){
+    $urls[] = printSingleUrl($fam->link(),$fam->updated(),'0.4'); 
+}
+
 
 $xml = view('xmlsitemap',Array('urls' => $urls),TRUE);
 print $xml;
