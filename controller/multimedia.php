@@ -1,19 +1,16 @@
 <?php
 
 function multimedia($id){
+    if(!array_key_exists('h',$_GET)){
+        $_GET['h'] = NULL;
+    }
+    if(!array_key_exists('w',$_GET)){
+        $_GET['w'] = NULL;
+    }
+    if(!array_key_exists('a',$_GET)){
+        $_GET['a'] = FALSE;
+    }
 
-    $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
-
-    $args = func_get_args();
-    $id = array_shift($args);
-
-    $obje = $gedcom->getObject($id);
-
-    $mime = $obje->mime();
-    print_r($mime);
-
-    $name = $obje->attachmentName();
-    print_r($name);
-
-
+    $file = join('/',func_get_args());
+    return obje::readfile($file,$_GET['h'],$_GET['w'],$_GET['a']);
 }

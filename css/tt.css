@@ -86,3 +86,8 @@ header menu {
 .ttfakelink {
     text-decoration: underline;
 }
+
+.ttthumbnail {
+    height: 250px;
+    width: 250px;
+}
