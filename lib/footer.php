@@ -1,8 +1,0 @@
-<?php
-/*
- * Here's where the footer and any content that you want at the bottom of every page should go
- */
-?>
-<div id='tt-footer'>
-Create your personal genealogy website like this one with <a href='http://treetrumpet.com'>TreeTrumpet</a>.
-</div>
