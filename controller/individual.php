@@ -12,6 +12,7 @@ function individual($indiId){
 
     $page = model('page');
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+    $page->css("css/individual.css");
     $page->title("All about " . $individual->firstName());
     $page->h1("All about " . $individual->firstBold());
 

@@ -13,6 +13,7 @@ function family($familyId){
 
     $page = model('page');
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+    $page->css("css/family.css");
     $page->title("All about $familyName");
     $page->h1("All about $familyName");
 

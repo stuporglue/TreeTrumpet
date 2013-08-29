@@ -145,14 +145,15 @@ class family {
 
     function multimedia(){
         $mm = '';
-        if($objes = $this->family->getObje()){
+        if($objes = $this->individual->getObje()){
+            $mm .= "<div id='multimedia'class='block'>";
             foreach($objes as $obje){
                 $mm .= $this->pretty_gedcom->printObje($obje);
             }
+            $mm .= "</div>";
         }
-
         if($mm != ''){
-            $mm = "<h2 class='blocktitle'>Multimedia</h2><div id='multimedia' class='block'>$mm</div>";
+            $mm = "<h2 class='blocktitle'>Multimedia</h2>$mm";
         }
 
         return $mm;
