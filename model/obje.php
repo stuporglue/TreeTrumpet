@@ -151,12 +151,12 @@ class obje {
             $file = $this->obje->getFile();
         }
 
-        if(!$_CONFIG['media_dir']){
+        if(!$_CONFIG['media_prefix']){
             return $file;
         }
 
-        if(strpos($file,$_CONFIG['media_dir']) === 0){
-            $file = str_replace($_CONFIG['media_dir'],'',$file);
+        if(strpos($file,$_CONFIG['media_prefix']) === 0){
+            $file = str_replace($_CONFIG['media_prefix'],'',$file);
         }
 
         return $file;

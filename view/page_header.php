@@ -8,6 +8,10 @@ print "<link type='text/css' href='$_BASEURL/css/tt.css' rel='stylesheet' media=
 print $page->printCss();
 print "<link rel='stylesheet' type='text/css' media='handheld, only screen and (max-device-width: 768px)' href='$_BASEURL/css/small_screens.css' />";
 
+if($can = $page->canonical()){
+    print "<link type='canonical' href='$can'/>";
+}
+
 print "<link type='image/x-icon' rel='shortcut icon' href='$_BASEURL/img/favicon.png'/>";
 print "<meta name='viewport' content='width=device-width'/>";
 print "<title>$page->title</title>";

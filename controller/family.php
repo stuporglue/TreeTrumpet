@@ -12,6 +12,7 @@ function family($familyId){
     $familyName = $family->familyName();
 
     $page = model('page');
+    $page->canonical($family->link());
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     $page->css("css/family.css");
     $page->title("All about $familyName");

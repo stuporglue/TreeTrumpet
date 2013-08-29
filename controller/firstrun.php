@@ -29,7 +29,7 @@ if(!@file_put_contents(__DIR__ . '/../cache/write_test','Caching enabled!')){
 if(!file_exists(__DIR__ . '/config.php')){
    $otherSteps[] = 'firstrun_customize'; 
 }else{
-    if(!$_CONFIG['show_email'] && !$_CONFIG['show_email_form'] || $_CONFIG['email_address'] == 'example@example.com'){
+    if((!$_CONFIG['show_email_address'] && !$_CONFIG['show_email_form']) || $_CONFIG['email_address'] == 'example@example.com'){
         $otherSteps[] = 'firstrun_email';
     }
     if($_CONFIG['show_email_form'] && !@include('Mail.php')){

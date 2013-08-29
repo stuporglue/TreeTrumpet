@@ -426,6 +426,20 @@ class individual {
         }
     }
 
+    function hisher(){
+        if($sex = $this->individual->getSex()){
+            switch($sex){
+            case 'M':
+                return "his";
+                break;
+            case 'F':
+                return "her";
+                break;
+            }
+        }
+        return 'their';
+    }
+
     function __toString(){
         return $this->firstName();
     }

@@ -1,7 +1,15 @@
 <?php
 
 $page = model('page');
+
+global $_BASEURL;
+$page->canonical(linky($_BASEURL . '/map.php'));
+
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+
+$focusId = $gedcom->getFocusId();
+$focus = $gedcom->getIndividual($focusId);
+
 $geocoder = model('geocoder');
 
 $eventTypes = Array();
@@ -54,9 +62,9 @@ foreach($allPlaces as $place => $people){
     $placesList .= "</li></ul></div>";
 }
 
-$intro = "<h2>Important Places and My People Who Lived there</h2>
+$intro = "<h2>Important Places and Relatives Who Lived there</h2>
     <div>
-    <p>This map and list show the places my ancestors lived and died. On the map you can filter by the year events occurred, and in the list you can see a list of places. 
+    <p>This map and list show the places " . $focus->firstName() .  " and " . $focus->hisher() . " relatives lived and died. On the map you can filter by the year events occurred, and in the list you can see a list of places. 
     <p>Clicking on the blue place names will zoom there on the map. </p></div>";
 
 
@@ -114,11 +122,15 @@ $page->js("
 });
 ",TRUE);
 
-$page->title("Ancestors Map");
+$page->title("Places " . $focus->firstName() . " and " . ucfirst($focus->hisher()) . " Relatives Lived");
 
-$page->h1("A Map of My Ancestors");
+$page->h1("A Map of " . $focus->firstName() . " and " . ucfirst($focus->hisher()) . " Relatives");
 
-$page->bodyright .= "<div id='tt-map'>Hang on! The map is loading!</div>";
+$page->bodyright .= "<div id='tt-map'>";
+$page->bodyright .= "<p>Hold tight, the map is loading!</p>";
+$page->bodyright .= "<p>This is an interactive map of the places my ancestors lived.</p>";
+$page->bodyright .= "<p>It requires JavaScript to work.</p>";
+$page->bodyright .= "</div>";
 
 $page->js("$('#places').accordion({ collapsible: true,heightStyle:'content' })",TRUE);
 

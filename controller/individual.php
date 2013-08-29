@@ -11,6 +11,9 @@ function individual($indiId){
     }
 
     $page = model('page');
+
+    $page->canonical($Individual->link());
+
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     $page->css("css/individual.css");
     $page->title("All about " . $individual->firstName());

@@ -57,6 +57,9 @@ $hidden = "
 
 $page = model('page');
 
+global $_BASEURL;
+$page->canonical(linky($_BASEURL . '/tree.php'));
+
 $csses = Array(
     'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css',
     'css/3rdparty/ui/ui.slider.css',
@@ -90,7 +93,13 @@ foreach($scripts as $script){
 $page->title($focus->firstName() . " Family Tree");
 $page->h1("<h1>The " . $focus->firstBold() . " Family Tree</h1>");
 $page->body .= $treeNav;
-$page->bodyright .= "<div id='tt-tree'>Please wait...loading</div>";
+
+$page->bodyright .= "<div id='tt-tree'>";
+$page->bodyright .= "<p>Hold tight, the tree is loading!</p>";
+$page->bodyright .= "<p>This is an interactive pedigree tree.</p>";
+$page->bodyright .= "<p>It requires JavaScript 1o work.</p>";
+$page->bodyright .= "</div>";
+
 $page->hidden($hidden);
 
 view('page_v_split',Array('page' => $page,'menu' => 'tree'));

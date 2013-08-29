@@ -57,3 +57,17 @@ function linky($url){
         return str_replace('.php','',$url);
     }
 }
+
+function linkPath($string){
+    return preg_replace(
+        '/[-]+/','-',
+        trim(
+            preg_replace(
+                '/[^A-Za-z0-9-_\.]+/',
+                '-',
+                $string
+            ),
+            '-'
+        )
+    );
+}

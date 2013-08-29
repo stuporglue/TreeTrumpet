@@ -19,6 +19,18 @@ class page{
     var $bodyright = '';
     var $hidden = '';
     var $head = '';
+    var $canonical = '';
+
+    function canonical($can = FALSE){
+        if($can){
+            $this->canonical = $can;
+            return $this->canonical;
+        }else if($this->canonical != ''){
+            return $this->canonical;
+        }else{
+            return FALSE;
+        }
+    }
 
     function title($title){
         $this->title = $title;

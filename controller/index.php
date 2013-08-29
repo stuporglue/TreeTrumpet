@@ -12,6 +12,8 @@ foreach($gedcom->gedcom->getIndi() as $individual){
 }
 
 $page = model('page');
+global $_BASEURL;
+$page->canonical($_BASEURL);
 
 $page->title("The Genealogy of " . $focus->firstName());
 

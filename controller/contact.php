@@ -1,6 +1,10 @@
 <?php
 
 $page = model('page');
+
+global $_BASEURL;
+$page->canonical(linky($_BASEURL . '/contact.php'));
+
 $page->title("Contact Me");
 $page->css("css/contact.css");
 $page->h1("Contact Me");

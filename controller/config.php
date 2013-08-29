@@ -17,10 +17,10 @@ $_CONFIG = Array(
      */
     'focus_person_id' => FALSE,
 
-    /*
-     *   media_dir
+        /*
+     *   media_prefix
      *
-     *   media_dir lets GEDCOMs with absolute media paths work
+     *   media_prefix lets GEDCOMs with absolute media paths work
      *
      *   If your gedcom file uses relative URLs, you can just upload everything to media
      *   with nothing listed in this config file
@@ -36,23 +36,23 @@ $_CONFIG = Array(
      *   Examples:
      *
      *  * Windows
-     *  media_dir=C:\Users\Michael\Genealogy\Files
+     *  media_prefix=C:\Users\Michael\Genealogy\Files
      *  Path to file shown in GEDCOOM: C:\Users\Michael\Genealogy\Files\mcginnis\patrick_marriage_cert.jpg
      *  Path to file on server: media/mcginnis/patrick_marriage_cert.jpg
      *
      *  * OSX
-     *  media_dir=/Volumes/External Hard Drive/Genealogy/Files
+     *  media_prefix=/Volumes/External Hard Drive/Genealogy/Files
      *  Path to file shown in GEDCOM: /Volumes/External Hard Drive/Genealogy/Files/mcginnis/patrick_marriage_cert.jpg
      *  Path to file on server: media/mcginnis/patrick_marriage_cert.jpg
      *
      *  * Linux
-     *  media_dir=/home/michael/genealogy/files
+     *  media_prefix=/home/michael/genealogy/files
      *  Path to file shown in GEDCOM: /home/michael/genealogy/files/mcginnis/patrick_marriage_cert.jpg
      *  Path to file on server: media/mcginnis/patrick_marriage_cert.jpg
      * 
      */
 
-    'media_dir' => '/media/',
+    'media_prefix' => '/media/',
 
 
     /*
@@ -74,9 +74,9 @@ $_CONFIG = Array(
      * You can use this to allow people to send you emails. 
      */
 
-    'email_address'     => "example@example.com", 
-    'show_email'        => FALSE,
-    'show_email_form'   => FALSE,
+    'email_address'         => "example@example.com", 
+    'show_email_address'    => TRUE,
+    'show_email_form'       => FALSE,
 
     // These are SMTP settings and you will need to check with your email
     // provider to determine the correct values. The values listed are
