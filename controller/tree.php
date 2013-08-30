@@ -12,7 +12,7 @@ $focusId = $gedcom->getFocusId();
 $focus = $ancestors[$focusId];
 
 $closePeople = controller('close_people',Array($gedcom,$focus,8));
-foreach($closePeople as $ids){
+foreach($closePeople as $close){
     $one = $gedcom->getIndividual($close);
     $fourNames[] = $one->firstName();
     $page->keywords[] = $one->surname();

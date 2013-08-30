@@ -1,6 +1,6 @@
 <?php
 
-function close_people(&$gedcom,&$focus,$count = 4){
+function close_people($gedcom,$focus,$count = 4){
 
     // Get some people close to the individual
     $closePeople = Array();

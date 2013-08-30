@@ -175,7 +175,7 @@ class individual {
                     continue;
                 }
 
-                $fam = $gedcom->getFamily($famId);
+                $fam = ttgedcom::getFamily($famId,$this->gedcom);
 
                 $husbId = NULL;
                 if($husbId = $fam->getHusb()){
@@ -267,7 +267,7 @@ class individual {
 
     function places(){
         $places = Array();
-        foreach($this->eventsList as $even){
+        foreach($this->eventsList() as $event){
             if($plac = $event->getPlac()){
                 $places[] = $plac->getPlac();
             }
