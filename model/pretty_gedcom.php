@@ -112,7 +112,7 @@ class pretty_gedcom {
             if($cfam && $husb = $cfam->getHusb()){ 
                 $husb = $this->findIndi($husb);
                 $name = "Husb {$husb->getId()}";
-                if($realName = $husb->getName()){
+                if($realName = $husb->firstName()){
                     $name = $realName;
                 }
                 $ret .= "<dt>Father</dt><dd><a href='" . $husb->link() . "'>$name</a></dd>";
@@ -123,7 +123,7 @@ class pretty_gedcom {
                 foreach($chils as $chil){
                     $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
-                    if($realName = $chil->getName()){
+                    if($realName = $chil->firstName()){
                         $name = $realName;
                     }
                     if($chil->getId() == $selfId){
@@ -166,7 +166,7 @@ class pretty_gedcom {
             if($sfam && $wife = $sfam->getWife()){ 
                 $wife = $this->findIndi($wife);
                 $name = "Wife {$wife->getId()}";
-                if($realName = $wife->getName()){
+                if($realName = $wife->firstName()){
                     $name = $realName;
                 }
                 if($wife->getId() == $selfId){
@@ -178,7 +178,7 @@ class pretty_gedcom {
             if($sfam && $husb = $sfam->getHusb()){ 
                 $husb = $this->findIndi($husb);
                 $name = "Husb {$husb->getId()}";
-                if($realName = $husb->getName()){
+                if($realName = $husb->firstName()){
                     $name = $realName;
                 }
                 if($husb->getId() == $selfId){
@@ -192,7 +192,7 @@ class pretty_gedcom {
                 foreach($chils as $chil){
                     $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
-                    if($realName = $chil->getName()){
+                    if($realName = $chil->firstName()){
                         $name = $realName;
                     }
                     if($chil->getId() == $selfId){
@@ -609,5 +609,9 @@ class pretty_gedcom {
             date('j',$date),
             date('Y',$date)
         );
+    }
+
+    function __call($func,$args){
+        return call_user_func_array(Array($this->parsedgedcom,$func),$args);
     }
 }

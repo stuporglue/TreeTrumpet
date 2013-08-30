@@ -1,10 +1,15 @@
 <?php
 
+global $_BASEURL;
+
+$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 $page = model('page');
 
-global $_BASEURL;
-$page->canonical(linky($_BASEURL . '/contact.php'));
+controller('standard_meta_tags',Array(&$gedcom,&$page));
 
+$page->keywords[] = 'contact';
+
+$page->canonical(linky($_BASEURL . '/contact.php'));
 $page->title("Contact Me");
 $page->css("css/contact.css");
 $page->h1("Contact Me");
@@ -15,7 +20,7 @@ we may be, please contact me so we can collaborate.
 </p>";
 
 $contacts = Array(); 
-$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+
 $submitter = $gedcom->getSubmitter();
 
 if($form = $submitter->emailForm()){

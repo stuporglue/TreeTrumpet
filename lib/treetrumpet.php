@@ -19,7 +19,11 @@ function controller($controller,$args = Array()){
         $controller = '_404';
     }
 
-    require(__DIR__ . "/../controller/$controller.php");
+    // If it's a function controller, we don't want to require it twice
+    if(!function_exists($controller)){
+        require(__DIR__ . "/../controller/$controller.php");
+    }
+
     if(function_exists($controller)){
         return call_user_func_array($controller,$args);
     }

@@ -1,6 +1,7 @@
 <?php
 
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+$subm = $gedcom->getSubmitter();
 
 $focus;
 $totalPeople = 0;
@@ -18,6 +19,12 @@ $page->canonical($_BASEURL);
 $page->title("The Genealogy of " . $focus->firstName());
 
 $page->h1("The Genealogy of " . $focus->firstBold() . " and " . ($totalPeople - 1) . " of " . $focus->posessive() . " relatives");
+
+$page->description .= "Genealogy website about " . $focus->firstName() . " and " . ($totalPeople - 1) . " of " . $focus->posessive() . " relatives.";
+
+if($name = $subm->name()){
+    $page->description .= " Prepared by $name.";
+}
 
 $page->body .= "<h2>Explore the family of " . $focus->firstBold() . "</h2>";
 

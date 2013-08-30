@@ -12,6 +12,15 @@ function family($familyId){
     $familyName = $family->familyName();
 
     $page = model('page');
+
+    controller('standard_meta_tags',Array(&$gedcom,&$page));
+
+    $page->description .= "The family of " . $familyName;
+
+    foreach($family->lastNames() as $surname){
+        $page->keywords[] = $surname;
+    }
+
     $page->canonical($family->link());
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     $page->css("css/family.css");

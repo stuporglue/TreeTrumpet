@@ -1,5 +1,4 @@
 <?php
-http://localhost/stuporglue/TreeTrumpet/treetrumpet/xmlsitemap.xml
 // Include dirs
 
 // Our models

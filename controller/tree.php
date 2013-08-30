@@ -1,11 +1,24 @@
 <?php
 
+global $_BASEURL;
+$page = model('page');
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+
+controller('standard_meta_tags',Array(&$gedcom,&$page));
 
 $ancestors = $gedcom->alphabeticByName();
 $focusId = $gedcom->getFocusId();
 
 $focus = $ancestors[$focusId];
+
+$closePeople = controller('close_people',Array($gedcom,$focus,8));
+foreach($closePeople as $ids){
+    $one = $gedcom->getIndividual($close);
+    $fourNames[] = $one->firstName();
+    $page->keywords[] = $one->surname();
+}
+
+$page->description .= "Pedigree Tree view of relatives of " . $focus->firstName() . ", including " . implode(',',$fourNames);
 
 $treeNav = "<p>Back to <a href='".$focus->link()."' onclick=\"return refocusTree('{$focusId}');\">" . $focus->firstBold() . "</a></p>";
 
@@ -55,9 +68,7 @@ $hidden = "
 </div>
 ";
 
-$page = model('page');
 
-global $_BASEURL;
 $page->canonical(linky($_BASEURL . '/tree.php'));
 
 $csses = Array(

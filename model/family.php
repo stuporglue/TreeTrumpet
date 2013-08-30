@@ -29,6 +29,25 @@ class family {
         return $familyName;
     }
 
+    function lastNames(){
+        $familyName = Array();
+        if($husbId = $this->family->getHusb()){
+            $husb = $this->pretty_gedcom->findIndi($husbId);
+            if($husbName = $husb->surname()){
+                $familyName[] = $husbName;
+            }
+        }
+
+        if($wifeId = $this->family->getWife()){
+            $wife = $this->pretty_gedcom->findIndi($wifeId);
+            if($wifeName = $wife->surname()){
+                $familyName[] = $wifeName;
+            }
+        }
+        return $familyName;
+
+    }
+
     function link(){
         global $_BASEURL;
         $url = $_BASEURL . "/family.php/".$this->family->getId()."/";
@@ -145,7 +164,7 @@ class family {
 
     function multimedia(){
         $mm = '';
-        if($objes = $this->individual->getObje()){
+        if($objes = $this->family->getObje()){
             $mm .= "<div id='multimedia'class='block'>";
             foreach($objes as $obje){
                 $mm .= $this->pretty_gedcom->printObje($obje);
@@ -209,7 +228,7 @@ class family {
     }
 
     function __call($func,$args){
-        call_user_func_array(Array($this->family,$func),$args);
+        return call_user_func_array(Array($this->family,$func),$args);
     }
 
     function eventsList(){

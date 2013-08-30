@@ -2,6 +2,10 @@
 
 class ttgedcom {
     var $gedcom;
+    var $_individualCache = Array();
+    var $_familyCache = Array();
+
+
 
     function __construct($gedcomFile){
         $parser = model('PhpGedcom\Parser');
@@ -25,11 +29,15 @@ class ttgedcom {
     }
 
     function getIndividual($id){
-        foreach($this->gedcom->getIndi() as $individual){
-            if($individual->getId() == $id){
-                return model('individual',Array($individual,$this->gedcom));
+        if(!array_key_exists($id,$this->_individualCache)){
+            foreach($this->gedcom->getIndi() as $individual){
+                if($individual->getId() == $id){
+                    $indi = model('individual',Array($individual,$this->gedcom));
+                    $this->_individualCache[$id] = $indi;
+                }
             }
         }
+        return $this->_individualCache[$id];
     }
 
     /**
@@ -152,5 +160,9 @@ class ttgedcom {
             }
         }
         return FALSE;
+    }
+
+    function __call($func,$args){
+        return call_user_func_array(Array($this->gedcom,$func),$args);
     }
 }

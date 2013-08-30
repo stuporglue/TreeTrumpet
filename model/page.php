@@ -20,6 +20,10 @@ class page{
     var $hidden = '';
     var $head = '';
     var $canonical = '';
+    var $description = '';
+    var $keywords = Array('genealogy');
+    var $author = '';
+    var $copyright = '';
 
     function canonical($can = FALSE){
         if($can){
@@ -31,6 +35,20 @@ class page{
             return FALSE;
         }
     }
+
+    function description($desc = FALSE){
+        if($desc){
+            $this->description = $desc;
+            return $this->description;
+        }else if($this->description != ''){
+            return $this->description;
+        }else{
+            return FALSE;
+        }
+    }
+
+
+
 
     function title($title){
         $this->title = $title;

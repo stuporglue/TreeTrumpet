@@ -1,11 +1,12 @@
 <?php
 
 $page = model('page');
+$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 
 global $_BASEURL;
 $page->canonical(linky($_BASEURL . '/map.php'));
 
-$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+controller('standard_meta_tags',Array(&$gedcom,&$page));
 
 $focusId = $gedcom->getFocusId();
 $focus = $gedcom->getIndividual($focusId);
@@ -25,6 +26,25 @@ foreach($gedcom->gedcom->getIndi() as $individual){
         }
     }
 }
+
+// Find top 5 used places for description
+$mostUsedPlaces = Array();
+foreach($allPlaces as $k => $people){
+    $mostUsedPlaces[$k] = count($people);
+}
+ksort($mostUsedPlaces);
+if(count($mostUsedPlaces) > 10){
+    $mostUsedPlaces = array_slice($mostUsedPlaces,-10);
+}
+foreach($mostUsedPlaces as $place){
+    $page->keywords[] = $place;
+}
+if(count($mostUsedPlaces) > 4){
+    $mostUsedPlaces = array_slice($mostUsedPlaces,-4);
+}
+array_flip($mostUsedPlaces);
+
+$page->description .= "Places " . $focus->firstName() . " and " . $focus->posessive() . " relatives lived, including " . implode($mostUsedPlaces);
 
 $places = $geocoder->geocode(array_keys($allPlaces));
 $foundPlaces = array_keys($places);

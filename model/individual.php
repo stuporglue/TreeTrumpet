@@ -4,6 +4,7 @@
 class individual {
     var $individual;
     var $pretty_gedcom;
+    var $gedcom;
 
     function __construct($individual,$gedcom,$pretty_gedcom = NULL){
         $this->individual = $individual;
@@ -37,6 +38,14 @@ class individual {
             $firstName = $names[0]->getName();
         }
         return $firstName;
+    }
+
+    function surname(){
+        $surname;
+        if($names = $this->individual->getName()){
+            $surname = $names[0]->getSurn();
+        }
+        return $surname;
     }
 
     // First name they have, try to bold the last name
@@ -154,6 +163,34 @@ class individual {
         return $parents;
     }
 
+    function parentIds(){
+        $parents = Array();
+
+        if($fams = $this->individual->getFamc()){
+            foreach($fams as $famc){
+
+                $famId = $famc->getFamc();
+
+                if(!$famId){
+                    continue;
+                }
+
+                $fam = $gedcom->getFamily($famId);
+
+                $husbId = NULL;
+                if($husbId = $fam->getHusb()){
+                    $parents[] = $husbId;
+                }
+                $wifeId = NULL;
+                if($wifeId = $fam->getWife()){
+                    $parents[] = $wifeId;
+                }
+            }
+        }
+
+        return $parents;
+    }
+
     // spouse and kids
     function spouseAndKids()
     {
@@ -192,6 +229,11 @@ class individual {
     }
 
     function eventsList(){
+
+        if(isset($this->_eventsCache)){
+            return $this->_eventsCache;
+        }
+
         $events = Array();
 
         if($evens = $this->individual->getEven()){
@@ -218,7 +260,28 @@ class individual {
             }
         }
 
+        $this->_eventsCache = $events;
+
         return $events;
+    }
+
+    function places(){
+        $places = Array();
+        foreach($this->eventsList as $even){
+            if($plac = $event->getPlac()){
+                $places[] = $plac->getPlac();
+            }
+        }
+        return array_unique($places);
+    }
+
+    function getEvent($type){
+        foreach($this->eventsList() as $even){
+            if($even->getType() == $type){
+                return $even;
+            }
+        }
+        return FALSE;
     }
 
     // Associates Block

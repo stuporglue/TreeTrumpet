@@ -11,8 +11,40 @@ function individual($indiId){
     }
 
     $page = model('page');
+    controller('standard_meta_tags',Array(&$gedcom,&$page));
 
-    $page->canonical($Individual->link());
+    $dates = Array();
+    if($birth = $individual->getEvent('BIRT')){
+        $dates[] = $birth->getdate();
+    }
+
+    if($death = $individual->getEvent('DEAT')){
+        $dates[] = $death->getDate();
+    }
+
+    $page->description .= "Genealogy, history and notes about " . $individual->firstName();
+
+    if(count($dates) > 0){
+        $page->description .= " who lived " . implode(' - ', $dates);
+    }
+
+    if($names = $individual->getName()){
+        foreach($names as $name){
+            if($givn = $name->getGivn()){
+                $page->keywords[] = $givn;
+            }
+            if($surn = $name->getSurn()){
+                $page->keywords[] = $surn;
+            }
+        }
+    }
+
+
+    foreach($individual->places() as $place){
+        $page->keywords[] = $place;
+    }
+
+    $page->canonical($individual->link());
 
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     $page->css("css/individual.css");
