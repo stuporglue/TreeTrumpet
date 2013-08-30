@@ -112,7 +112,8 @@ class individual {
             $overview .= "<h3>Possible Duplicates</h3>";
             $overview .= "<ul>";
             foreach($aliases as $alias){
-                $overview .= "<li><a href='individual.php?id=$alias'>$alias</a></li>";
+                $aliasIndi = ttgedcom::getIndividual($alias);
+                $overview .= "<li><a href='" . $aliasIndi->link() . "'>$alias</a></li>";
             }
             $overview .= "</ul>";
         }

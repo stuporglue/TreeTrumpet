@@ -1,5 +1,5 @@
 <?php
-
+global $_BASEURL;
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 $subm = $gedcom->getSubmitter();
 
@@ -38,7 +38,7 @@ $page->bodyright .= view('feature_preview',Array(
     'id' => 'pedigreetree',
     'title' => 'Pedigree Tree',
     'text' => 'Pan, zoom and click around this interactive tree view of the family tree.',
-    'link' => linky('tree.php'),
+    'link' => linky($_BASEURL . '/tree.php'),
     'img' => 'img/tree.png'
 ),true);
 
@@ -46,7 +46,7 @@ $page->bodyright .= view('feature_preview',Array(
     'id' => 'eventsmap',
     'title' => 'Ancestor Events Map',
     'text' => 'See where ancestors important events occurred on this map.',
-    'link' => linky('map.php'),
+    'link' => linky($_BASEURL . '/map.php'),
     'img' => 'img/map_preview.png'
 ),true);
 
@@ -54,7 +54,7 @@ $page->bodyright .= view('feature_preview',Array(
     'id' => 'people',
     'title' => 'People',
     'text' => 'Drill down to the ancestor you\'re looking for with the filter and sorting tools on this interactive table.',
-    'link' => linky('table.php'),
+    'link' => linky($_BASEURL . '/table.php'),
     'img' => 'img/table.png'
 ),true);
 
