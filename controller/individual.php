@@ -116,7 +116,6 @@ function individual($indiId){
         $details .= $meta;
     }
 
-
     // Most people probably won't want this online
     // $ord = $individual->ordinances();
     // if($ord != ''){

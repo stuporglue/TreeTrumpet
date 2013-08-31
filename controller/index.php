@@ -68,7 +68,7 @@ $page->bodyright .= view('feature_preview',Array(
     'text' => '<p>You can explore this pedigree with these tools. Each ancestor and family have their own personal pages to explore as well.</p>
     <p>If you have other tools you\'d like to see here, please let <a href="http://treetrumpet.com">TreeTrumpet</a> know.</p>',
     'link' => linky($_BASEURL . '/tree.php'),
-    'img' => 'img/tt.png'
+    'img' => 'img/treetrumpet.png'
 ),true);
 
 $page->bodyright .= view('feature_preview',Array(

@@ -1,4 +1,5 @@
 <?php 
+$page->js('js/social.js');
 $page->css('css/page_v_split.css');
 view('page_header',Array('page' => $page,'menu' => $menu)); ?>
 <article>

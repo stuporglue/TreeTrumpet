@@ -13,7 +13,7 @@ $(document).ready(function(){
 
     // Make a map between tab IDs and their index
     var tabIdx = {};
-    var tabLinks = tab$('.tt-content > ul li a');
+    var tabLinks = $('.tt-content > ul li a');
     for(var i = 0;i<tabLinks.length;i++){
         tabIdx[tabLinks[i].getAttribute('href')] = i;
     }

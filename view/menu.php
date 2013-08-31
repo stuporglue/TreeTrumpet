@@ -10,4 +10,4 @@ foreach($menus as $ctrl => $label){
     }
     print "<li class='$curClass'><a href='" . linky("$_BASEURL/$ctrl.php") . "' title='" . htmlentities($label) . "' alt='" . htmlentities($label) . "'>" . htmlentities($label) . "</a></li>";
 }
-print "</ul></div>";
+print "</ul><div class='socialButtons'></div></div>";

@@ -47,9 +47,6 @@ class page{
         }
     }
 
-
-
-
     function title($title){
         $this->title = $title;
     }
