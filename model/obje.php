@@ -3,18 +3,45 @@
 class obje {
     var $obje;
     var $pretty_gedcom;
+    var $parent_object;
 
     const THUMB_WIDTH = 250;
     const THUMB_HEIGHT = 250;
 
-    function __construct($obje,$gedcom){
+    /**
+     * $obje  The object we represent. A PHPGedcom\Obje object
+     * $gedcom A ttgedcom object
+     * $parent (optional) The parent object, so we can get location for events and such
+     */
+    function __construct($obje,$gedcom,$parent = FALSE){
         $this->pretty_gedcom = model('pretty_gedcom',Array($gedcom));
 
         if($obje->getIsReference()){
             $obje = $this->findObje($obje->getObje());
         }
+
+        $this->parent_object = $parent;
+
         $this->obje = $obje;
     }
+
+
+    function link(){
+        return $this->halfLink() . $this->title() . "</a>";
+    }
+
+    function caption(){
+        return "TODO";
+    }
+
+    function geo_location(){
+        return "TODO";
+    }
+
+    function title(){
+        return "TODO";
+    }
+
 
     function mime($file = NULL){
         $fsfile = obje::fsPath($file);
@@ -91,10 +118,6 @@ class obje {
         }
 
         return FALSE;
-    }
-
-    function link(){
-        return $this->halfLink() . $this->title() . "</a>";
     }
 
     // Return the opening <a> tag

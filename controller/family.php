@@ -86,12 +86,12 @@ function family($familyId){
     $scripts = Array(
         "http://code.jquery.com/jquery-1.9.1.js",
         "http://code.jquery.com/ui/1.10.3/jquery-ui.js",
+        "js/family.js",
     );
 
     foreach($scripts as $script){
         $page->js($script);
     }
-    $page->js("$('h2.blocktitle').hide(); $('.tt-content').tabs();",TRUE);
 
     view('page',Array('page' => $page,'menu' => 'family'));
 }

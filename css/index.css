@@ -1,4 +1,33 @@
-img.stretchy {
-    width: 100%;
-    max-height: 100%;
+.tt-preview {
+
+    border:1px inset #444;
+    padding: 2px;
+    overflow: hidden;
+    float: left;
+    background-color: white;
+    width: 48% !important;
+    width: calc(50% - 6px) !important;
+    height: 49% !important;
+    height: calc(50% - 6px) !important; 
+}
+
+.tt-preview img {
+    display: none;
+}
+
+#pedigreetree {
+    background: url('../img/tree.png') no-repeat center center;
+}
+
+#eventsmap {
+    background: url('../img/map.png') no-repeat center center;
+}
+
+#people {
+    background: url('../img/people.png') no-repeat center center;
+}
+
+h3 a {
+    color: black;
+    text-decoration: none;
 }
