@@ -33,11 +33,6 @@ function view($view,$vars = Array(),$asString = FALSE){
     if($asString){
         ob_start();
     }
-    foreach($vars as $k => $v){
-        if(is_string($v)){
-            $vars[$k] = htmlentities($v);
-        }
-    }
     extract($vars);
     require(__DIR__ . "/../view/$view.php");
     if($asString){

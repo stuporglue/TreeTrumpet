@@ -15,6 +15,10 @@
     display: none;
 }
 
+#overview {
+    background: url('../img/treetrumpet.png') no-repeat center center;
+}
+
 #pedigreetree {
     background: url('../img/tree.png') no-repeat center center;
 }
