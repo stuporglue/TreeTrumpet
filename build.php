@@ -81,6 +81,7 @@ function recurse_copy($src,$dst) {
     recurse_copy("model","$destdir/model");
     recurse_copy("view","$destdir/view");
     recurse_copy("controller","$destdir/controller");
+    recurse_copy("img","$destdir/img");
 
     // Other rood-dir files
     copy('htaccess',"$destdir/.htaccess");
