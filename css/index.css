@@ -35,3 +35,12 @@ h3 a {
     color: black;
     text-decoration: none;
 }
+
+.tt-content-right h3 {
+    padding-left: 10px;
+    font-size: 1.5em;
+}
+
+.tt-content-right p {
+    padding: 10px;
+}

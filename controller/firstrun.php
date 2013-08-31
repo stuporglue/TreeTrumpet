@@ -6,18 +6,15 @@ $page = model('page');
 
 $page->css('css/firstrun.css');
 
-$page->title("Welcome to TreeTrumpet");
+$page->title("Welcome To TreeTrumpet");
 
-$page->h1("TreeTrumpet");
-
-$page->body .= "<p>Thanks for installing TreeTrumpet!</p>";
+$page->h1("Welcome To TreeTrumpet");
 
 if(!file_exists(__DIR__ . '/../family.ged')){
     $page->body .= view('firstrun_gedcom',Array(),TRUE);
 }else{
     $page->body .= view('firstrun_required_done',Array(),TRUE);
 }
-
 
 
 $otherSteps = Array();

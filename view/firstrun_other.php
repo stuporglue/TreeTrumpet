@@ -1,4 +1,4 @@
-<h2>Optimize Your Size</h2>
+<h2>Recommended: Optimize Your Size</h2>
 <p>
-None of these things are required, but may make your website more useful to visitors.
+Optimizing your site will make it perform better and make it more usefull to visitors.
 </p>
