@@ -12,7 +12,6 @@
 <div style='display:none'>
 <?php 
     print $page->hidden;
-    view('social');
 ?>
 </div>
 </body></html>

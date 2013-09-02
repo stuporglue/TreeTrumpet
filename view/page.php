@@ -2,7 +2,6 @@
 if(!isset($menu)){
     $menu = '';
 }
-$page->js('js/social.js');
 view('page_header',Array('page' => $page,'menu' => $menu)); ?>
 <article>
     <div class='tt-content'>

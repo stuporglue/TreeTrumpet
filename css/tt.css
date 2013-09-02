@@ -15,10 +15,20 @@ header menu {
     background-color: #668866;
 }
 
+
 #tt-header ul {
     padding: 0;
     margin: 0;
+    display: inline;
 }
+
+.socialButtons {
+    display:inline-block;
+    float: right;
+    height: 32px;
+    padding: 6px 6px 0 0;
+}
+
 
 #tt-header li {
     display:inline-block;
