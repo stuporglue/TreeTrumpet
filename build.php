@@ -44,6 +44,7 @@ function recurse_copy($src,$dst) {
         "$destdir/js/3rdparty/ui",
         "$destdir/img",
         "$destdir/lib/3rdparty",
+        "$destdir/lib/3rdparty/phpmailer",
         "$destdir/lib/licenses",
         "$destdir/cache",
         "$destdir/media"
@@ -138,6 +139,14 @@ function recurse_copy($src,$dst) {
             copy($file,"$destdir/css/3rdparty/ui/" . basename($file));
         }
     } 
+
+    // PHPMailer
+    foreach(glob("lib/phpmailer/*.php") as $file){
+        if(is_file($file)){
+            copy($file,"$destdir/lib/3rdparty/phpmailer/" . basename($file));
+        }
+    }
+    copy("lib/phpmailer/LICENSE","$destdir/lib/3rdparty/phpmailer/LICENSE");
 }
 
 // New zip file!

@@ -10,3 +10,6 @@
 [submodule "js/Pedigree-Viewer"]
 	path = js/Pedigree-Viewer
 	url = https://github.com/dovy/Pedigree-Viewer.git
+[submodule "lib/phpmailer"]
+	path = lib/phpmailer
+	url = https://github.com/PHPMailer/PHPMailer.git

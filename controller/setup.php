@@ -33,8 +33,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-
-
 controller('config');
 
 if(!file_exists(__DIR__ . '/../family.ged')){

@@ -29,9 +29,6 @@ if(!file_exists(__DIR__ . '/config.php')){
     if((!$_CONFIG['show_email_address'] && !$_CONFIG['show_email_form']) || $_CONFIG['email_address'] == 'example@example.com'){
         $otherSteps[] = 'firstrun_email';
     }
-    if($_CONFIG['show_email_form'] && !@include('Mail.php')){
-        $otherSteps[] = 'firstrun_email_pear';
-    }
     if($_CONFIG['show_email_form'] && ($_CONFIG['smtp_username'] == 'example@example.com' || $_CONFIG['smtp_password'] == 'your_secret_password')){
         $otherSteps[] = 'firstrun_email_form';
     }

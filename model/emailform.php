@@ -11,9 +11,6 @@ class emailform {
         $this->enabled = TRUE;
 
         global $_CONFIG;
-        if(!@include_once('Mail.php')){
-            $this->enabled = FALSE;
-        }
         if($_CONFIG['email_address'] == 'example@example.com'){
             $this->enabled = FALSE;
         } 
@@ -49,44 +46,31 @@ class emailform {
 
     function sendMail(){
         global $_CONFIG;
+        require_once(__DIR__ . "/../libphpmailer/class.phpmailer.php");
         
         if(count($_POST) > 0  && !$this->enabled()){
             return FALSE;
         }
 
-        if (!filter_var($_POST['from_email'], FILTER_VALIDATE_EMAIL)) {
+        if(!filter_var($_POST['from_email'], FILTER_VALIDATE_EMAIL)) {
             return FALSE;
         }
 
-        $post = $_POST;
+        $smtp = new PHPMailer();
+        $smtp->IsSMTP();
+        $smtp->Host = $_CONFIG['smtp_server'];
+        $smtp->Port = $_CONFIG['smtp_port'];
+        $smtp->SMTPAuth = TRUE;
+        $smtp->SMTPSecure = 'ssl';
+        $smtp->Username = $_CONFIG['smtp_username'];
+        $smtp->Password = $_CONFIG['smtp_password'];
+        $smtp->setFrom($_POST['from_email']);
+        $smtp->Subject = preg_replace("|[^a-zA-Z0-9.;:@'\"/\!\? ]|",' ',$_POST['subject']);
+        $smtp->Body = $_POST['message'];
+        $smtp->AddAddress($_CONFIG['email_address']);
 
-        $from     = $_POST['from_email'];
-        $to       = $_CONFIG['email_address'];
-        $subject  = preg_replace("|[^a-zA-Z0-9.;:@'\"/\!\? ]|",' ',$_POST['subject']);
-        $body     = $_POST['message'];
-
-        $host     = $_CONFIG['smtp_server'];
-        $port     = $_CONFIG['smtp_port'];
-        $username = $_CONFIG['smtp_username'];  //<> give errors
-        $password = $_CONFIG['smtp_password'];
-
-        $headers = array(
-            'From'    => $from,
-            'To'      => $to,
-            'Subject' => $subject
-        );
-        $smtp = Mail::factory('smtp', array(
-            'host'     => $host,
-            'port'     => $port,
-            'auth'     => true,
-            'username' => $username,
-            'password' => $password
-        ));
-
-        $mail = $smtp->send($to, $headers, $body);
-
-        if (PEAR::isError($mail)) {
-            error_log($mail->getMessage());
+        if(!$smtp->Send()){
+            error_log("Mailer Error: " . $smtp->ErrorInfo);
             return FALSE;
         } else {
             return TRUE;
