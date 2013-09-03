@@ -1,25 +1,27 @@
-;<?php exit(); // Leave this line here to protect against people trying to read your config file!
-;
-; This is a simple config file for TreeTrumpet
-;
-; TreeTrumpet should be usable with the default settings, 
-; but you can change things here without breaking anything
+;;<?php exit(); // Leave this line here to protect against people trying to read your config file!
+;;
+;; This is a simple config file for TreeTrumpet
+;; Uncomment a configuration option by removing the semicolons from the start of the line
+;; The values listed are the default values
+;;
+;; TreeTrumpet should be usable with the default settings, 
+;; but you can change things here without breaking anything
 
-; Change the focus person
-focus_person_id=0
+;; Change the focus person
+;focus_person_id=0
 
 
-; This is a list of modules/pages, you can disable certain pages
-; if you don't want them to be displayed on your site
-;
-; 1 means enabled, 0 (or anything else) means disabled
+;; This is a list of modules/pages, you can disable certain pages
+;; if you don't want them to be displayed on your site
+;;
+;; 1 means enabled, 0 (or anything else) means disabled
 
 [modules]
-tree=1
-map=1
-people=1
-contact=1
-gedcom=1
+;tree=1
+;map=1
+;people=1
+;contact=1
+;gedcom=1
 
 
 ; By default only the contact information in your GEDCOM file is
@@ -31,20 +33,22 @@ gedcom=1
 ; address to them.
 
 [contact]
-show_email_address=1
-show_email_form=0
+;show_email_address=1
+;show_email_form=0
 
-email_address=example@example.com
+;email_address=example@example.com
 
 
 [mail_form_settings]
-; These are SMTP settings. You will need to check with your email
-; provider to determine the correct values. The values listed are
-; for use with Gmail.
-smtp_server=ssl://smtp.gmail.com
-smtp_port=465
+;; If your server is set up to send email, you don't need to configure these at all.
 
-; Your gmail username
-smtp_username=example@example.com  
-; Your gmail password
-smtp_password=your_secret_gmail_password 
+;; These values are fo use with Email
+;smtp_server=smtp.gmail.com
+;smtp_port=465
+;smtp_security=tls
+;
+;; Your gmail username
+;smtp_username=example@gmail.com
+;; Your gmail password
+;smtp_password=password
+

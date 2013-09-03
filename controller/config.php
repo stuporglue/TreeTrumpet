@@ -78,13 +78,6 @@ $_CONFIG = Array(
     'show_email_address'    => TRUE,
     'show_email_form'       => FALSE,
 
-    // These are SMTP settings and you will need to check with your email
-    // provider to determine the correct values. The values listed are
-    // for use with Gmail.
-    'smtp_server'       => 'ssl://smtp.gmail.com',
-    'smtp_port'         => '465',
-    'smtp_username'     => 'example@example.com', // Your gmail username
-    'smtp_password'     => 'your_secret_password', // Your gmail password
 
     // For debugging. Caches js and css locally then uses it instead
     'cache_resources'   => FALSE,

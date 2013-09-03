@@ -17,12 +17,6 @@ class emailform {
         if(!$_CONFIG['show_email_form']){
             $this->enabled = FALSE;
         }
-        if($_CONFIG['smtp_username'] == 'example@example.com'){
-            $this->enabled = FALSE;
-        }
-        if($_CONFIG['smtp_password'] == 'your_secret_gmail_password'){
-            $this->enabled = FALSE;
-        }
         if (!filter_var($_CONFIG['email_address'], FILTER_VALIDATE_EMAIL)) {
             $this->enabled = FALSE;
         }
@@ -46,7 +40,7 @@ class emailform {
 
     function sendMail(){
         global $_CONFIG;
-        require_once(__DIR__ . "/../libphpmailer/class.phpmailer.php");
+        require_once(__DIR__ . "/../lib/3rdparty/phpmailer/class.phpmailer.php");
         
         if(count($_POST) > 0  && !$this->enabled()){
             return FALSE;
@@ -56,21 +50,32 @@ class emailform {
             return FALSE;
         }
 
-        $smtp = new PHPMailer();
-        $smtp->IsSMTP();
-        $smtp->Host = $_CONFIG['smtp_server'];
-        $smtp->Port = $_CONFIG['smtp_port'];
-        $smtp->SMTPAuth = TRUE;
-        $smtp->SMTPSecure = 'ssl';
-        $smtp->Username = $_CONFIG['smtp_username'];
-        $smtp->Password = $_CONFIG['smtp_password'];
-        $smtp->setFrom($_POST['from_email']);
-        $smtp->Subject = preg_replace("|[^a-zA-Z0-9.;:@'\"/\!\? ]|",' ',$_POST['subject']);
-        $smtp->Body = $_POST['message'];
-        $smtp->AddAddress($_CONFIG['email_address']);
+        $mail = new PHPMailer();
 
-        if(!$smtp->Send()){
-            error_log("Mailer Error: " . $smtp->ErrorInfo);
+	if(array_key_exists('smtp_server',$_CONFIG)){
+	    $mail->IsSMTP();
+
+	    // $mail->SMTPDebug = 2;
+	    // $mail->Debugoutput = 'html';
+
+	    $mail->Host = $_CONFIG['smtp_server'];
+	    $mail->Port = $_CONFIG['smtp_port'];
+	    $mail->SMTPAuth = TRUE;
+	    $mail->SMTPSecure = $_CONFIG['smtp_security'];
+	    $mail->Username = $_CONFIG['smtp_username'];
+	    $mail->Password = $_CONFIG['smtp_password'];
+	}else{
+	    $mail->IsSendmail();
+	}
+
+
+        $mail->setFrom($_POST['from_email']);
+        $mail->AddAddress($_CONFIG['email_address']);
+        $mail->Subject = preg_replace("|[^a-zA-Z0-9.;:@'\"/\!\? ]|",' ',$_POST['subject']);
+        $mail->Body = $_POST['message'];
+
+        if(!$mail->Send()){
+            error_log("Mailer Error: " . $mail->ErrorInfo);
             return FALSE;
         } else {
             return TRUE;
