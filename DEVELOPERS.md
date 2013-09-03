@@ -4,24 +4,18 @@ Developers
 This project uses several other projects and needs to be built to run. It will 
 not run directly from checked-out code!!!
 
+These instructions work on Debian Linux. Please let me know what changes you have to make to build on other platforms. 
+
 
 Clone TreeTrumpet
 -----------------
     git clone https://github.com/stuporglue/TreeTrumpet.git
 
-Clone Submodules
+Clone and Init Submodules (and Sub-Submodules)
 ----------------
     cd TreeTrumpet
-    git submodule init
-    git submodule update
-
-Same for Sub-Submodules
------------------------
-    cd lib/ged2json
-    git submodule init
-    git submodule update
-    cd ../../
-
+    git submodule update --init --recursive
+    
 Install npm If Needed
 ---------------------
 
@@ -31,14 +25,15 @@ http://nodejs.org/download/
 Build JavaScript Projects
 -------------------------
     cd js/jQRangeSlider
-    npm install -g grunt-cli
+    sudo npm install -g grunt-cli
+    npm install grunt-contrib-mincss@0.4.0-rc7
     npm install
     grunt
     cd ..
 
     cd Leaflet.markercluster
     npm install
-    npm install -g jake
+    sudo npm install -g jake
     jake
     cd ../../
 
@@ -57,4 +52,4 @@ Deploy and Test
 
 Outside Dependencies
 --------------------
-PHP 5.3+ with Pear's Mail and Net_SMTP modules installed
+PHP 5.3+ with SQLite support
