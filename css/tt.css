@@ -16,6 +16,7 @@ header menu {
 }
 
 #tt-header {
+    overflow: hidden;
     text-align: right;
 }
 
@@ -64,6 +65,7 @@ header menu {
     border: 1px solid black;
     height: 525px;
     overflow: auto;
+    clear:both;
 }
 
 .tt-content-block {
