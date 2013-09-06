@@ -1,3 +1,4 @@
+</div>
 <footer>
     <div id='tt-footer'>
     <?php

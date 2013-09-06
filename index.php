@@ -1,4 +1,8 @@
 <?php
+// This is the router for TreeTrumpet. 
+// Since TreeTrumpet is supposed to be 0-config we need to work where .htaccess doesn't
+// PHP files such as tree.php or individual.php should require index.php which will take over
+
 require_once('lib/treetrumpet.php');
 
 // Some pretty simple processing to handle getting here either via

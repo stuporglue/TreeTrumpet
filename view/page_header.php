@@ -26,7 +26,7 @@ if($desc = $page->description){
 }
 
 if($keywords = $page->keywords){
-    print "<meta name='keyword' content='".implode(',',array_unique(str_replace(',','  ',$keywords)))."'/>";
+    print "<meta name='keywords' content='".implode(',',array_unique(str_replace(',','  ',$keywords)))."'/>";
 }
 
 if($copyright = $page->copyright){
@@ -37,6 +37,7 @@ if($author = $page->author){
     print "<meta name='author' content='$author'/>";
 }
 
+print "<meta name='application-name' content='TreeTrumpet'/>";
 print "<meta name='generator' content='TreeTrumpet'/>";
 print "<meta name='viewport' content='width=device-width'/>";
 
@@ -52,4 +53,3 @@ print $page->head;
     <h1><?php print $page->h1;?></h1>
     <menu><?php controller('menu',Array($menu)); ?></menu>
 </header>
-

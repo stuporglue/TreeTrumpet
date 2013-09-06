@@ -10,7 +10,7 @@ foreach($menus as $ctrl => $label){
     if($ctrl == $current){
         $curClass = 'current_page';
     }
-    print "<li class='$curClass'><a href='" . linky("$_BASEURL/$ctrl.php") . "' title='" . htmlentities($label) . "' alt='" . htmlentities($label) . "'>" . htmlentities($label) . "</a></li>";
+    print "<li class='$curClass'><a href='" . linky("$_BASEURL/$ctrl.php") . "' title='" . htmlentities($label) . "'>" . htmlentities($label) . "</a></li>";
 }
 print "</ul></nav>";
 
