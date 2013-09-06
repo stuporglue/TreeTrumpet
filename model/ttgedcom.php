@@ -5,11 +5,8 @@ class ttgedcom {
     var $_individualCache = Array();
     var $_familyCache = Array();
 
-
-
     function __construct($gedcomFile){
-        $parser = model('PhpGedcom\Parser');
-        $this->gedcom = $parser->parse(__DIR__. '/../family.ged');
+        $this->gedcom = model('gedCache',Array($gedcomFile,__DIR__ . '/../cache/gedCache.sqlite3'));
     }
 
     function updated(){
