@@ -1,7 +1,12 @@
 <?php
 global $_BASEURL;
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+$page = model('page');
+
 $subm = $gedcom->getSubmitter();
+if($name = $subm->name()){
+    $page->description .= " Prepared by $name.";
+}
 
 $focus;
 $totalPeople = 0;
@@ -12,8 +17,6 @@ foreach($gedcom->gedcom->getIndi() as $individual){
     $totalPeople++;
 }
 
-$page = model('page');
-global $_BASEURL;
 $page->canonical($_BASEURL);
 
 $page->title("The Genealogy of " . $focus->firstName());
@@ -38,10 +41,6 @@ foreach($fourClose as $close){
     $one = $gedcom->getIndividual($close);
     $fourNames[] = $one->firstName();
     $page->keywords[] = $one->surname();
-}
-
-if($name = $subm->name()){
-    $page->description .= " Prepared by $name.";
 }
 
 $page->body .= "<h2>Explore the family of " . $focus->firstBold() . "</h2>";

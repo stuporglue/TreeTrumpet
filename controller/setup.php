@@ -1,4 +1,5 @@
 <?php
+global $_CONFIG;
 // Include dirs
 
 // Our models
@@ -34,6 +35,10 @@ spl_autoload_register(function ($class) {
 });
 
 controller('config');
+
+if($_CONFIG['debug_mode'] !== TRUE){
+    set_error_handler('catchAnError');
+}
 
 if(!file_exists(__DIR__ . '/../family.ged')){
     controller('firstrun');

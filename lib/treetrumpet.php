@@ -70,3 +70,7 @@ function linkPath($string){
         )
     );
 }
+
+function catchAnError($errno, $errstr, $errfile, $errline){
+    return TRUE;
+}

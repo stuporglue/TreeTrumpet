@@ -4,16 +4,27 @@ class submitter {
     var $submitter;
     var $pretty_gedcom;
 
-    function __construct($submitter,$gedcom){
-        $this->submitter = $submitter;
-        $this->pretty_gedcom = model('pretty_gedcom',$gedcom);
+    function __construct($submitter = NULL,$gedcom = NULL){
+        if(!is_null($submitter)){
+            $this->submitter = $submitter;
+        }
+        if(!is_null($gedcom)){
+            $this->pretty_gedcom = model('pretty_gedcom',$gedcom);
+        }
     }
 
     function contactInfo(){
+        if(!isset($this->pretty_gedcom) || !isset($this->submitter)){
+            return FALSE;
+        }
         return $this->pretty_gedcom->printSubm($this->submitter);
     } 
 
     function name(){
+        if(!isset($this->pretty_gedcom) || !isset($this->submitter)){
+            return FALSE;
+        }
+
         if($name = $this->submitter->getName()){
             return $name;
         }
@@ -40,6 +51,9 @@ class submitter {
     }
 
     function __call($func,$args){
+        if(!isset($this->submitter)){
+            return FALSE;
+        }
         return call_user_func_array(Array($this->submitter,$func),$args);
     }
 }

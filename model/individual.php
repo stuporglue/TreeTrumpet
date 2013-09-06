@@ -176,7 +176,7 @@ class individual {
                     continue;
                 }
 
-                $fam = ttgedcom::getFamily($famId,$this->gedcom);
+                $fam = ttgedcom::getStaticFamily($famId,$this->gedcom);
 
                 $husbId = NULL;
                 if($husbId = $fam->getHusb()){
@@ -245,7 +245,7 @@ class individual {
 
         if($fams = $this->individual->getFams()){
             foreach($fams as $famc){
-                $fam = ttgedcom::getFamily($famc->getFams(),$this->gedcom);
+                $fam = ttgedcom::getStaticFamily($famc->getFams(),$this->gedcom);
                 foreach($fam->eventsList() as $even){
                     $events[] = $even;
                 }
@@ -254,7 +254,7 @@ class individual {
 
         if($famc = $this->individual->getFamc()){
             foreach($famc as $famc){
-                $fam = ttgedcom::getFamily($famc->getFamc(),$this->gedcom);
+                $fam = ttgedcom::getStaticFamily($famc->getFamc(),$this->gedcom);
                 foreach($fam->eventsList() as $even){
                     $events[] = $even;
                 }

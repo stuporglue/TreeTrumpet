@@ -79,8 +79,12 @@ $_CONFIG = Array(
     'show_email_form'       => FALSE,
 
 
-    // For debugging. Caches js and css locally then uses it instead
+    // For debugging / offline development. Caches js and css locally then uses it instead
     'cache_resources'   => FALSE,
+
+    // If we're not in debug mode then lib/treetrumpet.php:catchAnError gets set as the error handler
+    // If we're in debug mode, then we don't do anything special on errors.
+    'debug_mode'        => FALSE,
 );
 
 // If config exists merge it into the real settings

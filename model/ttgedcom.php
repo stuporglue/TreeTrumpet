@@ -87,10 +87,16 @@ class ttgedcom {
         return $this->getObject($cur->getId());
     }
 
-    function getFamily($id,$gedcom = NULL){
-        if(is_null($gedcom)){
-            $gedcom = $this->gedcom;
+    function getFamily($id){
+        foreach($this->gedcom->getFam() as $family){
+            if($family->getId() == $id){
+                return model('family',Array($family,$this->gedcom));
+            }
         }
+        return FALSE;
+    }
+
+    static function getStaticFamily($id,$gedcom){
         foreach($gedcom->getFam() as $family){
             if($family->getId() == $id){
                 return model('family',Array($family,$gedcom));
@@ -159,7 +165,7 @@ class ttgedcom {
                 return model('submitter',Array($subm,$this->gedcom));
             }
         }
-        return FALSE;
+        return model('submitter');
     }
 
     function __call($func,$args){
