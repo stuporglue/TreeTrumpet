@@ -59,7 +59,7 @@ function recurse_copy($src,$dst) {
     }
 
     // Set the version info
-    $revision = "TreeTrumpet build from " . date('Y-m-d_H:M') . "\n";
+    $revision = "TreeTrumpet build from " . date('Y-m-d_H:i') . "\n";
     $gitinfo = explode("\n",`git rev-list HEAD`);
     $revision .= array_shift($gitinfo);
     file_put_contents("$destdir/lib/version.txt",$revision);
