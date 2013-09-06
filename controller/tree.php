@@ -38,7 +38,7 @@ $hidden = "
         <a id='refocuslink' onclick='pt.refocus(this.className);return false;' class='' href='#'>Focus Tree on Me</a><br>
         <a id='gotopage' href='#' class=''>See all details</a>
     </p>
-    <h4>Gender</h3>
+    <h4>Gender</h4>
     <div class='gender'></div>
     <h4>Events</h4>
     <div class='events'></div>
@@ -102,7 +102,7 @@ foreach($scripts as $script){
 }
 
 $page->title($focus->firstName() . " Family Tree");
-$page->h1("<h1>The " . $focus->firstBold() . " Family Tree</h1>");
+$page->h1("The " . $focus->firstBold() . " Family Tree");
 $page->body .= $treeNav;
 
 $page->bodyright .= "<div id='tt-tree'>";
