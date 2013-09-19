@@ -142,6 +142,8 @@ $page->js("
 });
 ",TRUE);
 
+$page->js("$('#places').accordion({ collapsible: true,heightStyle:'content' })",TRUE);
+
 $page->title("Places " . $focus->firstName() . " and " . ucfirst($focus->hisher()) . " Relatives Lived");
 
 $page->h1("A Map of " . $focus->firstName() . " and " . ucfirst($focus->hisher()) . " Relatives");
@@ -151,7 +153,5 @@ $page->bodyright .= "<p>Hold tight, the map is loading!</p>";
 $page->bodyright .= "<p>This is an interactive map of the places my ancestors lived.</p>";
 $page->bodyright .= "<p>It requires JavaScript to work.</p>";
 $page->bodyright .= "</div>";
-
-$page->js("$('#places').accordion({ collapsible: true,heightStyle:'content' })",TRUE);
 
 view('page_v_split',Array('page' => $page,'menu' => 'map'));

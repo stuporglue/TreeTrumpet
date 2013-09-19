@@ -48,7 +48,7 @@ $page->js("$(document).ready(function(){
 
 
 $page->body .= "<div id='tt-people'>";
-$page->body .= controller('table_noscript');
+$page->body .= controller('table_noscript',Array($ttgedcom));
 $page->body .= "</div>";
 
 view('page',Array('page' => $page,'menu' => 'people'));
