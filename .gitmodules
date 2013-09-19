@@ -13,3 +13,6 @@
 [submodule "lib/phpmailer"]
 	path = lib/phpmailer
 	url = https://github.com/PHPMailer/PHPMailer.git
+[submodule "lib/php-gedcom-sqlite"]
+	path = lib/php-gedcom-sqlite
+	url = https://github.com/stuporglue/php-gedcom-sqlite.git

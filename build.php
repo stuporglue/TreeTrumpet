@@ -122,6 +122,12 @@ function recurse_copy($src,$dst) {
     copy("lib/ged2json/examples/php/lib/ssgeocoder/ssgeocoder.php","$destdir/lib/3rdparty/ssgeocoder.php");
     recurse_copy("lib/ged2json/examples/php/lib/php-gedcom/library","$destdir/lib/3rdparty/php-gedcom/library");
 
+    foreach(glob("lib/php-gedcom-sqlite/*.php") as $file){
+        if(is_file($file)){
+            copy($file,"$destdir/lib/3rdparty/php-gedcom/library/" . basename($file));
+        }
+    }
+
 
     // Pedigree Viewer 
     foreach(glob("js/Pedigree-Viewer/js/*") as $file){
