@@ -1,7 +1,7 @@
 <?php
 
-$gedfile = __DIR__ . '/../' . $_GET['g'];
-$ged2json = model('ged2json',Array($gedfile));
+$gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
+$ged2json = model('ged2json',Array($gedcom));
 
 $json = $ged2json->toJsonArray();
 

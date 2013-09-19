@@ -60,7 +60,7 @@ $eventTypesWithPlaces = array_keys($eventTypes);
 sort($eventTypesWithPlaces);
 
 $eventTypeMenu = '<h2>Filter Map by Event Type</h2><div><ul>';
-$eventTypeMenu .= "<li class='ttfakelink onclick='tm.usePlaceFrom(\"Any\",\"first\")'>Any</li>";
+$eventTypeMenu .= "<li class='ttfakelink' onclick='tm.usePlaceFrom(\"Any\",\"first\")'>Any</li>";
 foreach($eventTypesWithPlaces as $type){
     $eventTypeMenu .= "<li class='tteventfilter ttfakelink'>$type</li>";
 }

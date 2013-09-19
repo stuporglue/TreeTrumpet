@@ -6,7 +6,12 @@ class ttgedcom {
     var $_familyCache = Array();
 
     function __construct($gedcomFile){
-        $this->gedcom = model('gedCache',Array($gedcomFile,__DIR__ . '/../cache/gedCache.sqlite3'));
+        if(is_string($gedcomFile)){
+            $parser = model('PhpGedcom\ParserSqlite',Array(NULL,__DIR__ . '/../cache/family.ged.sqlite3'));
+            $this->gedcom = $parser->parse(__DIR__. '/../family.ged');
+        }else if(is_object($gedcomFile)){
+            $this->gedcom = $gedcomFile;
+        }
     }
 
     function updated(){
@@ -26,15 +31,11 @@ class ttgedcom {
     }
 
     function getIndividual($id){
-        if(!array_key_exists($id,$this->_individualCache)){
-            foreach($this->gedcom->getIndi() as $individual){
-                if($individual->getId() == $id){
-                    $indi = model('individual',Array($individual,$this->gedcom));
-                    $this->_individualCache[$id] = $indi;
-                }
-            }
+        $indis = $this->gedcom->getIndi();
+        if(isset($id,$indis)){
+            return model('individual',Array($indis[$id],$this->gedcom));
         }
-        return $this->_individualCache[$id];
+        return FALSE;
     }
 
     /**
@@ -85,19 +86,17 @@ class ttgedcom {
     }
 
     function getFamily($id){
-        foreach($this->gedcom->getFam() as $family){
-            if($family->getId() == $id){
-                return model('family',Array($family,$this->gedcom));
-            }
+        $fams = $this->gedcom->getFam();
+        if(isset($fams[$id])){
+            return model('family',Array($fams[$id],$this->gedcom));
         }
         return FALSE;
     }
 
     static function getStaticFamily($id,$gedcom){
-        foreach($gedcom->getFam() as $family){
-            if($family->getId() == $id){
-                return model('family',Array($family,$gedcom));
-            }
+        $fams = $gedcom->getFam();
+        if(isset($fams[$id])){
+            return model('family',Array($fams[$id],$gedcom));
         }
         return FALSE;
     }
@@ -145,14 +144,18 @@ class ttgedcom {
 
     function alphabeticByName(){
         $ancestors = Array();
-        foreach($this->gedcom->getIndi() as $individual){
-            $ancestors[$individual->getId()] = model('individual',Array($individual,$this->gedcom)); 
+        $indis = $this->gedcom->getIndi();
+
+        foreach($indis as $individual){
+            if($names = $individual->getName()){
+                $name = $names[0]->getName();
+                $ancestors[$individual->getId()] = trim(preg_replace('/[^a-zA-Z ]/','',$name));
+            }else{
+                $ancestors[$individual->getId()] = '';
+            }
         }
 
-        uasort($ancestors,function($a,$b){
-            return $a->alphaName() > $b->alphaName();
-        });
-
+        asort($ancestors);
         return $ancestors;
     }
 

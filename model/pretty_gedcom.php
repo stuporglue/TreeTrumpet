@@ -160,7 +160,7 @@ class pretty_gedcom {
         // Turn a family reference into a de-referenced family
         if($fam->hasAttribute('fams') && $fams = $fam->getFams()){
             $family = $this->findFam($fams);
-            $ret .= "<li><a href='" . $family->link() . "'>" . $family->familyName() . " (Family $fams)</a><dl>";
+            $ret .= "<li><a href='" . $family->link() . "'>" . $family->familyName() . " (Family $fams)</a><ul>";
             $sfam = $this->findFam($fams);
 
             if($sfam && $wife = $sfam->getWife()){ 
@@ -319,7 +319,7 @@ class pretty_gedcom {
     function printSubm($subm){
         $ret = '';
         if($name = $subm->getName()){
-            $ret .= "<span>$name</span><br>";
+            $ret .= "<div>$name</div><br>";
         }
 
         if($addr = $subm->getAddr()){ 
@@ -338,7 +338,7 @@ class pretty_gedcom {
         $ret = '';
         $type = preg_replace("|.*\\\|",'',get_class($even));
         $ret .= "<h3>Type: $type</h3>";
-        $ret .= "<span class='event'>";
+        $ret .= "<div class='event'>";
         $ret .= "<dl>";
         if($even->hasAttribute('famc') && $famc = $even->getFamc()){
             $ret .= "<dt>Family ID</dt><dd>$famc</dd>";
@@ -371,7 +371,7 @@ class pretty_gedcom {
             $ret .= $this->printObje($obje);
         }
         $ret .= "</dl>";
-        $ret .= "</span>";
+        $ret .= "</div>";
         return $ret;
     }
 
@@ -423,9 +423,9 @@ class pretty_gedcom {
         $ret = '';
         if($ph = $phon->getPhon()){
             if(preg_match('/^[0-9+()[]#-\s-]+$/',$ph)){
-                $ret .= "<span><a href='tel:$ph'>$ph</a></span>";
+                $ret .= "<div><a href='tel:$ph'>$ph</a></div>";
             }else{
-                $ret .= "<span>$ph</span>";
+                $ret .= "<div>$ph</div>";
             }
         }
         return $ret;
@@ -516,7 +516,7 @@ class pretty_gedcom {
 
     function printNote($note){
         $ret = '';
-        $ret .= "<span class='note'>";
+        $ret .= "<div class='note'>";
         //if($ref = $note->getIsRef()){
         //    $ret .= "Reference";
         //}
@@ -529,7 +529,7 @@ class pretty_gedcom {
                 $ret .= $this->printSour($sour);
             }
         }
-        $ret .= "</span>";
+        $ret .= "</div>";
         return $ret;
     }
 

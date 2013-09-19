@@ -9,7 +9,7 @@ controller('standard_meta_tags',Array(&$gedcom,&$page));
 $ancestors = $gedcom->alphabeticByName();
 $focusId = $gedcom->getFocusId();
 
-$focus = $ancestors[$focusId];
+$focus = $gedcom->getIndividual($focusId);
 
 $closePeople = controller('close_people',Array($gedcom,$focus,8));
 foreach($closePeople as $close){
@@ -25,7 +25,8 @@ $treeNav = "<p>Back to <a href='".$focus->link()."' onclick=\"return refocusTree
 $treeNav .= "<p style='display:none;'>Filter: <input type='text' id='autocomplete'/> (<span class='ttfakelink' id='searchhelp'>Help!</span>)</p>";
 
 $treeNav .= "<ul class='ancestorlist'>";
-foreach($ancestors as $id => $ancestor){
+foreach($ancestors as $id => $firstname){
+    $ancestor = $gedcom->getIndividual($id);
     $treeNav .= "<li><a href='".$ancestor->link()."' onclick=\"return refocusTree('$id');\">" . $ancestor->firstBold() . "</a></li>";
 }
 $treeNav .= "</ul>";
@@ -38,7 +39,7 @@ $hidden = "
         <a id='refocuslink' onclick='pt.refocus(this.className);return false;' class='' href='#'>Focus Tree on Me</a><br>
         <a id='gotopage' href='#' class=''>See all details</a>
     </p>
-    <h4>Gender</h3>
+    <h4>Gender</h4>
     <div class='gender'></div>
     <h4>Events</h4>
     <div class='events'></div>
@@ -102,7 +103,7 @@ foreach($scripts as $script){
 }
 
 $page->title($focus->firstName() . " Family Tree");
-$page->h1("<h1>The " . $focus->firstBold() . " Family Tree</h1>");
+$page->h1("The " . $focus->firstBold() . " Family Tree");
 $page->body .= $treeNav;
 
 $page->bodyright .= "<div id='tt-tree'>";
