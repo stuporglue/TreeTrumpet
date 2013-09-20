@@ -1,5 +1,8 @@
 <?php
 
+// Disable caching since we have variable output based on posted values
+ob_end_clean();
+
 global $_BASEURL;
 
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));

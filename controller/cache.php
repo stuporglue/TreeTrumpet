@@ -27,8 +27,9 @@ function cache($endpoint,$args){
     if(file_exists($cache_file_name)){
         $cache_ts = filemtime($cache_file_name);
         $code_ts = filemtime(__DIR__ . '/../lib/version.txt');
+        $config_ts = (file_exists(__DIR__ . '/../config.php') ? filemtime(__DIR__ . '/../config.php') : 0);
 
-        if($code_ts > $cache_ts){
+        if($code_ts > $cache_ts || $config_ts > $cache_ts){
             unlink($cache_file_name);
         }else{
             readfile($cache_file_name);
