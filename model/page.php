@@ -94,7 +94,7 @@ class page{
             $url = "$_BASEURL/$url";
         } else if($_CONFIG['cache_resources']){
             $cacheDir = __DIR__ . "/../cache/$type/3rdparty/";
-            @mkdir($cacheDir,0777,TRUE);
+            @mkdir($cacheDir,0775,TRUE);
             $downloadedFile = $cacheDir . basename($url);
 
             if(!file_exists($downloadedFile)){

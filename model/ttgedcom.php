@@ -102,7 +102,7 @@ class ttgedcom {
     }
 
     function getObject($id,$gedcom = NULL){
-     if(is_null($gedcom)){
+        if(is_null($gedcom)){
             $gedcom = $this->gedcom;
         }
         foreach($gedcom->getObject() as $obje){
@@ -166,6 +166,145 @@ class ttgedcom {
             }
         }
         return model('submitter');
+    }
+
+    private function parseDateString($string){
+        // might be a year!
+        $ts = date_create_from_format('y',$string);
+        if($ts === false){
+            $ts = strtotime($string);
+        }else{
+            $ts = $ts->gettimestamp();
+        }
+        if((int)$ts == 0){ return false; }
+        return $ts;
+    }
+
+    public function json($id){
+        $indi = $this->getIndividual($id);
+
+        $json = Array();
+        $json['id'] = $indi->getId();
+        if($names = $indi->getName()){
+            $name = $names[0];
+            $json['name'] = $name->getName();
+            foreach($names as $name){
+                $json['names'][] = $name->getName();
+            }
+        }
+
+        // Set gender (M|F) or default to U
+        $sex = $indi->getSex();
+        if(is_null($sex)){
+            $sex = 'U';
+        }
+        $json['gender'] = $sex;
+
+        //  Loop through person events
+        foreach($indi->getEven() as $event){
+            $even = Array();
+            $even['type'] = $event->getType();
+            if($d = $event->getDate()){
+                $even['date']['raw'] = $d;
+            }
+            if($ep = $event->getPlac()){
+                if($place = $ep->getPlac()){
+                    $even['place']['raw'] = $place;
+                }
+            }
+            $json['events'][] = $even;
+        }
+
+        // Find my children and spouse
+        foreach($indi->getFams() as $fams){
+            $family = $this->getFamily($fams->getFams());
+
+            $wifeId = $family->getWife();
+            $husbId = $family->getHusb();
+            if($wifeId && $husbId){
+                if($wifeId != $indi->getId()){
+                    $json['wife'] = $wifeId;
+                }else if($husbId != $indi->getId()){
+                    $json['husb'] = $husbId;
+                }
+            }
+
+            foreach($family->getChil() as $childId){
+                $json['children'][$childId] = $husbId;
+            }
+
+            foreach($family->getEven() as $event){
+                $parsedEvent = $this->parseEvent($event);
+                $json['events'][] = $parsedEvent;
+            }
+        }
+
+        // Find my parents
+        foreach($indi->getFamc() as $famc){
+            $family = $this->getFamily($famc->getFamc());
+            if($motherId = $family->getWife()){
+                $json['mothers'][] = $motherId;
+            }
+            if($fatherId = $family->getHusb()){
+                $json['fathers'][] = $fatherId;
+            }
+        }
+
+
+        foreach($json['events'] as $k => $even){
+            if(array_key_exists('date',$even)){
+                $pd = $this->parseDateString($d);
+                if($pd !== FALSE){
+                    $even['date']['y'] = date('Y',$pd);
+                    $month = date('m',$pd) - 1;
+                    $month = ($month < 0 ? 12 : $month);
+                    $even['date']['m'] = $month; 
+                    $even['date']['d'] = date('d',$pd); 
+                    if(!array_key_exists('refdate',$json)){
+                        $json['refdate'] = $pd;
+                    }
+                }
+            }
+
+            if(!array_key_exists('refPlace',$json) && 
+                array_key_exists('place',$even)){
+                $even['refplace'] = $even['place'];
+            }
+        }
+
+        usort($json['events'],Array('ged2json','eventUsort'));
+
+        return $json;
+    }
+
+
+    /**
+     * @brief callback function for sorting an array of events
+     *
+     * @return 0,1,-1
+     */
+    protected function eventUsort($refa,$refb){
+            foreach(Array('y','m','d') as $sortKey){
+                if(!array_key_exists($sortKey,$refa) && !array_key_exists($sortKey,$refb)){
+                    return 0;
+                }
+
+                if(!array_key_exists($sortKey,$refa)){
+                    return -1;
+                }
+
+                if(!array_key_exists($sortKey,$refb)){
+                    return 1;
+                }
+
+                $diff = $refa[$sortKey] - $refb[$sortKey];
+
+                if($diff !== 0){
+                    return $diff;
+                }
+            }
+
+            return 0;
     }
 
     function __call($func,$args){

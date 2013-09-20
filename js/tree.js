@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    pt = $('#tt-tree').pvTree('lib/ged2json.php','family.ged',{
+    pt = $('#tt-tree').pvTree('lib/ged2json.php?focus=' + focus_person_id,'family.ged',{
         focusPerson : focus_person_id,
         personClick : function(e){
             var id = e.target.id.replace('person_','');
@@ -62,10 +62,21 @@ $(document).ready(function(){
 // return false so that the link isn't followed. The link is there for 
 // javascriptless users and brings them to the individual page
 function refocusTree(id){
-    pt.refocus(id);
-    //window.location.hash='tree';
-    //window.location=window.location;
+    refocusTree.focused = refocusTree.focused || [];
+
+    if(indexOf(id,refocusTree.focused) == -1){
+
+        $.getJSON('lib/ged2json.php?focus=' + id,function(json){
+            for(var i = 0;i<json.length;i++){
+                pt.people[json[i].id] = json[i];
+            } 
+            pt.refocus(id);
+        });
+
+    }else{
+        pt.refocus(id);
+    }
+
+    // Don't follow link...
     return false;
 }
-
-
