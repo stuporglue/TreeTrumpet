@@ -65,7 +65,6 @@ function refocusTree(id){
     refocusTree.focused = refocusTree.focused || [];
 
     if(indexOf(id,refocusTree.focused) == -1){
-
         $.getJSON('lib/ged2json.php?focus=' + id,function(json){
             for(var i = 0;i<json.length;i++){
                 pt.people[json[i].id] = json[i];

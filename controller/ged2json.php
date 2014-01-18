@@ -53,4 +53,4 @@ while(count($queue) > 0){
     }
 }
 
-view('json',Array('json' => $json));
+view('json',Array('json' => array_values($json)));

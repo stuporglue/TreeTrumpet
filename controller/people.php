@@ -16,6 +16,7 @@ $fourClose = controller('close_people',Array($gedcom,$focus,4));
 if(count($fourClose) > 4){
     $fourClose = array_slice($fourClose,count($fourClose) - 5);
 }
+
 $fourNames = Array();
 foreach($fourClose as $close){
     $one = $gedcom->getIndividual($close);

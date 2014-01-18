@@ -101,6 +101,10 @@ class ttgedcom {
         return FALSE;
     }
 
+    function getSource($id){
+        $sources = $this->gedcom->getSour(); 
+    }
+
     function getObject($id,$gedcom = NULL){
         if(is_null($gedcom)){
             $gedcom = $this->gedcom;
@@ -198,7 +202,7 @@ class ttgedcom {
         if(is_null($sex)){
             $sex = 'U';
         }
-        $json['gender'] = $sex;
+        $json['s'] = $sex;
 
         //  Loop through person events
         foreach($indi->getEven() as $event){
@@ -277,6 +281,35 @@ class ttgedcom {
         return $json;
     }
 
+    function allEvents(){
+        $events = Array();
+        foreach($this->gedcom->getFam() as $id => $fam){
+            if($evens = $fam->getEven()){
+                foreach($evens as $even){
+                    if($string = $even->getDate()){
+                        if($date = $this->parseDateString($string)){
+                            $events[$date][$even->getType()]['fam'][] = $id;
+                        }
+                    }
+                }
+            }
+        }
+        foreach($this->gedcom->getIndi() as $id => $indi){
+            if($evens = $indi->getEven()){
+                foreach($evens as $even){
+                    if($string = $even->getDate()){
+                        if($date = $this->parseDateString($string)){
+                            $events[$date][$even->getType()]['indi'][] = $id;
+                        }
+                    }
+                }
+            }
+        }
+
+        ksort($events);
+
+        return $events;
+    }
 
     /**
      * @brief callback function for sorting an array of events

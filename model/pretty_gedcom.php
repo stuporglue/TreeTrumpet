@@ -361,8 +361,10 @@ class pretty_gedcom {
         if($addr = $even->getAddr()){
             $ret .= $this->printAddr($addr);
         }
-        if($sour = $even->getSour()){
-            $ret .= $this->printSour($sour);
+        if($sours = $even->getSour()){
+            foreach($sours as $sour){
+                $ret .= $this->printSour($sour);
+            }
         }
         if($note = $even->getNote()){
             $ret .= $this->printNote($note);
