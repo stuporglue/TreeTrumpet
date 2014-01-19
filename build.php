@@ -109,7 +109,6 @@ function recurse_copy($src,$dst) {
     copy("js/Leaflet.markercluster/dist/leaflet.markercluster.js", "$destdir/js/3rdparty/leaflet.markercluster.js");
     copy("js/Leaflet.markercluster/dist/MarkerCluster.css", "$destdir/css/3rdparty/MarkerCluster.css");
     copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.css","$destdir/css/3rdparty/MarkerCluster.Default.css");
-    copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.ie.css","$destdir/css/3rdparty/MarkerCluster.Default.ie.css");
     copy("js/Leaflet.markercluster/MIT-LICENCE.txt","$destdir/lib/licenses/Leaflet.markercluster.txt");
 
     // ged2json
