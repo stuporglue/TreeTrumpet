@@ -20,14 +20,14 @@ foreach($closePeople as $close){
 
 $page->description .= "Pedigree Tree view of relatives of " . $focus->firstName() . ", including " . implode(',',$fourNames);
 
-$treeNav = "<p>Back to <a href='".$focus->link()."' onclick=\"return refocusTree('{$focusId}');\">" . $focus->firstBold() . "</a></p>";
+$treeNav = "<p>Back to <a href='".$focus->link()."' class='refocusTree' data-id='{$focusId}'>" . $focus->firstBold() . "</a></p>";
 
 $treeNav .= "<p style='display:none;'>Filter: <input type='text' id='autocomplete'/> (<span class='ttfakelink' id='searchhelp'>Help!</span>)</p>";
 
 $treeNav .= "<ul class='ancestorlist'>";
 foreach($ancestors as $id => $firstname){
     $ancestor = $gedcom->getIndividual($id);
-    $treeNav .= "<li><a href='".$ancestor->link()."' onclick=\"return refocusTree('$id');\">" . $ancestor->firstBold() . "</a></li>";
+    $treeNav .= "<li><a href='".$ancestor->link()."' class='refocusTree' data-id='$id'>" . $ancestor->firstBold() . "</a></li>";
 }
 $treeNav .= "</ul>";
 

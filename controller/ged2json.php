@@ -20,25 +20,37 @@ $crawlInstructions = Array(
 while(count($queue) > 0){
     foreach($queue as $id => $depth){
         $json[$id] = $gedcom->json($id);
-
         if(is_numeric($depth)){
+            if((isset($seen[$id]) && !is_null($seen[$id]))){
+                continue;
+                unset($queue[$id]);
+            }
+
             foreach($crawlInstructions as $relation => $depthIncrement){
                 foreach($json[$id][$relation] as $childId => $relativeId){
-                    if(is_null($depthIncrement) && !isset($seen[$relativeId]) && !isset($queue[$relativeId])){
+                    if($relation == 'children'){
+                        $relativeId = $childId;
+                    }
+
+                    // If we've already queued/seen this person
+                    if(
+                        is_null($depthIncrement) && 
+                        !isset($seen[$relativeId]) && 
+                        !isset($queue[$relativeId])
+                    ){
                         $queue[$relativeId] = NULL; // We don't crawl spouses and we only want to crawl them once
-                    }else if(($depthIncrement * $depth) >= 0 && ($depthIncrement * $depth) <= $limit){
-
-                        if($relation == 'children'){
-                            $relativeId = $childId;
-                        }
-
+                    }else if(
+                        !is_null($depthIncrement) && 
+                        ($depthIncrement * $depth) >= 0 && 
+                        ($depthIncrement * $depth) <= $limit
+                    ){
                         $queue[$relativeId] = $depth + $depthIncrement;
                     }
                 }
             }
         }
 
-        $seen[$id] = $id;
+        $seen[$id] = $depth;
         unset($queue[$id]);
     }
 }
