@@ -84,7 +84,8 @@ function recurse_copy($src,$dst) {
     recurse_copy("controller","$destdir/controller");
     recurse_copy("img","$destdir/img");
 
-    // Other rood-dir files
+    // Other root-dir files
+    copy('php.ini',"$destdir/php.ini");
     copy('htaccess',"$destdir/.htaccess");
     copy('favicon.ico',"$destdir/favicon.ico");
     copy('config.php.example',"$destdir/config.php.example");
@@ -123,7 +124,7 @@ function recurse_copy($src,$dst) {
 
     foreach(glob("lib/php-gedcom-sqlite/*.php") as $file){
         if(is_file($file)){
-            copy($file,"$destdir/lib/3rdparty/php-gedcom/library/" . basename($file));
+            copy($file,"$destdir/lib/3rdparty/php-gedcom/library/PhpGedcom/" . basename($file));
         }
     }
 

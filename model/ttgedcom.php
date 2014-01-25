@@ -227,9 +227,9 @@ class ttgedcom {
             $husbId = $family->getHusb();
             if($wifeId && $husbId){
                 if($wifeId != $indi->getId()){
-                    $json['wife'] = $wifeId;
+                    $json['wife'][] = $wifeId;
                 }else if($husbId != $indi->getId()){
-                    $json['husb'] = $husbId;
+                    $json['husb'][] = $husbId;
                 }
             }
 
@@ -338,6 +338,35 @@ class ttgedcom {
             }
 
             return 0;
+    }
+
+    /**
+     * @brief Create a single event object
+     *
+     * @param $event (required) A single event object
+     *
+     * @return An events array object
+     */
+    protected function parseEvent($event){
+        $parsedEvent = Array();
+
+        // Set type
+        $parsedEvent['type'] = $event->getType();
+
+        // Set Date Maybe
+        if($d = $event->getDate()){
+            // ear: Event Array
+            $parsedEvent['date']['raw'] = $d;
+        }
+
+        // Set Place Maybe
+        if($eplace = $event->getPlac()){
+            if($place = $eplace->getPlac()){
+                $parsedEvent['place']['raw'] = $place;
+            }
+        }
+
+        return $parsedEvent;
     }
 
     function __call($func,$args){

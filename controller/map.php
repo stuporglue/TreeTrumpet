@@ -106,8 +106,8 @@ foreach($csses as $css){
 
 
 $scripts = Array(
-    "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
-    "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js",
+    "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
+    "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js",
     "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2",
     "js/3rdparty/leaflet.markercluster.js",
     "js/3rdparty/jquery.mousewheel.min.js",
