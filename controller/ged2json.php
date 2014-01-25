@@ -9,45 +9,35 @@ $limit = 7; // How many generations to get in both direcitons. We'll go with 7 u
 
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 
+$crawlInstructions = Array(
+    'wife' => NULL,
+    'husb' => NULL,
+    'mothers' => 1,
+    'fathers' => 1,
+    'children' => -1
+);
+
 while(count($queue) > 0){
     foreach($queue as $id => $depth){
         $json[$id] = $gedcom->json($id);
 
         if(is_numeric($depth)){
-            // Queue up spouse if not already queued up
-            if( isset($json[$id]['wife']) && 
-                !isset($seen[$json[$id]['wife']]) && 
-                !isset($queue[$json[$id]['wife']])
-            ){
-                $queue[$json[$id]['wife']] = NULL;
-            }
-            if( isset($json[$id]['husb']) && 
-                !isset($seen[$json[$id]['husb']]) && 
-                !isset($queue[$json[$id]['husb']])
-            ){
-                $queue[$json[$id]['husb']] = NULL;
-            }
+            foreach($crawlInstructions as $relation => $depthIncrement){
+                foreach($json[$id][$relation] as $childId => $relativeId){
+                    if(is_null($depthIncrement) && !isset($seen[$relativeId]) && !isset($queue[$relativeId])){
+                        $queue[$relativeId] = NULL; // We don't crawl spouses and we only want to crawl them once
+                    }else if(($depthIncrement * $depth) >= 0 && ($depthIncrement * $depth) <= $limit){
 
-            if($depth >= 0 && $depth <= $limit){
-                if(isset($json[$id]['mothers'])){
-                    foreach($json[$id]['mothers'] as $motherId){
-                        $queue[$motherId] = $depth + 1;
-                    }
-                }
-                if(isset($json[$id]['fathers'])){
-                    foreach($json[$id]['fathers'] as $fatherId){
-                        $queue[$fatherId] = $depth + 1;
-                    }
-                }
-            }
-            if($depth <= 0 && $depth >= ($limit * -1)){
-                if(isset($json[$id]['children'])){
-                    foreach($json[$id]['children'] as $childId => $parentId){
-                        $queue[$childId] = $depth - 1;
+                        if($relation == 'children'){
+                            $relativeId = $childId;
+                        }
+
+                        $queue[$relativeId] = $depth + $depthIncrement;
                     }
                 }
             }
         }
+
         $seen[$id] = $id;
         unset($queue[$id]);
     }

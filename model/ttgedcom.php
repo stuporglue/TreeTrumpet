@@ -202,7 +202,7 @@ class ttgedcom {
         if(is_null($sex)){
             $sex = 'U';
         }
-        $json['s'] = $sex;
+        $json['gender'] = $sex;
 
         //  Loop through person events
         foreach($indi->getEven() as $event){
