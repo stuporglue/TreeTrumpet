@@ -37,9 +37,6 @@ $directories = Array(
     "$destdir/media"
 );
 
-
-
-
 // @copy files
 {
     // @copy base TreeTrumpet files
@@ -68,7 +65,7 @@ $directories = Array(
     foreach($base_dirs as $src){
         foreach(glob("$destdir/$src/*") as $file){
             if(is_file($file)){
-                @copy($file,"$src/$file");
+                @copy($file,"$src/" . basename($file));
             }
         }
     }
@@ -95,6 +92,12 @@ $directories = Array(
     
     @copy("$destdir/lib/3rdparty/ssgeocoder.php","lib/ged2json/examples/php/lib/ssgeocoder/ssgeocoder.php");
     recurse_copy("$destdir/lib/3rdparty/php-gedcom/library","lib/ged2json/examples/php/lib/php-gedcom/library");
+
+    // These don't be long there
+    @rename("lib/ged2json/examples/php/lib/php-gedcom/library/PhpGedcom/GedCache.php","lib/php-gedcom-sqlite/GedCache.php");
+    @rename("lib/ged2json/examples/php/lib/php-gedcom/library/PhpGedcom/GedcomSqlite.php","lib/php-gedcom-sqlite/GedcomSqlite.php");
+    @rename("lib/ged2json/examples/php/lib/php-gedcom/library/PhpGedcom/GedcomSqliteArray.php","lib/php-gedcom-sqlite/GedcomSqliteArray.php");
+    @rename("lib/ged2json/examples/php/lib/php-gedcom/library/PhpGedcom/ParserSqlite.php","lib/php-gedcom-sqlite/ParserSqlite.php");
 
     foreach(glob("lib/php-gedcom-sqlite/*.php") as $file){
         if(is_file($file)){
@@ -126,4 +129,7 @@ $directories = Array(
             @copy("$destdir/lib/3rdparty/phpmailer/" . basename($file),$file);
         }
     }
+
+    // version file
+    @unlink("lib/version.txt");
 }

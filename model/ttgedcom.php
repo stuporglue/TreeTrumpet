@@ -102,7 +102,11 @@ class ttgedcom {
     }
 
     function getSource($id){
-        $sources = $this->gedcom->getSour(); 
+        $sours = $this->gedcom->getSour();
+        if(isset($id,$sours)){
+            return model('source',Array($sours[$id],$this-gedcom));
+        }
+        return FALSE;
     }
 
     function getObject($id,$gedcom = NULL){

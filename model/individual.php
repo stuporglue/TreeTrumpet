@@ -336,7 +336,7 @@ class individual {
         if($sours = $this->individual->getSour()){
             $refs .= "<h3>Sources</h3>";
             foreach($sours as $sour){
-                $refs .= $this->pretty_gedcom->printSour($sour);
+                $refs .= $this->pretty_gedcom->printSourRef($sour);
             }
         }
 

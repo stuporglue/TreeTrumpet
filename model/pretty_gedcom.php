@@ -61,7 +61,7 @@ class pretty_gedcom {
         if($sours = $ord->getSour()){
             $ret .= "<dt>Sources</dt><dd>";
             foreach($sours as $sour){
-                $ret .= $this->printSour($sour);
+                $ret .= $this->printSourRef($sour);
             }
             $ret .= "</dd>";
         }
@@ -315,7 +315,7 @@ class pretty_gedcom {
         if($sours = $asso->getSour()){
             $ret .= "<dt>Sources</dt><dd>";
             foreach($sours as $sour){
-                $ret .=  $ret .= $this->printSour($sour); 
+                $ret .=  $ret .= $this->printSourRef($sour); 
             }
             $ret .= "</dd>";
         }
@@ -371,7 +371,7 @@ class pretty_gedcom {
         }
         if($sours = $even->getSour()){
             foreach($sours as $sour){
-                $ret .= $this->printSour($sour);
+                $ret .= $this->printSourRef($sour);
             }
         }
         if($note = $even->getNote()){
@@ -457,7 +457,7 @@ class pretty_gedcom {
         }
         if($sours = $plac->getSour()){
             foreach($sours as $sour){
-                $ret .= $this->printSour($sour);
+                $ret .= $this->printSourRef($sour);
             }
         }
         $ret .= "</dd>";
@@ -512,7 +512,7 @@ class pretty_gedcom {
         }
         if($sours = $attr->getSour()){
             foreach($sours as $sour){
-                $ret .=  $ret .= $this->printSour($sour);
+                $ret .=  $ret .= $this->printSourRef($sour);
             }
         }
         if($objes = $attr->getObje()){
@@ -536,18 +536,17 @@ class pretty_gedcom {
         if($sours = $note->getSour()){
             $ret .= "<h4>Sources</h4>";
             foreach($sours as $sour){
-                $ret .= $this->printSour($sour);
+                $ret .= $this->printSourRef($sour);
             }
         }
         $ret .= "</div>";
         return $ret;
     }
 
-    function printSour($sour){
+    function printSourRef($sour){
         $ret = '';
         $ret .= "<dl>";
         if($sourid = $sour->getSour()){
-
             if($sour->getIsReference()){
                 $fullSour = $this->findSour($sourid);
                 $name = $fullSour->getName();

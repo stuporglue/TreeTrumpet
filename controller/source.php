@@ -3,48 +3,68 @@
 function source($sourId){
 
     $page = model('page');
+
     $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
 
     $source = $gedcom->getSource($sourId);
 
     controller('standard_meta_tags',Array(&$gedcom,&$page));
 
-    /*
-    $page->title("List of Relatives of " . $focus->firstName());
-    $page->h1("List of Relatives of " . $focus->firstBold());
+    $page->description .= "Source details for " . $source->getName();
 
-    $fourNames = Array();
-    foreach($fourClose as $close){
-        $one = $gedcom->getIndividual($close);
-        $fourNames[] = $one->firstName();
-        $page->keywords[] = $one->surname();
+    $page->keywords[] = $name;
+    if($publ = $source->getPubl()){
+        $page->keywords[] = $publ;
     }
 
-    $page->description .= "A list of relatives of " . $focus->firstName() . ", including " . implode(',',$fourNames);
+    $page->canonical($source->link());
+    $page->title("All about " . $source->getName());
+    $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+    $page->css("css/tabs.css");
+    $page->h1("All about " . $source->getName());
 
-    $csses = Array(
-        "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css",
-        "css/table.css",
-    );
-    foreach($csses as $css){
-        $page->css($css);
+    $pretty = model('pretty_gedcom',Array($gedcom));
+
+    $details = "";
+    $navigation = "<ul>";
+
+    $overview = $source->overview();
+    if($overview != ''){
+        $navigation .= "<li><a href='#overview'>Overview</a>";
+        $details .= $overview;
     }
+
+    $notes = $source->notes();
+    if($notes != ''){
+        $navigation .= "<li><a href='#notes'>Notes</a></li>";
+        $details .= $notes;
+    }
+
+    $mm = $source->multimedia();
+    if($mm != ''){
+        $navigation .= "<li><a href='#multimedia'>Multimedia</a></li>";
+        $details .= $mm;
+    }
+
+    $meta = $source->metadata();
+    if($meta != ''){
+        $navigation .= "<li><a href='#metadata'>Metadata</a></li>";
+        $details .= $meta;
+    }
+
+    $navigation .= "</ul>";
+
+    $page->body = $navigation . $details;
 
     $scripts = Array(
         "http://code.jquery.com/jquery-1.9.1.js",
-        "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js",
-        "js/people.js"
+        "http://code.jquery.com/ui/1.10.3/jquery-ui.js",
+        "js/tabs.js",
     );
+
     foreach($scripts as $script){
         $page->js($script);
     }
-    $page->js("$(document).ready(function(){ tt = $('#tt-people').ttTable('lib/ged2json.php','family.ged'); });",TRUE);
 
-
-    $page->body .= "<div id='tt-people'>";
-    $page->body .= controller('table_noscript',Array($ttgedcom));
-    $page->body .= "</div>";
-
-    view('page',Array('page' => $page,'menu' => 'people'));
-     */
+    view('page',Array('page' => $page,'menu' => 'source'));
 }
