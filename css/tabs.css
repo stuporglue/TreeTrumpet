@@ -13,3 +13,9 @@
     display: block;
 }
 
+
+.block > dl > dt {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 15px;
+}

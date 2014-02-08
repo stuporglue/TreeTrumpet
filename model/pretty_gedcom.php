@@ -42,6 +42,14 @@ class pretty_gedcom {
         }
     }
 
+    function findRepo($id){
+        foreach($this->parsedgedcom->getRepo() as $repo){
+            if($repo->hasAttribute('repo') && $repo->getRepo() == $id){
+                return $repo;
+            }
+        }
+    }
+
     function printOrdinance($ord){
         $ret = '';
         $ret .= "<dl>";
@@ -602,6 +610,51 @@ class pretty_gedcom {
             $ret .= "</dd>";
         }
         $ret .= "</dl>";
+        return $ret;
+    }
+
+    function printRepo($repo){
+        $ret = '<dl>';
+
+        if($id = $repo->getRepo()){
+            $ret .= "<dt>ID</dt><dd>$id</dd>";
+        }
+
+        if($name = $repo->getName()){
+            $ret .= "<dt>Name</dt><dd>$name</dd>";
+        }
+
+        if($addr = $repo->getAddr()){
+            $ret .= $this->printAddr($addr);
+        }
+
+        if($notes = $this->getNote()){
+            $ret .= "<dt>Notes</dt>";
+            foreach($notes as $note){
+                $ret .= "<dd>" . $this->printNote($note) . "</dd>";
+            }
+        }
+
+        if($refns = $this->getRefn()){
+            $ret .= "<dt>Reference Numbers</dt>";
+            foreach($refns as $refn){
+                $print = Array($refn->getRefn());
+                if($type = $refn->getType()){
+                    $print[] = $type;
+                }
+                $ret .= "<dd>" . implode(': ',$print) . "</dd>";
+            }
+        }
+
+        if($rin = $this->getRin()){
+            $ret .= "<dt>RIN</dt><dd>$rin</dd>";
+        }
+
+        if($chan = $this->getChan()){
+            $ret .= "<dt>Last Changed</dt>";
+            $ret .= "<dd>" . $this->printChan($chan) . "</dd>";
+        }
+
         return $ret;
     }
 

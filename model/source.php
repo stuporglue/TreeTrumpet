@@ -37,8 +37,8 @@ class source {
         }
 
         if($publ = $this->source->getPubl()){
-            $overview .= "<dt>Publisher</dt>";
-            $overview .= "<dd>$publ</dd>";
+            $overview .= "<h3>Publisher</h3>";
+            $overview .= "<p>$publ</p>";
         }
 
         if($text = $this->source->getText()){
@@ -115,7 +115,8 @@ class source {
         if($repo = $this->source->getRepo()){
             $meta .= "<dt>Repository</dt><dd><dl>";
             if($repoid = $repo->getRepo()){
-                $meta .= "<dt>ID Number</dt><dd>$repoid</dd>";
+                $fullRepo = $this->pretty_gedcom->findRepo($repoid);
+                $meta .= "<dt>Details</dt><dd>" . $this->pretty_gedcom->printRepo($fullRepo) . "</dd>";
             }
             if($calns = $repo->getCaln()){
                 $meta .= "<dt>Call Number(s)</dt>";
