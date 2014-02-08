@@ -21,6 +21,13 @@ class source {
         return linky(htmlentities($url));
     }
 
+    function getName(){
+        if($title = $this->source->getTitl()){
+            return $title;
+        }
+        return "Source " . $this->source->getSour();
+    }
+
     function __call($func,$args){
         return call_user_func_array(Array($this->source,$func),$args);
     }

@@ -34,6 +34,14 @@ class pretty_gedcom {
         return FALSE;
     }
 
+    function findSour($id){
+        foreach($this->parsedgedcom->getSour() as $sour){
+            if($sour->hasAttribute('sour') && $sour->getSour() == $id){
+                return model('source',Array($sour,$this->parsedgedcom));
+            }
+        }
+    }
+
     function printOrdinance($ord){
         $ret = '';
         $ret .= "<dl>";
@@ -119,7 +127,7 @@ class pretty_gedcom {
             }
 
             if($cfam && $chils = $cfam->getChil()){
-                $ret .= "<dt>Children</dt><dd><ol>";
+                $ret .= "<dt>Siblings</dt><dd><ol>";
                 foreach($chils as $chil){
                     $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
@@ -226,7 +234,7 @@ class pretty_gedcom {
     function printObje($obje){
 
         if($obje->getIsReference()){
-            $obje = $this->pretty_gedcom->findObje($obje->getObje());
+            $obje = $this->findObje($obje->getObje());
         }
 
         if(get_class($obje) != 'obje'){ 
@@ -539,7 +547,17 @@ class pretty_gedcom {
         $ret = '';
         $ret .= "<dl>";
         if($sourid = $sour->getSour()){
-            $ret .= "<dt>Source ID</dt><dd>$sourid</dd>";
+
+            if($sour->getIsReference()){
+                $fullSour = $this->findSour($sourid);
+                $name = $fullSour->getName();
+                $link = $fullSour->link();
+
+                $ret .= "<dt>Source</td><dd><a href='$link'>$name</dd>";
+
+            }else{
+                $ret .= "<dt>Source</dt><dd>$sourid</dd>";
+            }
         }
         if($page = $sour->getPage()){
             $ret .= "<dt>Page</dt><dd>$page</dd>";
@@ -570,8 +588,12 @@ class pretty_gedcom {
         if($text = $sour->getText()){
             $ret .= "<dt>Text</dt><dd>$text</dd>";
         }
-        if($obje = $sour->getObje()){
-            $ret .= $this->printObje($obje);
+        if($objes = $sour->getObje()){
+            $ret .= "<dt>Multimedia</dt><dd>";
+            foreach($objes as $obje){
+                $ret .= $this->printObje($obje);
+            }
+            $ret .= "</dd>";
         }
         if($notes = $sour->getNote()){
             $ret .= "<dt>Notes</dt><dd>";

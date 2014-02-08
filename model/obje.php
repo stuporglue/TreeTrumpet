@@ -16,7 +16,7 @@ class obje {
     function __construct($obje,$gedcom,$parent = FALSE){
         $this->pretty_gedcom = model('pretty_gedcom',Array($gedcom));
 
-        if($obje->getIsReference()){
+        if(method_exists($obje,'getIsReference') && $obje->getIsReference()){
             $obje = $this->findObje($obje->getObje());
         }
 
@@ -37,11 +37,6 @@ class obje {
     function geo_location(){
         return "TODO";
     }
-
-    function title(){
-        return "TODO";
-    }
-
 
     function mime($file = NULL){
         $fsfile = obje::fsPath($file);
