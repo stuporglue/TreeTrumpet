@@ -151,7 +151,7 @@ class family {
         $noteTxt = '';
         if($notes = $this->family->getNote()){
             foreach($notes as $note){
-                $noteTxt .= $this->pretty_gedcom->printNote($note);
+                $noteTxt .= $this->pretty_gedcom->printNoteRef($note);
             }
         }
 

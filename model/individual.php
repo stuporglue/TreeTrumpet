@@ -311,7 +311,7 @@ class individual {
         if($notes = $this->individual->getNote()){
             $snotes .= "<div id='notes' class='block'>";
             foreach($notes as $note){
-                $snotes .= $this->pretty_gedcom->printNote($note);
+                $snotes .= $this->pretty_gedcom->printNoteRef($note);
             }
             $snotes .= "</div>";
         }

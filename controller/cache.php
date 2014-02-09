@@ -28,8 +28,9 @@ function cache($endpoint,$args){
         $cache_ts = filemtime($cache_file_name);
         $code_ts = filemtime(__DIR__ . '/../lib/version.txt');
         $config_ts = (file_exists(__DIR__ . '/../config.php') ? filemtime(__DIR__ . '/../config.php') : 0);
+        $gedcom_ts = filemtime(__DIR__ . '/../family.ged');
 
-        if($code_ts > $cache_ts || $config_ts > $cache_ts){
+        if(max($code_ts,$config_ts,$gedcom_ts) > $cache_ts){
             unlink($cache_file_name);
         }else{
             readfile($cache_file_name);

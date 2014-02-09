@@ -71,7 +71,7 @@ class source {
         if($notes = $this->source->getNote()){
             $snotes .= "<div id='notes' class='block'>";
             foreach($notes as $note){
-                $snotes .= $this->pretty_gedcom->printNote($note);
+                $snotes .= $this->pretty_gedcom->printNoteRef($note);
             }
             $snotes .= "</div>";
         }
@@ -127,7 +127,7 @@ class source {
             if($notes = $repo->getNote()){
                 $meta .= "<dt>Notes</dt>";
                 foreach($notes as $note){
-                    $meta .= "<dd>" . $this->pretty_gedcom->printNote($note) . "</dd>";
+                    $meta .= "<dd>" . $this->pretty_gedcom->printNoteRef($note) . "</dd>";
                 }
             }
             $meta .= "</dl></dd>";
