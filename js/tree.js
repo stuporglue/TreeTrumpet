@@ -46,7 +46,7 @@ $(document).ready(function(){
                     $($('.ancestorlist li a')[i].parentNode).hide();
                 }
              }
-             response(matches);
+             return matches;
         };
     $('#autocomplete').on('mousedown',filter);
     $('#autocomplete').on('keyup',filter);
@@ -55,16 +55,26 @@ $(document).ready(function(){
     $('#searchhelp').on('click',function(e){
         $('#help').dialog({width: 500});
     });
-
+    $('a.refocusTree').on('click',function(e){
+        // climb up until we find the refocusTree class
+        while(e.target.parentNode !== null && !e.target.className.match(/refocusTree/)){
+            e.target = e.target.parentNode;
+        }       
+        if(e.target.parentNode !== null){
+            refocusTree(e.target);
+        }
+        return false;
+    });
 });
 
 // refocus the tree on someone and move the page so that the tree is in view
 // return false so that the link isn't followed. The link is there for 
 // javascriptless users and brings them to the individual page
-function refocusTree(id){
+function refocusTree(node){
+    var id = $(node).attr('data-id');
     refocusTree.focused = refocusTree.focused || [];
 
-    if(indexOf(id,refocusTree.focused) == -1){
+    if(refocusTree.focused.indexOf(id) === -1){
         $.getJSON('lib/ged2json.php?focus=' + id,function(json){
             for(var i = 0;i<json.length;i++){
                 pt.people[json[i].id] = json[i];

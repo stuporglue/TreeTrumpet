@@ -37,10 +37,10 @@ Header unset ETag
     RewriteCond %{QUERY_STRING} ^$
     RewriteRule . index.php?ruri=index
 
-## Robots.txt might never really exist if the web dir is not writable
-#    RewriteCond %{REQUEST_FILENAME} robots.txt
-#    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteRule . index.php?ruri=robots
+# Robots.txt is dynamic. Make it appear like it's there
+RewriteCond %{REQUEST_FILENAME} robots.txt
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . index.php?ruri=robots
 
 ## Lastly, any files which don't exist should go through index.php
 ## All our controllers should exist since we need to work where mod_rewrite might not be set up
