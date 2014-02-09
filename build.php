@@ -46,6 +46,7 @@ function recurse_copy($src,$dst) {
         "$destdir/lib/3rdparty",
         "$destdir/lib/3rdparty/phpmailer",
         "$destdir/lib/licenses",
+        "$destdir/lib/php-gedcom-custom/PhpGedcom",
         "$destdir/cache",
         "$destdir/media"
     );
@@ -124,7 +125,7 @@ function recurse_copy($src,$dst) {
 
     foreach(glob("lib/php-gedcom-sqlite/*.php") as $file){
         if(is_file($file)){
-            copy($file,"$destdir/lib/3rdparty/php-gedcom/library/PhpGedcom/" . basename($file));
+            copy($file,"$destdir/lib/php-gedcom-custom/PhpGedcom/" . basename($file));
         }
     }
 

@@ -242,7 +242,11 @@ class pretty_gedcom {
     function printObje($obje){
 
         if($obje->getIsReference()){
-            $obje = $this->findObje($obje->getObje());
+            $fullObje = $this->findObje($obje->getObje());
+        }
+
+        if(get_class($fullObje) != 'obje'){ 
+            $fullObje = model('obje',Array($fullObje,$this->parsedgedcom));
         }
 
         if(get_class($obje) != 'obje'){ 
@@ -253,12 +257,16 @@ class pretty_gedcom {
         $ret .= "<ul>";
 
 
-        if($obje->hasAttribute('file')){
+        if($obje->hasAttribute('file') && $obje->getFile()){
             $ret .= "<li>";
             $ret .= $obje->embedHtml();
             $ret .= "</li>";
         }else if($obje->hasAttribute('blob') && $blob = $obje->getBlob()){
             $ret .= "<li>Please ask for support for embedded images and in the mean time re-export your GEDCOM with linked images instead.</li>";
+        }else if($fullObje->hasAttribute('file') && $fullObje->getFile()){
+            $ret .= "<li>";
+            $ret .= $fullObje->embedHtml();
+            $ret .= "</li>";
         }
 
         if($notes = $obje->getNote()){
@@ -486,7 +494,7 @@ class pretty_gedcom {
         }
 
         if($plac = $attr->getPlac()){
-            $ret .= "<dt>Place</dt><dd>Place</dd>";
+            $ret .= "<dt></dt><dd>" . $this->printPlac($plac) . "</dd>";
         }
 
         if($caus = $attr->getCaus()){
@@ -560,7 +568,7 @@ class pretty_gedcom {
                 $name = $fullSour->getName();
                 $link = $fullSour->link();
 
-                $ret .= "<dt>Source</td><dd><a href='$link'>$name</dd>";
+                $ret .= "<dt>Source</td><dd><a href='$link'>$name</a></dd>";
 
             }else{
                 $ret .= "<dt>Source</dt><dd>$sourid</dd>";

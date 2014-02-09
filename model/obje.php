@@ -16,10 +16,6 @@ class obje {
     function __construct($obje,$gedcom,$parent = FALSE){
         $this->pretty_gedcom = model('pretty_gedcom',Array($gedcom));
 
-        if(method_exists($obje,'getIsReference') && $obje->getIsReference()){
-            $obje = $this->findObje($obje->getObje());
-        }
-
         $this->parent_object = $parent;
 
         $this->obje = $obje;
@@ -39,6 +35,10 @@ class obje {
     }
 
     function mime($file = NULL){
+        if(!$file){
+            return FALSE;
+        }
+
         $fsfile = obje::fsPath($file);
 
         // File type
@@ -54,7 +54,7 @@ class obje {
 
             // File type
             // $mime = `file -bi $file  | sed 's/;.*//'`;
-            if($mimeType = $this->mime()){
+            if($mimeType = $this->mime($this->getFile())){
 
                 $browserImages = Array('image/jpeg','image/gif','image/png');
                 $browserVideos = Array('video/mp4','video/webm','video/ogg');
@@ -108,11 +108,7 @@ class obje {
     
         $file = $this->webPath();
 
-        if(file_exists(__DIR__ . '/../' . $file)){
-            return $_BASEURL . '/' . $file;
-        }
-
-        return FALSE;
+        return $file;
     }
 
     // Return the opening <a> tag
@@ -169,18 +165,18 @@ class obje {
             $file = $this->obje->getFile();
         }
 
-        if(!$_CONFIG['media_prefix']){
-            return $file;
-        }
-
-        if(strpos($file,$_CONFIG['media_prefix']) === 0){
+        if($_CONFIG['media_prefix'] && strpos($file,$_CONFIG['media_prefix']) === 0){
             $file = str_replace($_CONFIG['media_prefix'],'',$file);
         }
 
         return $file;
     }
 
-    function fsPath($file = NULL){
+    static function fsPath($file = NULL){
+        global $_CONFIG;
+        if($_CONFIG['media_prefix'] && strpos($file,$_CONFIG['media_prefix']) === 0){
+            $file = str_replace($_CONFIG['media_prefix'],'',$file);
+        }
         $file = obje::relPath($file);
         return __DIR__ . '/../media/' . $file;
     }

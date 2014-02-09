@@ -52,3 +52,8 @@
 ;; Your gmail password
 ;smtp_password=password
 
+[media]
+;; Put all of your media in the media/ directory
+;; replace the media_prefix option below with whatever needs to be stripped off your
+;; file paths in your gedcom. 
+;media_prefix=C:\Users\stuporglue\Documents\Family Tree Maker\My Tree documents\
