@@ -73,7 +73,7 @@ function recurse_copy($src,$dst) {
     // Copy base TreeTrumpet files
     $base = glob("*.php");
     foreach($base as $i => $file){
-        if($file == 'build.php'){
+        if($file == 'build.php' || $file == 'unbuild.php'){
             continue;
         }else if(is_file($file)){
             copy($file,"$destdir/$file");
@@ -123,11 +123,7 @@ function recurse_copy($src,$dst) {
     copy("lib/ged2json/examples/php/lib/ssgeocoder/ssgeocoder.php","$destdir/lib/3rdparty/ssgeocoder.php");
     recurse_copy("lib/ged2json/examples/php/lib/php-gedcom/library","$destdir/lib/3rdparty/php-gedcom/library");
 
-    foreach(glob("lib/php-gedcom-sqlite/*.php") as $file){
-        if(is_file($file)){
-            copy($file,"$destdir/lib/php-gedcom-custom/PhpGedcom/" . basename($file));
-        }
-    }
+    recurse_copy("lib/php-gedcom-sqlite","$destdir/lib/php-gedcom-custom");
 
 
     // Pedigree Viewer 

@@ -74,15 +74,29 @@ class ttgedcom {
         @brief Keep returning objects until we've visited them all
      */
     function nextObje(){
-        if(!isset($This->_objectIDs)){
+        if(!isset($this->_objectIDs)){
             $this->_objectIDs = $this->gedcom->getObje();
         }
         $cur = current($this->_objectIDs);
         if($cur === FALSE){
             unset($this->_objectIDs);
+            return FALSE;
         }
-        next($this->_familyIDs);
+        next($this->_objectIDs);
         return $this->getObject($cur->getId());
+    }
+
+    function nextSour(){
+        if(!isset($this->_sourceIDs)){
+            $this->_sourceIDs = $this->gedcom->getSour();
+        }
+        $cur = current($this->_sourceIDs);
+        if($cur === FALSE){
+            unset($this->_sourceIDs);
+            return FALSE;
+        }
+        next($this->_sourceIDs);
+        return $this->getSource($cur->getSour());
     }
 
     function getFamily($id){
@@ -113,7 +127,7 @@ class ttgedcom {
         if(is_null($gedcom)){
             $gedcom = $this->gedcom;
         }
-        foreach($gedcom->getObject() as $obje){
+        foreach($gedcom->getObje() as $obje){
             if($obje->getId() == $id){
                 return model('obje',Array($obje,$gedcom));
             }

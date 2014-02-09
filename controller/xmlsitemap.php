@@ -21,9 +21,11 @@ function printSingleUrl($loc,$lastmod,$priority){
     $url = '';
     $url .= "<url>";
     $url .= "<loc>" . linky($loc) . "</loc>";
-    $url .= "<lastmod>";
-    $url .= date('Y-m-d\TH:i:s+00:00',$lastmod);
-    $url .= "</lastmod>";
+    if($lastmod){
+        $url .= "<lastmod>";
+        $url .= date('Y-m-d\TH:i:s+00:00',$lastmod);
+        $url .= "</lastmod>";
+    }
     $url .= "<priority>$priority</priority>";
     $url .= "</url>";
     return $url;
@@ -33,13 +35,11 @@ function printSingleUrl($loc,$lastmod,$priority){
 // Homepage
 $urls[] = printSingleUrl($_BASEURL,$gedcom->updated(),'0.2');
 
-
 // Enabled Modules, except contact
 if($_CONFIG['tree']){    $urls[] .= printSingleUrl("$_BASEURL/tree.php",$gedcom->updated(),'0.8'); }
 if($_CONFIG['map']){     $urls[] .= printSingleUrl("$_BASEURL/map.php",$gedcom->updated(),'0.8'); }
-if($_CONFIG['people']){   $urls[] .= printSingleUrl("$_BASEURL/peopl.php",$gedcom->updated(),'1.0'); }
+if($_CONFIG['people']){   $urls[] .= printSingleUrl("$_BASEURL/people.php",$gedcom->updated(),'1.0'); }
 if($_CONFIG['contact']){ $urls[] .= printSingleUrl("$_BASEURL/contact.php",$gedcom->updated(),'0.2'); }
-
 
 // Individual ancestors
 while($indi = $gedcom->nextIndividual()){
@@ -51,10 +51,14 @@ while($fam = $gedcom->nextFamily()){
     $urls[] = printSingleUrl($fam->link(),$fam->updated(),'0.4'); 
 }
 
-while($obje = $gedcom->nextObje()){
-    $urls[] = printSingleUrl($fam->link(),$fam->updated(),'0.4'); 
-}
+// // Media
+// while($obje = $gedcom->nextObje()){
+//     $urls[] = printSingleUrl($obje->href(),$obje->updated(),'0.4'); 
+// }
 
+while($sour = $gedcom->nextSour()){
+    $urls[] = printSingleUrl($sour->link(),$sour->updated(),'0.2');
+}
 
 $xml = view('xmlsitemap',Array('urls' => $urls),TRUE);
 print $xml;

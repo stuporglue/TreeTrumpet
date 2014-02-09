@@ -166,6 +166,25 @@ class source {
         return FALSE;
     }
 
+    function updated(){
+        if($chan = $this->source->getChan()){
+            return $this->parseDateString($chan);
+        }
+        return FALSE;
+    }
+
+    private function parseDateString($string){
+        // might be a year!
+        $ts = date_create_from_format('y',$string);
+        if($ts === false){
+            $ts = strtotime($string);
+        }else{
+            $ts = $ts->gettimestamp();
+        }
+        if((int)$ts == 0){ return false; }
+        return $ts;
+    }
+
     function __call($func,$args){
         return call_user_func_array(Array($this->source,$func),$args);
     }

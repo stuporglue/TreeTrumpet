@@ -21,7 +21,6 @@ class obje {
         $this->obje = $obje;
     }
 
-
     function link(){
         return $this->halfLink() . $this->title() . "</a>";
     }
