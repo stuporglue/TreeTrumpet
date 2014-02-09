@@ -19,3 +19,7 @@
     font-weight: bold;
     margin-top: 15px;
 }
+
+.medialink img {
+    display: block;
+}

@@ -113,7 +113,7 @@ class obje {
 
     // Return the opening <a> tag
     function halfLink(){
-        return "<a alt='" . $this->title() . "' title='" . $this->title() . "' href='" . $this->href() . "'>";
+        return "<a class='medialink' alt='" . $this->title() . "' title='" . $this->title() . "' href='" . $this->href() . "'>";
     }
 
     // Return a suitable title for link text or an alt-tag
@@ -185,7 +185,7 @@ class obje {
         return basename($this->webPath());
     }
 
-    function readfile($basefile = NULL,$h = NULL,$w = NULL,$attachment = FALSE){
+    static function readfile($basefile = NULL,$h = NULL,$w = NULL,$attachment = FALSE){
         $mime = obje::mime($basefile);
         $file = obje::fsPath($basefile);
         $attachmentName = basename($file);
@@ -193,6 +193,10 @@ class obje {
         if(!file_exists($file)){
             return controller('_404');
         }
+
+        // print these two headers now since if we can't cache the image we'll return immediately
+        header("Content-Description: File Transfer");
+        header("Content-type: $mime");
 
         if(!is_null($h) || !is_null($w)){
             switch($mime){
@@ -208,21 +212,31 @@ class obje {
                     $img = imagecreatefromgif($file);
                     $outfunc = 'imagegif';
                     break;
+                default:
+                    // some other image format, just print it full sized
+                    return readfile($file);
             }
 
             $origwidth = imagesx( $img );
             $origheight = imagesy( $img );
 
-            if(!is_null($h)){
-                $newheight = $h;
-            }else{
-                $newheight = $origheight;
-            }
+            // preserve image aspect ratio while making the image fit within the h & w provided
 
-            if(!is_null($w)){
+            // both h & w given
+            if(!is_null($h) && !is_null($w)){
+                if($origwidth > $origheight){
+                    $newwidth = $w;
+                    $newheight = floor($origheight/($origwidth/$w));
+                }else{
+                    $newheight = $h;
+                    $newwidth = floor($origwidth/($origheight/$h));
+                }
+            }else if(!is_null($h)){
+                $newheight = $h;
+                $newwidth = floor($origwidth/($origheight/$h));
+            }else if(!is_null($w)){
                 $newwidth = $w;
-            }else{
-                $newwidth = $origheight;
+                $newheight = floor($origheight/($origwidth/$w));
             }
 
             $cachePath = __DIR__ . "/../cache/{$newheight}x{$newwidth}/" . obje::relPath($basefile);
@@ -238,18 +252,19 @@ class obje {
                 if(!is_dir($dir)){
                     @mkdir($dir,0775,TRUE);
                 }
+
                 if(is_dir($dir)){
-                    $outfunc($tmpimg,$cachePath);
+                    @$outfunc($tmpimg,$cachePath);
                 }
 
                 if(file_exists($cachePath)){
                     $file = $cachePath;
+                }else{
+                    return $outfunc($tmpimg);
                 }
             }
         }
 
-        header("Content-Description: File Transfer");
-        header("Content-type: $mime");
         header("Content-Length: " . filesize($file));
         if($attachment){
             header("Content-disposition: attachment; filename=$attachmentName");
