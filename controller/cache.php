@@ -40,10 +40,10 @@ function cache($endpoint,$args){
 
     // Buffer the output so we can cache it later
     ob_start();
-    register_shutdown_function(create_function('',"writeCache('$cache_file_name');"));
+    register_shutdown_function(create_function('',"writeCache('$cache_file_name','$endpoint');"));
 }
 
-function writeCache($cache_file_name){
+function writeCache($cache_file_name,$endpoint){
     $cacheContents = ob_get_contents();
     ob_end_clean();
     print $cacheContents;
@@ -55,7 +55,13 @@ function writeCache($cache_file_name){
         return; 
     }
 
+    $writen = FALSE;
     if(strlen($cacheContents) > 0){
-        @file_put_contents($cache_file_name,$cacheContents);
+        $written = @file_put_contents($cache_file_name,$cacheContents);
+    }
+
+    // We just wrote a new xmlsitemap. Tell the world!
+    if($written !== FALSE && function_exists('pingCrawlersAboutSitemap')){
+        pingCrawlersAboutSitemap();
     }
 }

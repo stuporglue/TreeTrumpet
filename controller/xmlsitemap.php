@@ -1,18 +1,28 @@
 <?php
 global $_CONFIG,$_BASEURL;
 
-header("Content-Type: text/xml; charset=utf-8");
+/**
+ * @brief Tell crawlers that we have a new sitemap
+ *
+ * This gets called any time that a new xmlsitemap cache file is successfully written
+ * 
+ * If cache is not enabled then the sitemap will just get generated whenever crawlers 
+ * ask for it after noticing it in robots.txt and this will never get called
+ */
+function pingCrawlersAboutSitemap(){
+    global $_BASEURL;
+    $pings = Array(
+        "http://www.google.com/webmasters/sitemaps/ping?sitemap=",
+        "http://www.bing.com/webmaster/ping.aspx?siteMap=",
+    );
 
-// Three cases
-
-
-// Case 1: Cached xmlsitemap exists and is newer than the GEDCOM file. Serve that instead
-if(file_exists(__DIR__ . '/../cache/xmlsitemap.xml') && filemtime(__DIR__ . '/../cache/xmlsitemap.xml') > filemtime(__DIR__ . '/../family.ged')){
-    readfile(__DIR__ . '/../cache/xmlsitemap.xml'); 
-    return;
+    foreach($pings as $ping){
+        $ping .= urlencode("$_BASEURL/xmlsitemap.php");
+        file_get_contents($ping);
+    }
 }
 
-// Case 2: We need to prepare a new xmlsitemap and serve it to the user
+// Prepare a new xmlsitemap and serve it to the user
 
 // This file should produce a valid sitemap.xml for the enabled modules and auto-generated pages
 $gedcom = model('ttgedcom',Array(__DIR__ . '/../family.ged'));
@@ -56,32 +66,10 @@ while($fam = $gedcom->nextFamily()){
 //     $urls[] = printSingleUrl($obje->href(),$obje->updated(),'0.4'); 
 // }
 
+// Sources
 while($sour = $gedcom->nextSour()){
     $urls[] = printSingleUrl($sour->link(),$sour->updated(),'0.2');
 }
 
-$xml = view('xmlsitemap',Array('urls' => $urls),TRUE);
-print $xml;
-
-
-// Case 2b: We also need to notify search engines about it
-@unlink(__DIR__ . '/../cache/xmlsitemap.xml');
-@file_put_contents(__DIR__ . '/../cache/xmlsitemap.xml',$xml);
-
-// Case 2b.1: Cache is empty because we can't write to it. Randomly decide if we should notify search engines
-// Since most users who are requesting the xmlsitemap are ALREADY search engines, we'll only do this once in a while
-if(!file_exists(__DIR__ . '/../cache/xmlsitemap.xml')){
-    if(rand(1,100) != 100){
-        return; 
-    }
-}
-
-$pings = Array(
-    "http://www.google.com/webmasters/sitemaps/ping?sitemap=",
-    "http://www.bing.com/webmaster/ping.aspx?siteMap=",
-);
-
-foreach($pings as $ping){
-    $ping .= urlencode('http://stuporglue.com/xmlsitemap.xml');
-    file_get_contents($ping);
-}
+header("Content-Type: text/xml; charset=utf-8");
+view('xmlsitemap',Array('urls' => $urls));

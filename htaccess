@@ -26,6 +26,12 @@ Header unset ETag
     Options -MultiViews
     RewriteEngine On
 
+## We provide a hard coded robots.txt with a relative xmlsitemap link in case the server
+## doesn't support .htaccess or mod_rewrite. If it does support it, then we can use
+## the preferred full URL to access the sitemap and make it look like it ends in .xml
+    RewriteRule robots.txt index.php?ruri=robots [L]
+    RewriteRule xmlsitemap.xml index.php?ruri=xmlsitemap [L]
+
 ## All PHP requests should go through index.php (except index.php)
     RewriteCond %{REQUEST_FILENAME} !index.php
     RewriteCond %{REQUEST_URI} (.*)\.php(.*)

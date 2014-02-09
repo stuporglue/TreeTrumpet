@@ -7,6 +7,8 @@ function controller($controller,$args = Array()){
     $controller = strtolower($controller);
     $controller = basename($controller,'.php');
     $controller = basename($controller,'.ged');
+    $controller = basename($controller,'.txt');
+    $controller = basename($controller,'.xml');
 
     if(!is_array($args)){
         $args = Array($args);
@@ -21,7 +23,7 @@ function controller($controller,$args = Array()){
 
     // If it's a function controller, we don't want to require it twice
     if(!function_exists($controller)){
-        require(__DIR__ . "/../controller/$controller.php");
+        $gotit = require(__DIR__ . "/../controller/$controller.php");
     }
 
     if(function_exists($controller)){
