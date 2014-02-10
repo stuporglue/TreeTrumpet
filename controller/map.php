@@ -124,6 +124,10 @@ $page->js("
         tm = $('#tt-map').ttMap('lib/ged2geojson.php');
 
         $('.tthasgeo').on('click',function(e){
+            while(e.target.parentNode !== null && !e.target.className.match(/tthasgeo/)){
+                e.target = e.target.parentNode;
+            }
+
             var coords = e.target.getAttribute('data-geo').split(',');
             tm.ttmap.panTo([parseFloat(coords[1]),parseFloat(coords[0])]);
             tm.ttmap.setZoom(10);

@@ -42,10 +42,10 @@
 [mail_form_settings]
 ;; If your server is set up to send email, you don't need to configure these at all.
 
-;; These values are fo use with Email
+;; These values are to use smtp to send your email. These settings are for Gmail
 ;smtp_server=smtp.gmail.com
 ;smtp_port=465
-;smtp_security=tls
+;smtp_security=ssl
 ;
 ;; Your gmail username
 ;smtp_username=example@gmail.com
