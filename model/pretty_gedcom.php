@@ -7,6 +7,15 @@ class pretty_gedcom {
         $this->parsedgedcom = $parsedgedcom;
     }
 
+    function findNote($id){
+        foreach($this->parsedgedcom->getNote() as $note){
+            if($note->hasAttribute('id') && $note->getId() == $id){
+                return $note;
+            }
+        }
+        return FALSE;
+    }
+
     function findObje($id){
         foreach($this->parsedgedcom->getObje() as $obje){
             if($obje->hasAttribute('id') && $obje->getId() == $id){
@@ -34,6 +43,22 @@ class pretty_gedcom {
         return FALSE;
     }
 
+    function findSour($id){
+        foreach($this->parsedgedcom->getSour() as $sour){
+            if($sour->hasAttribute('sour') && $sour->getSour() == $id){
+                return model('source',Array($sour,$this->parsedgedcom));
+            }
+        }
+    }
+
+    function findRepo($id){
+        foreach($this->parsedgedcom->getRepo() as $repo){
+            if($repo->hasAttribute('repo') && $repo->getRepo() == $id){
+                return $repo;
+            }
+        }
+    }
+
     function printOrdinance($ord){
         $ret = '';
         $ret .= "<dl>";
@@ -53,7 +78,7 @@ class pretty_gedcom {
         if($sours = $ord->getSour()){
             $ret .= "<dt>Sources</dt><dd>";
             foreach($sours as $sour){
-                $ret .= $this->printSour($sour);
+                $ret .= $this->printSourRef($sour);
             }
             $ret .= "</dd>";
         }
@@ -61,7 +86,7 @@ class pretty_gedcom {
         if($notes = $ord->getNote()){
             $ret .= "<dt>Note</dt><dd>";
             foreach($notes as $note){
-                $ret .= $this->printNote($note);
+                $ret .= $this->printNoteRef($note);
             }
             $ret .= "</dd>";
         }
@@ -82,7 +107,7 @@ class pretty_gedcom {
         if($notes = $chan->getNote()){
             $ret .= "<dt>Notes</dt><dd>";
             foreach($notes as $note){
-                $ret .= $this->printNote($note);
+                $ret .= $this->printNoteRef($note);
             }
             $ret .= "</dd>";
         }
@@ -119,7 +144,7 @@ class pretty_gedcom {
             }
 
             if($cfam && $chils = $cfam->getChil()){
-                $ret .= "<dt>Children</dt><dd><ol>";
+                $ret .= "<dt>Siblings</dt><dd><ol>";
                 foreach($chils as $chil){
                     $chil = $this->findIndi($chil);
                     $name = "Child {$chil->getId()}";
@@ -143,7 +168,7 @@ class pretty_gedcom {
         if($notes = $fam->getNote()){
             $ret .= "<li><h3>Notes</h3><li>";
             foreach($notes as $note){
-                $ret .= $this->printNote($note);
+                $ret .= $this->printNoteRef($note);
             }
             $ret .= "</li>";
         }
@@ -214,7 +239,7 @@ class pretty_gedcom {
         if($notes = $fam->getNote()){
             $ret .= "<li><h3>Notes</h3><li>";
             foreach($notes as $note){
-                $ret .= $this->printNote($note);
+                $ret .= $this->printNoteRef($note);
             }
             $ret .= "</li>";
         }
@@ -226,7 +251,11 @@ class pretty_gedcom {
     function printObje($obje){
 
         if($obje->getIsReference()){
-            $obje = $this->pretty_gedcom->findObje($obje->getObje());
+            $fullObje = $this->findObje($obje->getObje());
+        }
+
+        if(get_class($fullObje) != 'obje'){ 
+            $fullObje = model('obje',Array($fullObje,$this->parsedgedcom));
         }
 
         if(get_class($obje) != 'obje'){ 
@@ -237,18 +266,22 @@ class pretty_gedcom {
         $ret .= "<ul>";
 
 
-        if($obje->hasAttribute('file')){
+        if($obje->hasAttribute('file') && $obje->getFile()){
             $ret .= "<li>";
             $ret .= $obje->embedHtml();
             $ret .= "</li>";
         }else if($obje->hasAttribute('blob') && $blob = $obje->getBlob()){
             $ret .= "<li>Please ask for support for embedded images and in the mean time re-export your GEDCOM with linked images instead.</li>";
+        }else if($fullObje->hasAttribute('file') && $fullObje->getFile()){
+            $ret .= "<li>";
+            $ret .= $fullObje->embedHtml();
+            $ret .= "</li>";
         }
 
         if($notes = $obje->getNote()){
             $ret .= "<li><h3>Notes</h3>";
             foreach($notes as $note){
-                $ret .=  $this->printNote($note);
+                $ret .=  $this->printNoteRef($note);
             }
             $ret .= "</li>";
         }
@@ -261,7 +294,7 @@ class pretty_gedcom {
         if($obje->hasAttribute('refn') && $refns = $obje->getRefn()){
             $ret .= "<li><h3>References</h3>";
             foreach($refns as $refn){
-                $ret .=  $ret .= $this->printRefn($refn);
+                $ret .= $this->printRefn($refn);
             }
             $ret .= "</li>";
         }
@@ -300,14 +333,14 @@ class pretty_gedcom {
         if($notes = $asso->getNote()){
             $ret .= "<dt>Notes</dt><dd>";
             foreach($notes as $note){
-                $ret .= $this->printNote($note);
+                $ret .= $this->printNoteRef($note);
             }
             $ret .= "</dd>";
         }
         if($sours = $asso->getSour()){
             $ret .= "<dt>Sources</dt><dd>";
             foreach($sours as $sour){
-                $ret .=  $ret .= $this->printSour($sour); 
+                $ret .=  $ret .= $this->printSourRef($sour); 
             }
             $ret .= "</dd>";
         }
@@ -361,11 +394,13 @@ class pretty_gedcom {
         if($addr = $even->getAddr()){
             $ret .= $this->printAddr($addr);
         }
-        if($sour = $even->getSour()){
-            $ret .= $this->printSour($sour);
+        if($sours = $even->getSour()){
+            foreach($sours as $sour){
+                $ret .= $this->printSourRef($sour);
+            }
         }
         if($note = $even->getNote()){
-            $ret .= $this->printNote($note);
+            $ret .= $this->printNoteRef($note);
         }
         if($obje = $even->getObje()){
             $ret .= $this->printObje($obje);
@@ -442,12 +477,12 @@ class pretty_gedcom {
         }
         if($notes = $plac->getNote()){
             foreach($notes as $note){
-                $ret .= $this->printNote($note);
+                $ret .= $this->printNoteRef($note);
             }
         }
         if($sours = $plac->getSour()){
             foreach($sours as $sour){
-                $ret .= $this->printSour($sour);
+                $ret .= $this->printSourRef($sour);
             }
         }
         $ret .= "</dd>";
@@ -468,7 +503,7 @@ class pretty_gedcom {
         }
 
         if($plac = $attr->getPlac()){
-            $ret .= "<dt>Place</dt><dd>Place</dd>";
+            $ret .= "<dt></dt><dd>" . $this->printPlac($plac) . "</dd>";
         }
 
         if($caus = $attr->getCaus()){
@@ -497,12 +532,12 @@ class pretty_gedcom {
 
         if($notes = $attr->getNote()){
             foreach($notes as $note){
-                $ret .=  $ret .= $this->printNote($note);
+                $ret .=  $ret .= $this->printNoteRef($note);
             }
         }
         if($sours = $attr->getSour()){
             foreach($sours as $sour){
-                $ret .=  $ret .= $this->printSour($sour);
+                $ret .=  $ret .= $this->printSourRef($sour);
             }
         }
         if($objes = $attr->getObje()){
@@ -515,29 +550,82 @@ class pretty_gedcom {
     }
 
     function printNote($note){
+        $ret = "<div class='note'>";
+
+        if($id = $note->getId()){
+            $ret .= "<p>$id</p>";
+        }
+
+        if($chan = $note->getChan()){
+            $ret .= "<h3>Changed</h3>" . $this->printChan($chan);
+        }
+
+        if($noteText = $note->getNote()){
+            $ret .= "<p>$noteText</p>";
+        }
+
+        if($even = $note->getEven()){
+            $ret .= "<h3>Event</h3>" . $this->printEven($even);
+        }
+
+        if($refns = $note->getRefn()){
+            $ret .= "<h3>Reference IDs</h3><ul>";
+            foreach($refns as $refn){
+                $ret .= "<li>" . $this->printRefn($refn) . "</li>"; 
+            }
+            $ret .= "</ul>";
+        }
+
+        if($rin = $note->getRin()){
+            $ret .= "<h3>RIN</h3><p>$rin</p>";
+        }
+
+        if($sours = $note->getSour()){
+            $ret .= "<h3>Sources</h3>";
+            foreach($sours as $sour){
+                $ret .= $this->printSourRef($sour);
+            }
+        }
+            
+        $ret .= "</div>";
+        return $ret;
+    }
+
+    function printNoteRef($note){
         $ret = '';
-        $ret .= "<div class='note'>";
-        //if($ref = $note->getIsRef()){
-        //    $ret .= "Reference";
-        //}
-        if($text = $note->getNote()){
+
+        $ret .= "<div class='noteref'>";
+
+        if($ref = $note->getIsReference()){
+            $realNote = $this->findNote($note->getNote());
+            $ret .= $this->printNote($realNote);
+        }else if($text = $note->getNote()){
             $ret .= "<p>$text</p>";
         }
         if($sours = $note->getSour()){
             $ret .= "<h4>Sources</h4>";
             foreach($sours as $sour){
-                $ret .= $this->printSour($sour);
+                $ret .= $this->printSourRef($sour);
             }
         }
         $ret .= "</div>";
         return $ret;
     }
 
-    function printSour($sour){
+    function printSourRef($sour){
         $ret = '';
         $ret .= "<dl>";
         if($sourid = $sour->getSour()){
-            $ret .= "<dt>Source ID</dt><dd>$sourid</dd>";
+            if($sour->getIsReference()){
+                $fullSour = $this->findSour($sourid);
+                $name = $fullSour->getName();
+                $link = $fullSour->link();
+
+                $ret .= "<dt>Source</td><dd><a href='$link'>$name</a></dd>";
+
+            }else{
+                $ret .= "<dt>Source</dt><dd>$sourid</dd>";
+            }
         }
         if($page = $sour->getPage()){
             $ret .= "<dt>Page</dt><dd>$page</dd>";
@@ -568,17 +656,66 @@ class pretty_gedcom {
         if($text = $sour->getText()){
             $ret .= "<dt>Text</dt><dd>$text</dd>";
         }
-        if($obje = $sour->getObje()){
-            $ret .= $this->printObje($obje);
+        if($objes = $sour->getObje()){
+            $ret .= "<dt>Multimedia</dt><dd>";
+            foreach($objes as $obje){
+                $ret .= $this->printObje($obje);
+            }
+            $ret .= "</dd>";
         }
         if($notes = $sour->getNote()){
             $ret .= "<dt>Notes</dt><dd>";
             foreach($notes as $note){
-                $ret .= $this->printNote($note);
+                $ret .= $this->printNoteRef($note);
             }
             $ret .= "</dd>";
         }
         $ret .= "</dl>";
+        return $ret;
+    }
+
+    function printRepo($repo){
+        $ret = '<dl>';
+
+        if($id = $repo->getRepo()){
+            $ret .= "<dt>ID</dt><dd>$id</dd>";
+        }
+
+        if($name = $repo->getName()){
+            $ret .= "<dt>Name</dt><dd>$name</dd>";
+        }
+
+        if($addr = $repo->getAddr()){
+            $ret .= $this->printAddr($addr);
+        }
+
+        if($notes = $this->getNote()){
+            $ret .= "<dt>Notes</dt>";
+            foreach($notes as $note){
+                $ret .= "<dd>" . $this->printNoteRef($note) . "</dd>";
+            }
+        }
+
+        if($refns = $this->getRefn()){
+            $ret .= "<dt>Reference Numbers</dt>";
+            foreach($refns as $refn){
+                $print = Array($refn->getRefn());
+                if($type = $refn->getType()){
+                    $print[] = $type;
+                }
+                $ret .= "<dd>" . implode(': ',$print) . "</dd>";
+            }
+        }
+
+        if($rin = $this->getRin()){
+            $ret .= "<dt>RIN</dt><dd>$rin</dd>";
+        }
+
+        if($chan = $this->getChan()){
+            $ret .= "<dt>Last Changed</dt>";
+            $ret .= "<dd>" . $this->printChan($chan) . "</dd>";
+        }
+
         return $ret;
     }
 

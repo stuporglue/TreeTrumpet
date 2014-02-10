@@ -26,6 +26,12 @@ Header unset ETag
     Options -MultiViews
     RewriteEngine On
 
+## We provide a hard coded robots.txt with a relative xmlsitemap link in case the server
+## doesn't support .htaccess or mod_rewrite. If it does support it, then we can use
+## the preferred full URL to access the sitemap and make it look like it ends in .xml
+    RewriteRule robots.txt index.php?ruri=robots [L]
+    RewriteRule xmlsitemap.xml index.php?ruri=xmlsitemap [L]
+
 ## All PHP requests should go through index.php (except index.php)
     RewriteCond %{REQUEST_FILENAME} !index.php
     RewriteCond %{REQUEST_URI} (.*)\.php(.*)
@@ -37,11 +43,6 @@ Header unset ETag
     RewriteCond %{QUERY_STRING} ^$
     RewriteRule . index.php?ruri=index
 
-## Robots.txt might never really exist if the web dir is not writable
-#    RewriteCond %{REQUEST_FILENAME} robots.txt
-#    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteRule . index.php?ruri=robots
-
 ## Lastly, any files which don't exist should go through index.php
 ## All our controllers should exist since we need to work where mod_rewrite might not be set up
     RewriteCond %{REQUEST_FILENAME} !-f
@@ -49,3 +50,10 @@ Header unset ETag
     RewriteCond %{REQUEST_FILENAME} !.*index.php
     RewriteRule . index.php?ruri=%{REQUEST_URI} [PT,QSA]
 </IfModule>
+
+# Try to set the memory limit higher. 
+# We have to read the whole GEDCOM file
+# at least once (if we're caching), maybe
+# more often. 
+php_value memory_limit 1024M
+php_value max_execution_time 600

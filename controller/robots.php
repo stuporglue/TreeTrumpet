@@ -1,15 +1,12 @@
 <?php
 
-// Re-make robots.txt if it doesn't exist or if family.ged has been updated 
+global $_BASEURL;
 
-if(file_exists(__DIR__ . '/../robots.txt')){
-    header("Content-type: text/plain;charset=utf-8");
-    readfile(__DIR__ . '/../robots.txt');
-    exit();
+$robots = file(__DIR__ . '/../robots.txt');
+foreach($robots as $lineno => $line){
+    if(strpos($line,'TreeTrumpet xmlsitemap')){
+        $robots[$lineno] = "Sitemap: $_BASEURL/xmlsitemap.xml\n";
+    }
 }
 
-global $_BASEURL;
-$robots = view('robots',Array('sitemap' => $_BASEURL . '/xmlsitemap.xml'),TRUE);
-@file_put_contents(__DIR__ . '/../robots.txt',$robots);
-print $robots;
-exit();
+print implode("",$robots);

@@ -10,15 +10,28 @@ spl_autoload_register(function ($class) {
     }
 });
 
-
-
-// php-gedcom
+// php-gedcom override
+// use to extend php-gedcom
 spl_autoload_register(function ($class) {
-    $pathToPhpGedcom = __DIR__ . '/../lib/3rdparty/php-gedcom/library/'; 
-
     if (!substr(ltrim($class, '\\'), 0, 7) == 'PhpGedcom\\') {
         return;
     }
+
+    $pathToPhpGedcom = __DIR__ . '/../lib/php-gedcom-custom/'; 
+
+    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+    if (file_exists($pathToPhpGedcom . $class)) {
+        require_once($pathToPhpGedcom . $class);
+    }
+});
+
+// php-gedcom
+spl_autoload_register(function ($class) {
+    if (!substr(ltrim($class, '\\'), 0, 7) == 'PhpGedcom\\') {
+        return;
+    }
+
+    $pathToPhpGedcom = __DIR__ . '/../lib/3rdparty/php-gedcom/library/'; 
 
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
     if (file_exists($pathToPhpGedcom . $class)) {

@@ -92,7 +92,7 @@ $intro = "<h2>Important Places and Relatives Who Lived there</h2>
 $page->body .= "<div id='places'>$intro$eventTypeMenu$placesList</div>";
 
 $csses = Array(
-    "http://cdn.leafletjs.com/leaflet-0.5/leaflet.css",
+    "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css",
     "css/3rdparty/MarkerCluster.css",
     "css/3rdparty/MarkerCluster.Default.css",
     "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css",
@@ -104,18 +104,11 @@ foreach($csses as $css){
     $page->css($css);
 }
 
-$iecss = Array(
-    "http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css",
-    "css/3rdparty/MarkerCluster.Default.ie.css"
-);
-foreach($iecss as $css){
-    $page->css($css,'all','if lte IE 8');
-}
 
 $scripts = Array(
-    "http://code.jquery.com/jquery-1.9.1.js",
-    "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js",
-    "http://cdn.leafletjs.com/leaflet-0.6/leaflet.js",
+    "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
+    "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js",
+    "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2",
     "js/3rdparty/leaflet.markercluster.js",
     "js/3rdparty/jquery.mousewheel.min.js",
     "js/3rdparty/jQEditRangeSlider-min.js",
@@ -131,6 +124,10 @@ $page->js("
         tm = $('#tt-map').ttMap('lib/ged2geojson.php');
 
         $('.tthasgeo').on('click',function(e){
+            while(e.target.parentNode !== null && !e.target.className.match(/tthasgeo/)){
+                e.target = e.target.parentNode;
+            }
+
             var coords = e.target.getAttribute('data-geo').split(',');
             tm.ttmap.panTo([parseFloat(coords[1]),parseFloat(coords[0])]);
             tm.ttmap.setZoom(10);
@@ -142,6 +139,8 @@ $page->js("
 });
 ",TRUE);
 
+$page->js("$('#places').accordion({ collapsible: true,heightStyle:'content' })",TRUE);
+
 $page->title("Places " . $focus->firstName() . " and " . ucfirst($focus->hisher()) . " Relatives Lived");
 
 $page->h1("A Map of " . $focus->firstName() . " and " . ucfirst($focus->hisher()) . " Relatives");
@@ -151,7 +150,5 @@ $page->bodyright .= "<p>Hold tight, the map is loading!</p>";
 $page->bodyright .= "<p>This is an interactive map of the places my ancestors lived.</p>";
 $page->bodyright .= "<p>It requires JavaScript to work.</p>";
 $page->bodyright .= "</div>";
-
-$page->js("$('#places').accordion({ collapsible: true,heightStyle:'content' })",TRUE);
 
 view('page_v_split',Array('page' => $page,'menu' => 'map'));

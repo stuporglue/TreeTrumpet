@@ -1,4 +1,8 @@
 <?php
+
+// Don't cache 404s since they might exist in the future
+ob_end_clean();
+
 function _404($requested){
     $page = model('page');
 

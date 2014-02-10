@@ -16,6 +16,7 @@ $fourClose = controller('close_people',Array($gedcom,$focus,4));
 if(count($fourClose) > 4){
     $fourClose = array_slice($fourClose,count($fourClose) - 5);
 }
+
 $fourNames = Array();
 foreach($fourClose as $close){
     $one = $gedcom->getIndividual($close);
@@ -48,7 +49,7 @@ $page->js("$(document).ready(function(){
 
 
 $page->body .= "<div id='tt-people'>";
-$page->body .= controller('table_noscript');
+$page->body .= controller('table_noscript',Array($ttgedcom));
 $page->body .= "</div>";
 
 view('page',Array('page' => $page,'menu' => 'people'));

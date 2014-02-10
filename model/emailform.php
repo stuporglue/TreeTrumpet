@@ -29,11 +29,15 @@ class emailform {
             return FALSE;
         }
 
+        $from = (isset($_POST['from_email']) ? $_POST['from_email'] : '');
+        $sub = (isset($_POST['subject']) ? $_POST['subject'] : '');
+        $message = (isset($_POST['message']) ? $_POST['message'] : '');
+
         return "<form method='post'>
-            <label for='from_email'>Your Email Address:</label><input name='from_email' id='from_email' type='email'/><br>
-            <label for='subject'>Subject:</label><input id='subject' name='subject' type='text'/><br>
+            <label for='from_email'>Your Email Address:</label><input name='from_email' id='from_email' type='email' value='$from'/><br>
+            <label for='subject'>Subject:</label><input id='subject' name='subject' type='text' value='$sub'/><br>
             <label for='message'>Message:</label>
-            <textarea class='clearme' id='message' name='message'></textarea>
+            <textarea class='clearme' id='message' name='message'>$message</textarea>
             <input type='submit' value='Send me an email!'/>
             </form>";
     }
@@ -74,10 +78,12 @@ class emailform {
         $mail->Subject = preg_replace("|[^a-zA-Z0-9.;:@'\"/\!\? ]|",' ',$_POST['subject']);
         $mail->Body = $_POST['message'];
 
-        if(!$mail->Send()){
+        $sendResult = $mail->Send();
+        if(!$sendResult){
             error_log("Mailer Error: " . $mail->ErrorInfo);
             return FALSE;
         } else {
+            $_POST = Array();
             return TRUE;
         }
     }

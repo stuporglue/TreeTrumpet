@@ -136,7 +136,7 @@ class family {
         if($sours = $this->family->getSour()){
             $refs .= "<h3>Sources</h3>";
             foreach($sours as $sour){
-                $refs .= $this->pretty_gedcom->printSour($sour);
+                $refs .= $this->pretty_gedcom->printSourRef($sour);
             }
         }
 
@@ -151,7 +151,7 @@ class family {
         $noteTxt = '';
         if($notes = $this->family->getNote()){
             foreach($notes as $note){
-                $noteTxt .= $this->pretty_gedcom->printNote($note);
+                $noteTxt .= $this->pretty_gedcom->printNoteRef($note);
             }
         }
 

@@ -46,6 +46,7 @@ function recurse_copy($src,$dst) {
         "$destdir/lib/3rdparty",
         "$destdir/lib/3rdparty/phpmailer",
         "$destdir/lib/licenses",
+        "$destdir/lib/php-gedcom-custom/PhpGedcom",
         "$destdir/cache",
         "$destdir/media"
     );
@@ -72,7 +73,7 @@ function recurse_copy($src,$dst) {
     // Copy base TreeTrumpet files
     $base = glob("*.php");
     foreach($base as $i => $file){
-        if($file == 'build.php'){
+        if($file == 'build.php' || $file == 'unbuild.php'){
             continue;
         }else if(is_file($file)){
             copy($file,"$destdir/$file");
@@ -84,7 +85,8 @@ function recurse_copy($src,$dst) {
     recurse_copy("controller","$destdir/controller");
     recurse_copy("img","$destdir/img");
 
-    // Other rood-dir files
+    // Other root-dir files
+    copy('php.ini',"$destdir/php.ini");
     copy('htaccess',"$destdir/.htaccess");
     copy('favicon.ico',"$destdir/favicon.ico");
     copy('config.php.example',"$destdir/config.php.example");
@@ -109,7 +111,6 @@ function recurse_copy($src,$dst) {
     copy("js/Leaflet.markercluster/dist/leaflet.markercluster.js", "$destdir/js/3rdparty/leaflet.markercluster.js");
     copy("js/Leaflet.markercluster/dist/MarkerCluster.css", "$destdir/css/3rdparty/MarkerCluster.css");
     copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.css","$destdir/css/3rdparty/MarkerCluster.Default.css");
-    copy("js/Leaflet.markercluster/dist/MarkerCluster.Default.ie.css","$destdir/css/3rdparty/MarkerCluster.Default.ie.css");
     copy("js/Leaflet.markercluster/MIT-LICENCE.txt","$destdir/lib/licenses/Leaflet.markercluster.txt");
 
     // ged2json
@@ -121,6 +122,8 @@ function recurse_copy($src,$dst) {
     }
     copy("lib/ged2json/examples/php/lib/ssgeocoder/ssgeocoder.php","$destdir/lib/3rdparty/ssgeocoder.php");
     recurse_copy("lib/ged2json/examples/php/lib/php-gedcom/library","$destdir/lib/3rdparty/php-gedcom/library");
+
+    recurse_copy("lib/php-gedcom-sqlite","$destdir/lib/php-gedcom-custom");
 
 
     // Pedigree Viewer 

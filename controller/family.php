@@ -23,7 +23,7 @@ function family($familyId){
 
     $page->canonical($family->link());
     $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
-    $page->css("css/family.css");
+    $page->css("css/tabs.css");
     $page->title("All about $familyName");
     $page->h1("All about $familyName");
 
@@ -81,12 +81,12 @@ function family($familyId){
 
     $navigation .= "</ul>";
 
-    $page->body = $navigation .= $details;
+    $page->body = $navigation . $details;
 
     $scripts = Array(
         "http://code.jquery.com/jquery-1.9.1.js",
         "http://code.jquery.com/ui/1.10.3/jquery-ui.js",
-        "js/family.js",
+        "js/tabs.js",
     );
 
     foreach($scripts as $script){

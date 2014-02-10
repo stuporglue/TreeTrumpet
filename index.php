@@ -28,4 +28,5 @@ if(array_key_exists('PATH_INFO',$_SERVER)){
 
 // Call the requested controller
 controller('setup');
+controller('cache',Array($endpoint,$args));
 controller($endpoint,$args);

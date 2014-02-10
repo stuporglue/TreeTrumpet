@@ -102,6 +102,7 @@ header menu {
 
 .ttfakelink {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .ttthumbnail {
