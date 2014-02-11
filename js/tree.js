@@ -76,9 +76,7 @@ function refocusTree(node){
 
     if(refocusTree.focused.indexOf(id) === -1){
         $.getJSON('lib/ged2json.php?focus=' + id,function(json){
-            for(var i = 0;i<json.length;i++){
-                pt.people[json[i].id] = json[i];
-            } 
+            pt.addPeople(json);
             pt.refocus(id);
         });
 
