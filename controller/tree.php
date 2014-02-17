@@ -109,7 +109,7 @@ $page->body .= $treeNav;
 $page->bodyright .= "<div id='tt-tree'>";
 $page->bodyright .= "<p>Hold tight, the tree is loading!</p>";
 $page->bodyright .= "<p>This is an interactive pedigree tree.</p>";
-$page->bodyright .= "<p>It requires JavaScript 1o work.</p>";
+$page->bodyright .= "<p>It requires JavaScript to work.</p>";
 $page->bodyright .= "</div>";
 
 $page->hidden($hidden);
