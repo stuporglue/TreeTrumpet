@@ -143,6 +143,9 @@ function recurse_copy($src,$dst) {
         }
     } 
 
+    // TagCanvas
+    copy("js/TagCanvas/jquery.tagcavas.min.js","$destdir/js/3rdparty/jquery.tagcanvas.min.js");
+
     // PHPMailer
     foreach(glob("lib/phpmailer/*.php") as $file){
         if(is_file($file)){

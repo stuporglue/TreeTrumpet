@@ -11,6 +11,7 @@ function menu($current){
         'tree'      => 'Tree',
         'map'       => 'Map',
         'people'     => 'People',
+        'name_cloud'   => 'Name Cloud',
         'contact'   => 'Contact Me',
         'gedcom'    => 'GEDCOM'
     );
@@ -19,7 +20,7 @@ function menu($current){
 
     foreach($pages as $ctrl => $label){
         $current_page = "";
-        if($_CONFIG[$ctrl]){
+        if($_CONFIG[$ctrl] !== FALSE){
             $moduleMenu[$ctrl] = $label;
         }
     }

@@ -61,14 +61,6 @@ $_CONFIG = Array(
      * You can disable them by setting the value to FALSE
      */
 
-
-    'tree'      =>  TRUE, 
-    'map'       =>  TRUE, 
-    'people'    =>  TRUE, 
-    'contact'   =>  TRUE, 
-    'gedcom'    =>  TRUE, 
-
-
     /* $contact_settings define additional settings for the contact page
      *
      * You can use this to allow people to send you emails. 
@@ -105,6 +97,9 @@ if(file_exists($inifile)){
     foreach($ini_config as $k => $val){
         if($val === '1'){
             $ini_config[$k] = TRUE;
+        }
+        if($val === '0'){
+            $ini_config[$k] = FALSE;
         }
     }
 

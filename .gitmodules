@@ -16,3 +16,6 @@
 [submodule "lib/php-gedcom-sqlite"]
 	path = lib/php-gedcom-sqlite
 	url = https://github.com/stuporglue/php-gedcom-sqlite.git
+[submodule "js/TagCanvas"]
+	path = js/TagCanvas
+	url = https://github.com/goat1000/TagCanvas

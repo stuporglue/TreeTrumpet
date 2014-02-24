@@ -21,6 +21,7 @@
 ;map=1
 ;people=1
 ;contact=1
+;name_cloud=1
 ;gedcom=1
 
 
@@ -57,3 +58,8 @@
 ;; replace the media_prefix option below with whatever needs to be stripped off your
 ;; file paths in your gedcom. 
 media_prefix=C:\Users\stuporglue\Documents\Family Tree Maker\Descendants of Patrick McGuinness and Maria Moran Media\
+
+
+[cache]
+;; Cache enabled
+;cache_enabled = 1

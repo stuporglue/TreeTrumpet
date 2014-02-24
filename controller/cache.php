@@ -13,6 +13,11 @@
 // To clear the cache, delete the contents of cache/pages
 
 function cache($endpoint,$args){
+    global $_CONFIG;
+    if(!$_CONFIG['cache_enabled']){
+        return;
+    }
+
     $cacheDir = __DIR__ . '/../cache/pages/';
     @mkdir($cacheDir,0777,TRUE);
 

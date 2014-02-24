@@ -1,7 +1,6 @@
 # This file isn't required for TreeTrumpet, but if your server supports it, this file will: 
 # * Enable caching
 # * Give you prettier URLs (/individual/id/name instead of individual.php/id/name)
-# * Bump up PHP's max memory (TODO)
 # * Increase security by denying access to sub-directories (TODO)
 
 # Add some caching

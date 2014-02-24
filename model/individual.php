@@ -44,8 +44,32 @@ class individual {
         $surname;
         if($names = $this->individual->getName()){
             $surname = $names[0]->getSurn();
+            if(!$surname){
+                if(preg_match('|/(.*)/|',$names[0]->getName(),$matches) > 0){
+                    $surname = $matches[1];
+                }
+            }
         }
         return $surname;
+    }
+
+    function given(){
+        $given;
+        if($names = $this->individual->getName()){
+            $given = $names[0]->getGivn();
+            if(!$given){
+                $given = preg_replace('|/.*/|','',$names[0]->getName());
+            }
+        }
+        return trim($given);
+    }
+
+    function givenArray(){
+        $given = Array();
+        if($givenString = $this->given()){
+            $given = preg_split('|\s+|',$givenString);
+        }
+        return array_map('trim',$given);
     }
 
     // First name they have, try to bold the last name
@@ -56,6 +80,10 @@ class individual {
             $firstBold = preg_replace('|/(.*)/|',"<span class='ttln'>$1</span>",$firstName);
         }
         return $firstBold;
+    }
+
+    function prettyLink(){
+        return "<a href='" . $this->link() . "' alt='".str_replace("'","&quot;",$this->firstName())."'>" . $this->firstBold() . "</a>";
     }
 
     function link(){
