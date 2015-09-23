@@ -21,6 +21,31 @@ or through FTP.
 Unzip pedigree-viewer.zip and upload everything inside up to your server. That's all there is 
 to the install. 
 
+Installing From Source
+----------------------
+
+git clone https://github.com/stuporglue/TreeTrumpet.git tree
+cd tree
+git submodule init
+git submodule update --init --recursive
+
+Next you'll need to build jQRangeSlider
+
+Install grunt if you don't have it: 
+
+cd js/jQRangeSlider
+npm install
+npm install -g grunt-cli
+grunt
+cd ../..
+
+Now you can build TreeTrumpet
+
+php ./build.php
+
+The built project will be in the treetrumpet directory. You can now copy the treetrumpet directory to your web server.
+
+
 
 Adding Your Family
 ------------------
