@@ -46,7 +46,7 @@ function individual($indiId){
 
     $page->canonical($individual->link());
 
-    $page->css("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+    $page->css("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
     $page->css("css/tabs.css");
     $page->title("All about " . $individual->firstName());
     $page->h1("All about " . $individual->firstBold());
@@ -128,8 +128,8 @@ function individual($indiId){
     $page->body = $navigation . $details;
 
     $scripts = Array(
-        "http://code.jquery.com/jquery-1.9.1.js",
-        "http://code.jquery.com/ui/1.10.3/jquery-ui.js",
+        "//code.jquery.com/jquery-1.11.3.min.js",
+        "//code.jquery.com/ui/1.11.4/jquery-ui.min.js",
         "js/tabs.js",
     );
 

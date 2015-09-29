@@ -73,7 +73,7 @@ $hidden = "
 $page->canonical(linky($_BASEURL . '/tree.php'));
 
 $csses = Array(
-    'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css',
+    "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css",
     'css/3rdparty/ui/ui.slider.css',
     'css/3rdparty/tree.css',
     'css/tree.css'

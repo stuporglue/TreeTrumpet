@@ -99,7 +99,7 @@ $page->bodyright .= view('feature_preview',Array(
 
 
 $csses = Array(
-    "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css",
+    "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css",
     "css/index.css",
 );
 foreach($csses as $css){

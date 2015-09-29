@@ -95,7 +95,7 @@ $csses = Array(
     "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css",
     "css/3rdparty/MarkerCluster.css",
     "css/3rdparty/MarkerCluster.Default.css",
-    "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css",
+    "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css",
     "css/3rdparty/iThing.css",
     "css/map.css"
 );
@@ -106,8 +106,8 @@ foreach($csses as $css){
 
 
 $scripts = Array(
-    "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
-    "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js",
+    "//code.jquery.com/jquery-1.11.3.min.js",
+    "//code.jquery.com/ui/1.11.4/jquery-ui.min.js",
     "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2",
     "js/3rdparty/leaflet.markercluster.js",
     "js/3rdparty/jquery.mousewheel.min.js",

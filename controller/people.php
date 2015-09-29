@@ -35,7 +35,7 @@ foreach($csses as $css){
 }
 
 $scripts = Array(
-    "http://code.jquery.com/jquery-1.9.1.js",
+    "//code.jquery.com/jquery-1.11.3.min.js",
     "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js",
     "js/people.js"
 );
