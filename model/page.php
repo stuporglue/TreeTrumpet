@@ -90,7 +90,7 @@ class page{
     function cacheLocally($url,$type){
         global $_BASEURL,$_CONFIG;
 
-        if(strlen(filter_var($url,FILTER_VALIDATE_URL)) === 0){
+        if(strlen(filter_var($url,FILTER_VALIDATE_URL)) === 0 && strpos('//',$url) === 0){
             $url = "$_BASEURL/$url";
         } else if($_CONFIG['cache_resources']){
             $cacheDir = __DIR__ . "/../cache/$type/3rdparty/";
