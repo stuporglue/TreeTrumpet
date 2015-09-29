@@ -92,7 +92,7 @@ $intro = "<h2>Important Places and Relatives Who Lived there</h2>
 $page->body .= "<div id='places'>$intro$eventTypeMenu$placesList</div>";
 
 $csses = Array(
-    "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css",
+    "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css",
     "css/3rdparty/MarkerCluster.css",
     "css/3rdparty/MarkerCluster.Default.css",
     "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css",
@@ -108,7 +108,7 @@ foreach($csses as $css){
 $scripts = Array(
     "//code.jquery.com/jquery-1.11.3.min.js",
     "//code.jquery.com/ui/1.11.4/jquery-ui.min.js",
-    "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2",
+    "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js",
     "js/3rdparty/leaflet.markercluster.js",
     "js/3rdparty/jquery.mousewheel.min.js",
     "js/3rdparty/jQEditRangeSlider-min.js",
