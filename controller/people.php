@@ -27,7 +27,7 @@ foreach($fourClose as $close){
 $page->description .= "A list of relatives of " . $focus->firstName() . ", including " . implode(',',$fourNames);
 
 $csses = Array(
-    "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css",
+    "//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css",
     "css/table.css",
 );
 foreach($csses as $css){
@@ -36,7 +36,7 @@ foreach($csses as $css){
 
 $scripts = Array(
     "//code.jquery.com/jquery-1.11.3.min.js",
-    "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js",
+    "//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js",
     "js/people.js"
 );
 foreach($scripts as $script){

@@ -85,8 +85,8 @@ foreach($csses as $css){
 
 $scripts = Array(
     "js/3rdparty/excanvas.js",
-    "http://code.jquery.com/jquery-1.9.1.js",
-    "http://code.jquery.com/ui/1.10.3/jquery-ui.js",
+    "//code.jquery.com/jquery-1.11.3.min.js",
+    "//code.jquery.com/ui/1.11.4/jquery-ui.min.js",
     "js/3rdparty/jquery.mousewheel.js",
     "js/3rdparty/sharing-time.js",
     "js/3rdparty/sharing-time-ui.js",
