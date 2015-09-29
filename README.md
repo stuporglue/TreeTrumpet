@@ -18,7 +18,7 @@ use https://www.bluehost.com/, but any web hosting which supports PHP should wor
 Your hosting provider will have instructions for uploading files, either through the browser, 
 or through FTP.
 
-Unzip pedigree-viewer.zip and upload everything inside up to your server. That's all there is 
+Unzip treetrumpet.zip and upload everything inside up to your server. That's all there is 
 to the install. 
 
 Installing From Source
