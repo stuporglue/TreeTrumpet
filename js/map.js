@@ -59,8 +59,13 @@
         // Add a base map
         // Our base map is a free MapQuest/OSM map
         // http://developer.mapquest.com/web/products/open/map#terms
-        var mapquestUrl = 'http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
-        var subDomains = ['otile1','otile2','otile3','otile4'];
+        var mapquestUrl = '//{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
+        var subDomains;
+        if(window.location.protocol === 'https:'){
+            subDomains = ['otile1-s','otile2-s','otile3-s','otile4-s'];
+        } else{
+            subDomains = ['otile1','otile2','otile3','otile4'];
+        }
         var mapquestAttrib = '<p>Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png"></p>';
         var basemap = new L.TileLayer(mapquestUrl, {maxZoom: 18, attribution: mapquestAttrib, subdomains: subDomains}).addTo(this.ttmap);
 
