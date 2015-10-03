@@ -1,18 +1,18 @@
-[submodule "js/Leaflet.markercluster"]
-	path = js/Leaflet.markercluster
+[submodule "src/js/Leaflet.markercluster"]
+	path = src/js/Leaflet.markercluster
 	url = http://github.com/Leaflet/Leaflet.markercluster.git
-[submodule "js/jQRangeSlider"]
-	path = js/jQRangeSlider
+[submodule "src/js/jQRangeSlider"]
+	path = src/js/jQRangeSlider
 	url = http://github.com/ghusse/jQRangeSlider.git
-[submodule "lib/ged2json"]
-	path = lib/ged2json
+[submodule "src/lib/ged2json"]
+	path = src/lib/ged2json
 	url = https://github.com/stuporglue/ged2json.git
-[submodule "js/Pedigree-Viewer"]
-	path = js/Pedigree-Viewer
+[submodule "src/js/Pedigree-Viewer"]
+	path = src/js/Pedigree-Viewer
 	url = https://github.com/dovy/Pedigree-Viewer.git
-[submodule "lib/phpmailer"]
-	path = lib/phpmailer
+[submodule "src/lib/phpmailer"]
+	path = src/lib/phpmailer
 	url = https://github.com/PHPMailer/PHPMailer.git
-[submodule "lib/php-gedcom-sqlite"]
-	path = lib/php-gedcom-sqlite
+[submodule "src/lib/php-gedcom-sqlite"]
+	path = src/lib/php-gedcom-sqlite
 	url = https://github.com/stuporglue/php-gedcom-sqlite.git
