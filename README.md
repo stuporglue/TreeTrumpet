@@ -24,6 +24,10 @@ to the install.
 Installing From Source
 ----------------------
 
+This project uses several other projects and needs to be built to run. It will 
+not run directly from checked-out code!!!
+
+These instructions work on Debian Linux and OSX. Please let me know what changes you have to make to build on other platforms. 
 
     git clone https://github.com/stuporglue/TreeTrumpet.git tree
     cd tree
@@ -35,7 +39,6 @@ Next you'll need to build jQRangeSlider
 
 Install grunt if you don't have it: 
 
-
     cd js/jQRangeSlider
     npm install
     npm install -g grunt-cli
@@ -46,22 +49,18 @@ Now you can build TreeTrumpet
 
     php ./build.php
 
-The built project will be in the treetrumpet directory. You can now copy the treetrumpet directory to your web server.
-
-
+The built project will be in the treetrumpet directory. You can now copy the treetrumpet directory to your web server, or copy and unzip the treetrumpet.zip file.
 
 Adding Your Family
 ------------------
 Export a GEDCOM file from your genealogy program and name it family.ged. Upload it to the 
 webserver. To update the site, simply upload a new file named family.ged.
 
-
 Configuration (Optional)
 ------------------------
 If you want people to be able contact you by email, or if you want to disable certain pages, 
 copy config.php.example to be named config.php and edit the values inside. Upload it to the
 web server. 
-
 
 Help!
 -----
