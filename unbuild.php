@@ -5,6 +5,12 @@
 # It is meant to be run from the command line, but should work from a browser 
 # if the server has write permissions to the current folder
 
+$basedir = __DIR__;
+$destdir = $basedir . '/treetrumpet/';
+$srcdir = $basedir . '/src/';
+
+chdir($srcdir);
+
 function recurse_copy($src,$dst) { 
     $dir = opendir($src); 
     @mkdir($dst,'01777',TRUE); 
@@ -22,7 +28,6 @@ function recurse_copy($src,$dst) {
 }
 
 // Destination directories
-$destdir = 'treetrumpet';
 $directories = Array(
     "$destdir/model",
     "$destdir/view",
