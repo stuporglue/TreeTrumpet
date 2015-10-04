@@ -5,21 +5,32 @@
 # It is meant to be run from the command line, but should work from a browser 
 # if the server has write permissions to the current folder
 
-$destdir = 'treetrumpet';
+$basedir = __DIR__;
+$destdir = $basedir . '/treetrumpet/';
+$srcdir = $basedir . '/src/';
 
-$exclude_from_zip = Array(
-    './cache/geocding.sqlite3',
-    './family.ged',
-    './robots.txt',
-    './config.php'
-);
-
-chdir(__DIR__);
+chdir($srcdir);
 umask(0);
 
-function recurse_copy($src,$dst) { 
+// Get submodules so others don't have to
+print shell_exec('git submodule init');
+print shell_exec('git submodule update --recursive --init');
+
+if(!file_exists('js/jQRangeSlider/dest/jQEditRangeSlider-min.js')){
+    print "\n";
+    print "Please go to src/js/jQRangeSlider/ and run:\n";
+    print "  npm install\n";
+    print "  npm install -g grunt-cli\n";
+    print "  grunt\n";
+    print "\n";
+    print "Then rerun this script\n";
+
+    exit();
+}
+
+function recurse_copy($src,$dst) {
     $dir = opendir($src); 
-    @mkdir($dst,'01777',TRUE); 
+    @mkdir($dst,01755,TRUE); 
     while(false !== ( $file = readdir($dir)) ) { 
         if (( $file != '.' ) && ( $file != '..' )) { 
             if ( is_dir($src . '/' . $file) ) { 
@@ -52,7 +63,7 @@ function recurse_copy($src,$dst) {
     );
 
     foreach($directories as $dir){
-        @mkdir($dir,'01777',TRUE);
+        @mkdir($dir,01755,TRUE);
         if(!is_dir($dir)){
             print "ERROR: Couldn't create $dir\n";
             exit();
@@ -73,9 +84,7 @@ function recurse_copy($src,$dst) {
     // Copy base TreeTrumpet files
     $base = glob("*.php");
     foreach($base as $i => $file){
-        if($file == 'build.php' || $file == 'unbuild.php'){
-            continue;
-        }else if(is_file($file)){
+        if(is_file($file)){
             copy($file,"$destdir/$file");
         }
     }
@@ -86,6 +95,7 @@ function recurse_copy($src,$dst) {
     recurse_copy("img","$destdir/img");
 
     // Other root-dir files
+    copy('../LICENSE.md',"$destdir/LICENSE.md");
     copy('php.ini',"$destdir/php.ini");
     copy('htaccess',"$destdir/.htaccess");
     copy('favicon.ico',"$destdir/favicon.ico");
@@ -154,35 +164,39 @@ function recurse_copy($src,$dst) {
 
 // New zip file!
 {
-    @unlink("$destdir.zip");
-    chmod($destdir,01777);
-    chdir($destdir);
-
-    $directories = Array('.');
+    chdir($basedir);
+    $basename = basename($destdir);
+    @unlink("$basename.zip");
 
     $zip = new ZipArchive();
-    if($zip->open("./../$destdir.zip",ZipArchive::CREATE) !== TRUE){
-        exit("Cannot open $destdir.zip for writing!");
+    if($zip->open("$basename.zip",ZipArchive::CREATE) !== TRUE){
+        exit("Cannot open $basename.zip for writing!");
     }
 
-    while(count($directories) > 0){
-        $cur_dir = array_shift($directories);
-        foreach(glob("$cur_dir/*") as $file_or_dir){
-            @chmod($file_or_dir,01755);
-            if(is_dir($file_or_dir)){
-                $directories[] = $file_or_dir;
-            }else if(is_file($file_or_dir) && !in_array($file_or_dir,$exclude_from_zip)){
-                $res = $zip->addFile(preg_replace('|^[./]*|','',$file_or_dir));
-            }
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($destdir),
+        RecursiveIteratorIterator::LEAVES_ONLY
+    );
+
+    foreach ($files as $name => $file)
+    {
+        // Skip directories (they would be added automatically)
+        if (!$file->isDir())
+        {
+            // Get real and relative path for current file
+            $filePath = $file->getRealPath();
+            $relativePath = substr($filePath, strlen($destdir));
+
+            // Add current file to archive
+            $zip->addFile($filePath, $basename . '/' . $relativePath);
         }
-        $res = $zip->addFile('.htaccess');
-        $res = $zip->addEmptyDir('media');
-        $res = $zip->addEmptyDir('cache');
     }
+
+    $zip->addEmptyDir($basename . '/media');
+    $zip->addEmptyDir($basename . '/cache');
 
     $zip->close();
 
-    chdir('./..');
-    $md5 = md5("$destdir.zip");
-    file_put_contents("$destdir.zip.md5",$md5);
+    $md5 = md5("$basename.zip");
+    file_put_contents("$basename.zip.md5",$md5);
 }

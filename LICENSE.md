@@ -1,6 +1,10 @@
 TreeTrumpet Licensing
 =====================
 
+TreeTrumpet is Copyright 2013-2015 by Michael Moore. 
+
+It also uses programs and scripts which are copyright other authors and are used in accordance to their respective licenses. 
+
 TreeTrumpet is dual licensed. 
 
 
