@@ -1,6 +1,14 @@
 TreeTrumpet 
 ==============
 
+Unfortunately I have not had time to maintain this project as I had hoped I would. 
+
+You are welcome to fork it, or do what you want with it -- it is Open Source after all. 
+
+I'm happy to answer simple questions, but I won't be able to dedicate any significant time to support. 
+
+
+
 About
 -----
 TreeTrumpet is a very easy way to get your family history online. It is simple to install,
