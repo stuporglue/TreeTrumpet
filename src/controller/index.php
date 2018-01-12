@@ -55,7 +55,7 @@ $page->body .= "If we have a shared research interest, I'd be happy to cross-ref
 $page->body .= "</p>";
 $page->body .= "<p>";
 $page->body .= "If you have suggestions on how to improve this site, please let";
-$page->body .= "  the folks over at <a href='http://treetrumpet.com/'>TreeTrumpet</a> know and I'll get the new features the next time I upgrade.";
+$page->body .= "  the folks over at <a href='https://github.com/stuporglue/TreeTrumpet'>TreeTrumpet</a> know and I'll get the new features the next time I upgrade.";
 $page->body .= "</p>";
 $page->body .= "<p>";
 $page->body .= "Thanks for stopping by!";
@@ -65,7 +65,7 @@ $page->bodyright .= view('feature_preview',Array(
     'id' => 'overview',
     'title' => 'Features',
     'text' => '<p>You can explore this pedigree with these tools. Each ancestor and family have their own personal pages to explore as well.</p>
-    <p>If you have other tools you\'d like to see here, please let <a href="http://treetrumpet.com">TreeTrumpet</a> know.</p>',
+    <p>If you have other tools you\'d like to see here, please let <a href="https://github.com/stuporglue/TreeTrumpet">TreeTrumpet</a> know.</p>',
     'link' => linky($_BASEURL . '/tree.php'),
     'img' => 'img/treetrumpet.png'
 ),true);
